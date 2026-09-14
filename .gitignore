@@ -14,3 +14,11 @@ next-env.d.ts
 .vercel
 *.tsbuildinfo
 .env*
+
+# مخلّفات جلسة تطبيق الهوية — ليست جزءاً من المشروع
+_backup-design-*/
+_to_delete/
+_kit/
+*.log
+*.tgz
+*.zip
