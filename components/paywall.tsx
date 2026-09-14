@@ -3,27 +3,27 @@ import { LockIcon } from "@/components/bahjaa/icons";
 
 /**
  * الجدار — يظهر بعد القسم الرابع لغير المسجّل.
- * لا يحمل نموذجاً خاصاً به: يوجّه إلى /login حيث يعيش منطق OTP كاملاً،
- * فلا يُكرَّر ولا يُخاطَر به.
+ *
+ * اللمحة أشكال لا نصّ: الزائر لا يملك صلاحية قراءة content_full،
+ * وأي نصّ نكتبه هنا سيكون مختلَقاً ويظهر على كل كتاب بلا تمييز.
+ * الأشكال تنقل «هناك المزيد» بصدق، بلا ادّعاء محتوى.
+ *
+ * لا يحمل نموذجاً خاصاً به: يوجّه إلى /login حيث يعيش منطق OTP كاملاً.
  */
 export default function Paywall({ slug }: { slug: string }) {
+  const lines = [96, 88, 93, 74, 90, 62];
+
   return (
     <div style={{ marginTop: 40 }}>
       <div className="locked">
-        {/* لمحة مموّهة عمّا خلف الجدار */}
         <div className="teaser" aria-hidden="true">
-        <h3 className="h-sub" style={{ marginBottom: 14 }}>
-          المحور الأول — إعادة تعريف التقدّم
-        </h3>
-        <p className="read">
-          يبدأ الكتاب من سؤال مزعج عن معنى أن تتقدّم فعلاً، لا أن تنشغل فحسب. والفرق بين
-          الاثنين هو ما يفصل فريقاً منتجاً عن فريق يدور في مكانه.
-        </p>
-        <p className="read">
-          ثم يقترح بديلاً عملياً: التقدّم هو أن تعرف اليوم عن عميلك شيئاً لم تكن تعرفه أمس،
-          وأن يكون مدعوماً بسلوك حقيقي لا برأي مُجامِل.
-        </p>
-      </div>
+          <div className="skeleton-head" />
+          <div className="skeleton-lines">
+            {lines.map((w, i) => (
+              <div key={i} className="skeleton-line" style={{ width: `${w}%` }} />
+            ))}
+          </div>
+        </div>
         <div className="fade" />
       </div>
 

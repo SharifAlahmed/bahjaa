@@ -513,3 +513,8 @@ a{color:inherit;}
 /* القسم الحرّ والكامل يرثان عمود القراءة */
 .summary-page > section,
 .summary-page > div{max-width:720px;}
+
+/* لمحة الجدار — أشكال لا نصّ مختلَق */
+.skeleton-head{height:22px;width:58%;background:var(--rule);margin-bottom:26px;}
+.skeleton-lines{display:flex;flex-direction:column;gap:14px;}
+.skeleton-line{height:11px;background:var(--rule);}
