@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* ============================================================
+   نظام تصميم بهجة — المصدر الوحيد للحقيقة
+   غيّر هنا فيتغيّر كل الموقع وكل الملخصات
+   ============================================================ */
+@theme {
+  --color-bh-primary: #1d9e75;
+  --color-bh-primary-light: #e1f5ee;
+  --color-bh-primary-dark: #085041;
+  --color-bh-bg: #f7faf8;
+  --color-bh-surface: #ffffff;
+  --color-bh-border: #d8e7df;
+  --color-bh-text: #15332a;
+  --color-bh-muted: #5b7a6e;
+  --color-bh-trap-bg: #fff8e7;
+  --color-bh-trap-border: #ef9f27;
+  --color-bh-trap-text: #633806;
+
+  --font-bh: "Tajawal", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-bh: 12px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bh-bg);
+  color: var(--color-bh-text);
+  font-family: var(--font-bh);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* التسلسل الهرمي الملزم: العنوان دائماً أكبر من النص */
+.bh-sec-title {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.4;
+}
+.bh-pillar-title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.bh-card-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-bh-primary-dark);
+}
+.bh-body {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2;
+  color: var(--color-bh-text);
+}
+.bh-sub {
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--color-bh-muted);
+}
+.bh-sec-num {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* بطاقة عامة */
+.bh-card {
+  background: var(--color-bh-surface);
+  border: 1px solid var(--color-bh-border);
+  border-radius: var(--radius-bh);
+}
+
+/* الفخ الشائع */
+.bh-trap {
+  background: var(--color-bh-trap-bg);
+  border-right: 3px solid var(--color-bh-trap-border);
+  color: var(--color-bh-trap-text);
+  border-radius: 8px;
+}
+
+/* تدرّج الإخفاء فوق الجدار */
+.bh-fade {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+}
