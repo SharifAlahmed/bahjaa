@@ -138,7 +138,7 @@ function Group({ title, rows, empty }: { title: string; rows: Row[]; empty: stri
                 <form action={deleteSummary.bind(null, r.id, r.slug)}>
                   <button
                     className="px-3 py-1.5 rounded-lg text-sm font-bold transition hover:bg-red-50"
-                    style={{ color: "#b23b2e" }}
+                    style={{ color: "var(--color-danger)" }}
                   >
                     حذف
                   </button>

@@ -159,7 +159,7 @@ export default function LoginForm() {
         </button>
 
         {error && (
-          <p className="bh-sub text-center mt-3" style={{ color: "#b23b2e" }}>
+          <p className="bh-sub text-center mt-3" style={{ color: "var(--color-danger)" }}>
             {error}
           </p>
         )}
@@ -227,7 +227,7 @@ export default function LoginForm() {
       </button>
 
       {error && (
-        <p className="bh-sub text-center" style={{ color: "#b23b2e" }}>
+        <p className="bh-sub text-center" style={{ color: "var(--color-danger)" }}>
           {error}
         </p>
       )}

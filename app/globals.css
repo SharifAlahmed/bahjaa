@@ -2,8 +2,12 @@
 
 /* ══════════════════════════════════════════════════════════
    الخطوط — مستضافة ذاتياً من public/fonts
-   لا next/font ولا Google Fonts: شبكة البناء على الجهاز محجوبة
-   بـ proxy، والاستضافة الذاتية أسرع للزائر وتلغي أي طلب لطرف ثالث.
+   ⚠️ ممنوع next/font/google: شبكة جهاز التطوير محجوبة بـ proxy
+   (fonts.googleapis.com → 403) فيعلّق البناء بلا رسالة خطأ.
+   أي خط جديد يُنزَّل ويوضع في public/fonts أولاً.
+
+   المرحلة القادمة: استبدال العائلتين بـ Tajawal (عربي) و Inter
+   (لاتيني) حسب لوحة الهوية — مؤجّلة بقرار شريف.
    ══════════════════════════════════════════════════════════ */
 @font-face{font-family:"Amiri";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/amiri-400.woff2") format("woff2");}
 @font-face{font-family:"Amiri";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/amiri-700.woff2") format("woff2");}
@@ -13,79 +17,128 @@
 @font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/plex-ar-600.woff2") format("woff2");}
 
 /* ══════════════════════════════════════════════════════════
-   بهجة — نظام التصميم
-   ورق دافئ × أخضر عميق × نحاس
-   المصدر الوحيد للحقيقة. غيّر هنا فيتغيّر كل الموقع.
+   بهجة — ملف الرموز · المصدر الوحيد للحقيقة
+   مشتق من لوحة الهوية الرسمية (16 سبتمبر 2026)
 
-   القواعد الأربع التي لا تُكسر:
-   ١. خطوط لا بطاقات — الفاصل الافتراضي خط 1px بلون rule.
-      البطاقة محجوزة للغلاف وللوحة بوابة التسجيل فقط. ممنوع بطاقة داخل بطاقة.
-   ٢. اليمين هو المرساة — لا توسيط لنص عربي طويل خارج اللوحة الداكنة.
-   ٣. الرقم يتدلّى — رقم القسم في الهامش الأيمن خارج عمود النص، بلون rule.
-   ٤. لحظة داكنة واحدة — لوحة deep واحدة في كل صفحة (عدا الهيدر والتذييل).
-
-   وزر أخضر واحد في كل منطقة. لا أبيض نقي. لا زوايا > 2px.
-   لا تدرّجات عدا تلاشي بوابة التسجيل. لا ظلال عدا الأغلفة.
+   ⛔ ممنوع كتابة أي قيمة hex خارج هذا الملف.
    ══════════════════════════════════════════════════════════ */
 
 @theme {
-  /* ── الرموز الجديدة ── */
-  --color-paper:    #FBF7EF;
-  --color-paper-2:  #F3EEE3;
-  --color-ink:      #0B1F19;
-  --color-ink-soft: #4A5A53;
-  --color-muted:    #8A7A63;
-  --color-deep:     #063B31;
-  --color-deep-2:   #04241D;
-  --color-green:    #1D9E75;
-  --color-brass:    #B07D3A;
-  --color-rule:     #DFD5C2;
+  /* ── لوحة الهوية · الألوان الثمانية ────────────────── */
+  --color-brand-primary: #1D9E75;  /* CTA · روابط · حالات نشطة */
+  --color-brand-dark:    #15332A;  /* عناوين · هيدر · أسطح داكنة · نص المتن */
+  --color-brand-mint:    #3ED69F;  /* لكنات زخرفية — ممنوع لنص المتن */
+  --color-deep:          #0B1412;  /* الفوتر · أعمق الألواح */
+  --color-background:    #F7F5EE;  /* خلفية الصفحة والقراءة */
+  --color-surface:       #FFFFFF;  /* بطاقات · حقول · ألواح محتوى */
+  --color-border:        #E6ECE9;  /* كل فاصل وكل حد */
+  --color-accent-gold:   #C99A45;  /* تمييز — عنصر واحد كحد أقصى في الصفحة */
 
-  /* ── توافق: رموز bh-* القديمة معاد ربطها باللوحة الجديدة ──
-     كل صنف Tailwind قائم (bg-bh-surface، text-bh-primary-dark، border-bh-border …)
-     يتبنّى الهوية الجديدة تلقائياً بلا تعديل سطر واحد في الصفحات. */
-  --color-bh-primary:       #1D9E75;  /* = green */
-  --color-bh-primary-light: #F3EEE3;  /* = paper-2 — لا أخضر فاتح كخلفيات */
-  --color-bh-primary-dark:  #063B31;  /* = deep */
-  --color-bh-bg:            #FBF7EF;  /* = paper */
-  --color-bh-surface:       #FBF7EF;  /* = paper — الأبيض النقي ممنوع */
-  --color-bh-border:        #DFD5C2;  /* = rule */
-  --color-bh-text:          #0B1F19;  /* = ink */
-  --color-bh-muted:         #4A5A53;  /* = ink-soft */
-  --color-bh-trap-bg:       #FFF8E7;
-  --color-bh-trap-border:   #EF9F27;
-  --color-bh-trap-text:     #633806;
+  /* ⚠️ ليس على لوحة الهوية — اللوحة لا تعرّف لون خطأ.
+     مستعار حتى يُعتمد لون رسمي. لرسائل الخطأ وحدها. */
+  --color-danger: #A8432B;
+  --mask-solid:   #000;
 
+  /* ── مشتقات الشفافية ───────────────────────────────── */
+  --color-ink-soft:   rgba(21,51,42,.72);   /* نص ثانوي على فاتح */
+  --color-ink-muted:  rgba(21,51,42,.55);   /* بيانات وصفية */
+  --color-on-dark:    rgba(247,245,238,.86);/* نص على داكن */
+  --color-on-dark-soft: rgba(247,245,238,.66);
+  --color-on-dark-line: rgba(247,245,238,.22);
+  --color-on-dark-edge: rgba(247,245,238,.45);
+
+  /* ── الزوايا ───────────────────────────────────────── */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* ── الظلال — ثلاثة لا رابع لها ────────────────────── */
+  --shadow-1: 0 1px 2px rgba(0,0,0,.05);
+  --shadow-2: 0 4px 12px rgba(0,0,0,.08);
+  --shadow-3: 0 8px 24px rgba(0,0,0,.12);
+
+  /* ── المسافات — أساس 4px ───────────────────────────── */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --space-9: 96px;
+
+  /* ── الخطوط ────────────────────────────────────────── */
+  --font-ar: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-display: "Amiri", "Times New Roman", serif;
+
+  /* ── توافق: أسماء الهوية السابقة معاد ربطها باللوحة ──
+     تبقى حتى تُعاد كتابة المكوّنات السبعة القديمة، ثم تُحذف.
+     ترتيب الحذف: أعد كتابة المكوّن أولاً، ثم احذف رمزه. */
+  --color-bh-primary:       #1D9E75;
+  --color-bh-primary-light: #FFFFFF;
+  --color-bh-primary-dark:  #15332A;
+  --color-bh-bg:            #F7F5EE;
+  --color-bh-surface:       #FFFFFF;
+  --color-bh-border:        #E6ECE9;
+  --color-bh-text:          #15332A;
+  --color-bh-muted:         rgba(21,51,42,.72);
+  --color-bh-trap-bg:       #F7F5EE;
+  --color-bh-trap-border:   #C99A45;
+  --color-bh-trap-text:     #15332A;
   --font-bh: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
-  --radius-bh: 2px;
+  --radius-bh: 8px;
 }
 
 /* ══════════════════════════════════════════════════════════
-   بهجة — الرموز
-   ورق دافئ × أخضر عميق × نحاس
+   أسماء مختصرة للاستعمال داخل هذا الملف والمكوّنات.
+   كلها إشارات إلى رموز @theme أعلاه — لا قيمة hex جديدة.
    ══════════════════════════════════════════════════════════ */
 :root{
-  --paper:#FBF7EF;
-  --paper-2:#F3EEE3;
-  --ink:#0B1F19;
-  --ink-soft:#4A5A53;
-  --muted:#8A7A63;
-  --deep:#063B31;
-  --deep-2:#04241D;
-  --green:#1D9E75;
-  --brass:#B07D3A;
-  --rule:#DFD5C2;
+  --paper:      var(--color-background);
+  --paper-2:    var(--color-surface);
+  --ink:        var(--color-brand-dark);
+  --ink-soft:   var(--color-ink-soft);
+  --muted:      var(--color-ink-muted);
+  --deep:       var(--color-brand-dark);
+  --deep-2:     var(--color-deep);
+  --green:      var(--color-brand-primary);
+  --mint:       var(--color-brand-mint);
+  --brass:      var(--color-accent-gold);
+  --rule:       var(--color-border);
 
-  --cat-leadership:#085041;
-  --cat-entrepreneurship:#A8432B;
-  --cat-productivity:#1D9E75;
-  --cat-strategy:#1F3A5F;
-  --cat-teams:#6B4A7E;
-  --cat-business:#B07D3A;
+  --on-dark:      var(--color-on-dark);
+  --on-dark-soft: var(--color-on-dark-soft);
+  --on-dark-line: var(--color-on-dark-line);
+  --on-dark-edge: var(--color-on-dark-edge);
 
-  --serif: "Amiri", "Times New Roman", serif;
-  --sans: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
-  --logo: "IBM Plex Sans Arabic", sans-serif;
+  /* ── الأقسام الستة — مشتقة من اللوحة وحدها ──────────
+     قرار 16 سبتمبر: لا لون كامل لكل قسم. حقلان داكنان من
+     اللوحة × ثلاث لكنات = ستة تركيبات مميّزة، والتمييز
+     يحمله سطر التصنيف واللكنة لا لون الغلاف. */
+  --cat-leadership-field:       var(--color-brand-dark);
+  --cat-leadership-accent:      var(--color-accent-gold);
+  --cat-entrepreneurship-field: var(--color-brand-dark);
+  --cat-entrepreneurship-accent:var(--color-brand-mint);
+  --cat-productivity-field:     var(--color-brand-dark);
+  --cat-productivity-accent:    var(--color-brand-primary);
+  --cat-strategy-field:         var(--color-deep);
+  --cat-strategy-accent:        var(--color-accent-gold);
+  --cat-teams-field:            var(--color-deep);
+  --cat-teams-accent:           var(--color-brand-mint);
+  --cat-business-field:         var(--color-deep);
+  --cat-business-accent:        var(--color-brand-primary);
+
+  --serif: var(--font-display);
+  --sans:  var(--font-ar);
+  --logo:  var(--font-ar);
+
+  /* ── مقياس الطباعة من اللوحة ───────────────────────── */
+  --t-h1: clamp(34px, 6.4vw, 64px);
+  --t-h2: clamp(28px, 4.4vw, 44px);
+  --t-h3: clamp(22px, 3vw, 32px);
+  --t-body: 17px;
+  --t-small: 14px;
+  --t-caption: 13px;
+  --t-button: 16px;
+  --lh-body: 1.8;
+  --lh-head: 1.3;
 }
 
 *{box-sizing:border-box;}
@@ -95,9 +148,9 @@ body{
   background:var(--paper);
   color:var(--ink);
   font-family:var(--sans);
-  font-weight:300;
-  font-size:18px;
-  line-height:2.15;
+  font-weight:400;
+  font-size:var(--t-body);
+  line-height:var(--lh-body);
   -webkit-font-smoothing:antialiased;
 }
 img{max-width:100%;}
@@ -118,10 +171,10 @@ a{color:inherit;}
 .h-sec{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,32px);line-height:1.5;margin:0;color:var(--ink);text-wrap:balance;}
 .h-sub{font-family:var(--serif);font-weight:700;font-size:clamp(19px,2.6vw,22px);line-height:1.4;margin:0;color:var(--ink);}
 .quote{font-family:var(--serif);font-weight:400;font-size:clamp(21px,3.4vw,28px);line-height:1.8;margin:0;color:var(--ink);}
-.read{font-size:18px;line-height:2.15;font-weight:300;color:var(--ink);margin:0;}
+.read{font-size:var(--t-body);line-height:var(--lh-body);font-weight:400;color:var(--ink);margin:0;}
 .read + .read{margin-top:22px;}
-.incard{font-size:16px;line-height:1.95;font-weight:400;color:var(--ink-soft);margin:0;}
-.meta{font-size:14px;line-height:1.8;font-weight:300;color:var(--muted);margin:0;}
+.incard{font-size:16px;line-height:var(--lh-body);font-weight:400;color:var(--ink-soft);margin:0;}
+.meta{font-size:var(--t-small);line-height:1.7;font-weight:400;color:var(--muted);margin:0;}
 .col{max-width:720px;}
 
 .rule{height:1px;background:var(--rule);border:0;margin:0;}
@@ -129,14 +182,14 @@ a{color:inherit;}
 /* ── الأزرار ──────────────────────────────────────────── */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  min-height:56px;padding-inline:34px;border-radius:2px;border:0;
+  min-height:56px;padding-inline:34px;border-radius:var(--radius-sm);border:0;
   font-family:var(--sans);font-size:16px;font-weight:600;
   cursor:pointer;text-decoration:none;
 }
 .btn-primary{background:var(--green);color:var(--deep-2);}
 .btn-secondary{background:transparent;border:1px solid var(--deep);color:var(--deep);}
 .btn-deep{background:var(--deep);color:var(--paper);}
-.btn-ghost-light{background:transparent;border:1px solid rgba(251,247,239,.45);color:var(--paper);}
+.btn-ghost-light{background:transparent;border:1px solid var(--on-dark-edge);color:var(--paper);}
 @media (max-width:600px){ .btn{min-height:52px;padding-inline:24px;width:100%;} }
 
 /* هدف لمس 44px دون تغيير التخطيط البصري */
@@ -146,7 +199,7 @@ a{color:inherit;}
 .mini-action{
   display:inline-flex;align-items:center;gap:8px;
   min-height:44px;padding-inline:14px;
-  background:transparent;border:1px solid var(--rule);border-radius:2px;
+  background:transparent;border:1px solid var(--rule);border-radius:var(--radius-sm);
   font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink-soft);
   cursor:pointer;
 }
@@ -163,15 +216,15 @@ a{color:inherit;}
 .logo-mark{height:46px;width:46px;display:block;flex:none;}
 .site-footer .logo-mark{height:40px;width:40px;}
 .logo-lockup{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.logo-tag{font-family:var(--sans);font-weight:400;font-size:12px;letter-spacing:.6px;line-height:1.5;color:rgba(251,247,239,.68);}
+.logo-tag{font-family:var(--sans);font-weight:400;font-size:12px;letter-spacing:.6px;line-height:1.5;color:var(--on-dark-soft);}
 .site-nav{display:flex;align-items:center;gap:6px;margin-inline-start:auto;}
 .site-nav a{
-  font-size:15px;font-weight:400;color:rgba(251,247,239,.82);
+  font-size:15px;font-weight:400;color:var(--on-dark);
   text-decoration:none;line-height:1.6;
   display:inline-flex;align-items:center;min-height:44px;padding-inline:10px;
 }
 .site-nav a:hover{color:var(--paper);}
-.nav-cta{border:1px solid rgba(251,247,239,.45);border-radius:2px;color:var(--paper) !important;font-size:14px;padding-inline:18px !important;}
+.nav-cta{border:1px solid var(--on-dark-edge);border-radius:var(--radius-sm);color:var(--paper) !important;font-size:14px;padding-inline:18px !important;}
 @media (max-width:600px){
   .logo-tag{display:none;}
   .site-nav .hide-sm{display:none;}
@@ -181,14 +234,14 @@ a{color:inherit;}
 /* ── اللوحة الداكنة ───────────────────────────────────── */
 .dark-panel{background:var(--deep);color:var(--paper);padding:54px 46px;text-align:center;}
 .dark-panel .statement{font-family:var(--serif);font-weight:700;font-size:clamp(23px,4.4vw,38px);line-height:1.5;color:var(--paper);margin:0;text-wrap:balance;}
-.dark-panel .eyebrow{color:rgba(251,247,239,.62);}
+.dark-panel .eyebrow{color:var(--on-dark-soft);}
 @media (max-width:600px){ .dark-panel{padding:36px 20px;} }
 
 /* ── الهيرو ───────────────────────────────────────────── */
 .hero{background:var(--deep);color:var(--paper);}
 .hero .wrap{padding-block:clamp(48px,8vw,86px);text-align:center;}
 .hero .h-hero{color:var(--paper);max-width:14ch;margin-inline:auto;margin-top:20px;}
-.hero .lede{max-width:600px;margin:24px auto 0;font-size:clamp(16px,2.3vw,18px);line-height:2;font-weight:300;color:rgba(251,247,239,.86);}
+.hero .lede{max-width:600px;margin:24px auto 0;font-size:clamp(16px,2.3vw,18px);line-height:2;font-weight:300;color:var(--on-dark);}
 .hero .promise{max-width:560px;margin:14px auto 0;font-family:var(--serif);font-weight:400;font-size:clamp(18px,2.8vw,22px);line-height:1.7;color:var(--paper);}
 .hero .actions{margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
 @media (max-width:600px){
@@ -200,16 +253,16 @@ a{color:inherit;}
   list-style:none;padding:0;
   margin:44px auto 0;max-width:820px;
   display:grid;grid-template-columns:repeat(3,1fr);
-  border-top:1px solid rgba(251,247,239,.22);
-  border-bottom:1px solid rgba(251,247,239,.22);
+  border-top:1px solid var(--on-dark-line);
+  border-bottom:1px solid var(--on-dark-line);
 }
-.value-strip .vs-item{padding:22px 16px;border-inline-start:1px solid rgba(251,247,239,.22);}
+.value-strip .vs-item{padding:22px 16px;border-inline-start:1px solid var(--on-dark-line);}
 .value-strip .vs-item:first-child{border-inline-start:0;}
 .value-strip .vs-num{font-family:var(--serif);font-weight:700;font-size:34px;line-height:1.1;color:var(--paper);}
-.value-strip .vs-txt{font-size:14px;line-height:1.7;font-weight:300;color:rgba(251,247,239,.78);margin-top:4px;}
+.value-strip .vs-txt{font-size:14px;line-height:1.7;font-weight:300;color:var(--on-dark-soft);margin-top:4px;}
 @media (max-width:600px){
   .value-strip{grid-template-columns:1fr;margin-top:34px;}
-  .value-strip .vs-item{border-inline-start:0;border-top:1px solid rgba(251,247,239,.22);display:flex;align-items:baseline;gap:14px;padding:16px 4px;text-align:start;}
+  .value-strip .vs-item{border-inline-start:0;border-top:1px solid var(--on-dark-line);display:flex;align-items:baseline;gap:14px;padding:16px 4px;text-align:start;}
   .value-strip .vs-item:first-child{border-top:0;}
   .value-strip .vs-num{font-size:28px;}
   .value-strip .vs-txt{margin-top:0;}
@@ -258,16 +311,16 @@ a{color:inherit;}
 .cover{
   aspect-ratio:3/4;
   background:var(--cat, var(--deep));
-  box-shadow:0 18px 44px rgba(11,31,25,.18);
+  box-shadow:var(--shadow-3);
   padding:28px 24px;
   display:flex;flex-direction:column;border-radius:0;
 }
-.cover-rule{width:28px;height:1px;background:rgba(251,247,239,.6);flex:none;}
+.cover-rule{width:28px;height:1px;background:var(--on-dark-soft);flex:none;}
 .cover-title{font-family:var(--serif);font-weight:700;color:var(--paper);line-height:1.36;margin:14px 0 0;text-wrap:balance;}
 .cover-title.lg{font-size:clamp(32px,3.6vw,46px);}
 .cover-title.md{font-size:clamp(27px,3vw,38px);}
 .cover-title.sm{font-size:clamp(22px,2.4vw,30px);}
-.cover-label{margin-top:auto;font-family:var(--sans);font-weight:400;font-size:10px;letter-spacing:1.5px;line-height:1.6;color:rgba(251,247,239,.66);}
+.cover-label{margin-top:auto;font-family:var(--sans);font-weight:400;font-size:10px;letter-spacing:1.5px;line-height:1.6;color:var(--on-dark-soft);}
 
 /* ── رفّ الملخصات ─────────────────────────────────────── */
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 34px;}
@@ -276,7 +329,7 @@ a{color:inherit;}
 
 .book-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;}
 .book-card .cover{transition:transform .22s ease, box-shadow .22s ease;}
-.book-card:hover .cover{transform:translateY(-3px);box-shadow:0 22px 48px rgba(11,31,25,.22);}
+.book-card:hover .cover{transform:translateY(-3px);box-shadow:var(--shadow-3);}
 .book-card h3{margin:20px 0 0;}
 .book-card .author{margin:6px 0 0;font-size:15px;font-weight:400;line-height:1.7;color:var(--ink-soft);}
 .book-card .facts{margin:4px 0 0;}
@@ -375,7 +428,7 @@ a{color:inherit;}
 .locked .teaser{opacity:.3;pointer-events:none;user-select:none;}
 .locked .fade{
   position:absolute;inset-inline:0;bottom:0;height:150px;pointer-events:none;
-  background:linear-gradient(to bottom, rgba(251,247,239,0) 0%, var(--paper) 100%);
+  background:linear-gradient(to bottom, rgba(247,245,238,0) 0%, var(--paper) 100%);
 }
 .gate{background:var(--paper-2);border:1px solid var(--rule);padding:48px 52px;margin-top:34px;scroll-margin-top:24px;}
 .gate .lock-line{display:flex;align-items:center;gap:12px;}
@@ -390,15 +443,15 @@ a{color:inherit;}
 .gate .field-row{display:flex;gap:12px;flex-wrap:wrap;}
 .gate input{
   flex:1 1 260px;min-width:0;min-height:56px;padding-inline:18px;
-  background:var(--paper);border:1px solid var(--rule);border-radius:2px;
+  background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-sm);
   font-family:var(--sans);font-size:16px;font-weight:400;color:var(--ink);
 }
 .gate input::placeholder{color:var(--muted);}
-.gate input[aria-invalid="true"]{border-color:#A8432B;}
+.gate input[aria-invalid="true"]{border-color:var(--color-danger);}
 .gate .helper{margin-top:12px;}
 .gate .status{margin-top:14px;font-size:15px;line-height:1.8;font-weight:400;min-height:1.8em;}
 .gate .status[data-state="ok"]{color:var(--deep);}
-.gate .status[data-state="err"]{color:#A8432B;}
+.gate .status[data-state="err"]{color:var(--color-danger);}
 .gate .have-code{margin-top:18px;}
 @media (max-width:700px){
   .gate{padding:30px 20px;}
@@ -422,7 +475,7 @@ a{color:inherit;}
 @media (max-width:820px){ .related{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:600px){ .related{grid-template-columns:1fr;gap:36px;} }
 .rel-card{display:flex;gap:18px;text-decoration:none;color:inherit;align-items:flex-start;}
-.rel-card .cover{width:88px;flex:none;padding:12px 10px;box-shadow:0 10px 24px rgba(11,31,25,.16);}
+.rel-card .cover{width:88px;flex:none;padding:12px 10px;box-shadow:var(--shadow-2);}
 .rel-card .cover-rule{width:16px;}
 .rel-card .cover-title{font-size:14px;line-height:1.3;margin-top:8px;}
 .rel-card .cover-label{font-size:6px;letter-spacing:.6px;}
@@ -434,15 +487,15 @@ a{color:inherit;}
 .rel-card .go svg{color:var(--brass);}
 
 /* ── التذييل ──────────────────────────────────────────── */
-.site-footer{background:var(--deep-2);color:rgba(251,247,239,.72);}
+.site-footer{background:var(--deep-2);color:var(--on-dark-soft);}
 .site-footer .wrap{padding-block:46px;display:flex;gap:26px;justify-content:space-between;flex-wrap:wrap;}
-.site-footer .meta{color:rgba(251,247,239,.55);}
-.site-footer a{color:rgba(251,247,239,.72);text-decoration:none;}
+.site-footer .meta{color:var(--on-dark-soft);}
+.site-footer a{color:var(--on-dark-soft);text-decoration:none;}
 
 /* ── إشعار تجريبي ─────────────────────────────────────── */
 .toast{
   position:fixed;inset-inline:16px;bottom:20px;margin-inline:auto;max-width:380px;
-  background:var(--deep);color:var(--paper);border-radius:2px;
+  background:var(--deep);color:var(--paper);border-radius:var(--radius-sm);
   padding:14px 20px;font-size:15px;line-height:1.7;text-align:center;
   opacity:0;transform:translateY(10px);transition:opacity .22s ease, transform .22s ease;
   pointer-events:none;z-index:50;
@@ -469,16 +522,20 @@ a{color:inherit;}
 .bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:2.2px;color:var(--brass);}
 
 /* البطاقة صارت خطوطاً: حد رفيع على الورق، بلا تعبئة بيضاء وبلا ظل */
-.bh-card{background:var(--paper);border:1px solid var(--rule);border-radius:2px;}
+.bh-card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-sm);}
 
 /* الفخ الشائع — يبقى كما هو، فهو جزء من نظام الملخص */
-.bh-trap{background:#FFF8E7;border-inline-start:3px solid #EF9F27;color:#633806;border-radius:2px;}
+.bh-trap{background:var(--color-bh-trap-bg);border-inline-start:3px solid var(--color-bh-trap-border);color:var(--color-bh-trap-text);border-radius:var(--radius-sm);}
 
 /* تدرّج الإخفاء فوق الجدار */
-.bh-fade{-webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,transparent 100%);}
+.bh-fade{-webkit-mask-image:linear-gradient(to bottom,var(--mask-solid) 0%,transparent 100%);mask-image:linear-gradient(to bottom,var(--mask-solid) 0%,transparent 100%);}
 
 /* الزوايا الدائرية الموروثة من Tailwind تُسوّى إلى 2px */
-.rounded-xl,.rounded-lg,.rounded-md,.rounded-full{border-radius:2px !important;}
+/* الزوايا الموروثة تُسوَّى على سُلَّم اللوحة */
+.rounded-md{border-radius:var(--radius-sm) !important;}
+.rounded-lg{border-radius:var(--radius-sm) !important;}
+.rounded-xl{border-radius:var(--radius-md) !important;}
+.rounded-full{border-radius:var(--radius-full) !important;}
 
 /* ══════════════════════════════════════════════════════════
    إضافات ربط الصفحات الفعلية
@@ -486,11 +543,11 @@ a{color:inherit;}
 
 /* زر الخروج داخل الترويسة — نفس شكل nav-cta */
 .nav-cta-button{
-  background:transparent;border:1px solid rgba(251,247,239,.45);border-radius:2px;
+  background:transparent;border:1px solid var(--on-dark-edge);border-radius:var(--radius-sm);
   color:var(--paper);font-family:var(--sans);font-size:14px;font-weight:400;
   padding-inline:18px;min-height:44px;display:inline-flex;align-items:center;cursor:pointer;
 }
-.nav-cta-button:hover{color:var(--paper);border-color:rgba(251,247,239,.75);}
+.nav-cta-button:hover{color:var(--paper);border-color:var(--on-dark);}
 
 /* روابط التذييل */
 .footer-nav{display:flex;gap:20px;align-items:center;}

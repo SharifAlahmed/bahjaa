@@ -22,3 +22,4 @@ _kit/
 *.log
 *.tgz
 *.zip
+.trash/
