@@ -1,5 +1,6 @@
 import { Section } from "./section";
 import type { ContentFull } from "@/lib/types";
+import { toArabicDigits } from "@/components/bahjaa/format";
 
 function Stars({ n }: { n: number }) {
   const filled = Math.max(0, Math.min(10, Math.round(n)));
@@ -31,7 +32,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
                 <article className="bh-card overflow-hidden">
                   <header className="bg-bh-primary-light px-5 py-3">
                     <h3 className="bh-pillar-title text-bh-primary-dark">
-                      {i + 1}. {p.title}
+                      {toArabicDigits(i + 1)}. {p.title}
                     </h3>
                   </header>
                   <div className="p-5 space-y-4">
@@ -126,7 +127,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
             <div className="grid sm:grid-cols-2 gap-px bg-bh-border">
               {([
                 ["١ — التشخيص", s8.diagnosis],
-                ["٢ — الخطوة الصفرية (5 دقائق اليوم)", s8.zero_step],
+                ["٢ — الخطوة الصفرية (٥ دقائق اليوم)", s8.zero_step],
               ] as const).map(([label, val]) => (
                 <div key={label} className="bg-bh-surface p-5">
                   <p className="bh-card-label mb-1.5">{label}</p>
@@ -141,7 +142,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
                     {s8.week_plan.map((d, i) => (
                       <li key={i} className="flex gap-2">
                         <span className="shrink-0 w-5 h-5 grid place-items-center rounded-full bg-bh-primary-light text-bh-primary text-[11px] font-bold mt-0.5">
-                          {i + 1}
+                          {toArabicDigits(i + 1)}
                         </span>
                         <span className="bh-body">{d}</span>
                       </li>

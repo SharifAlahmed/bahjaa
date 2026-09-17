@@ -30,16 +30,41 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   || 'sb_publishable_fGWR88iL1EhyufGgnXmTrg_FnfXxOLJ'
 
-const CATEGORY_COLORS = {
-  leadership:       '#085041',
-  entrepreneurship: '#A8432B',
-  productivity:     '#1D9E75',
-  strategy:         '#1F3A5F',
-  teams:            '#6B4A7E',
-  business:         '#B07D3A',
+// ⚠️ اللوحة الرسمية — مطابقة لـ app/globals.css (--cat-*-field / --cat-*-accent)
+const CATEGORY = {
+  leadership:       { field: '#15332A', accent: '#C99A45' },
+  entrepreneurship: { field: '#15332A', accent: '#3ED69F' },
+  productivity:     { field: '#15332A', accent: '#1D9E75' },
+  strategy:         { field: '#0B1412', accent: '#C99A45' },
+  teams:            { field: '#0B1412', accent: '#3ED69F' },
+  business:         { field: '#0B1412', accent: '#1D9E75' },
 }
 
-const PAPER = '#FBF7EF'
+const PAPER = '#F7F5EE'
+
+// ⚠️ نسخة مطابقة من lib/seal.ts — المصدر الوحيد للحقيقة هناك.
+// أي تعديل على هندسة الخَتْم يُنسخ إلى هذا الموضع.
+function sealHash(slug) {
+  let h = 2166136261
+  for (let i = 0; i < slug.length; i++) { h ^= slug.charCodeAt(i); h = Math.imul(h, 16777619) }
+  return h >>> 0
+}
+const pickBit = (h, shift, n) => ((h >>> shift) & 0xff) % n
+const gcd = (a, b) => (b ? gcd(b, a % b) : a)
+
+function seal(slug) {
+  const h = sealHash(slug)
+  const N = 9 + pickBit(h, 0, 4) * 2
+  let step = 3 + pickBit(h, 8, Math.floor(N / 2) - 2)
+  while (gcd(step, N) !== 1) step++
+  const R = 58
+  let d = ''
+  for (let i = 0, seen = 0; seen < N; seen++, i = (i + step) % N) {
+    const a = (i * 2 * Math.PI) / N - Math.PI / 2
+    d += (seen === 0 ? 'M' : 'L') + (R * Math.cos(a)).toFixed(1) + ' ' + (R * Math.sin(a)).toFixed(1) + ' '
+  }
+  return { d: d + 'Z', inner: 20 + pickBit(h, 16, 14) }
+}
 
 // ── وسائط سطر الأوامر ─────────────────────────────────────────
 const argv = process.argv.slice(2)
@@ -68,10 +93,9 @@ const SCALE = WIDTH / BASE_WIDTH
 // لأن العربية تتفاوت كثيراً في طول الكلمة.
 function coverTitleSize(title) {
   const len = title.trim().length
-  if (len <= 14) return 46
-  if (len <= 20) return 40
-  if (len <= 28) return 34
-  return 30
+  if (len <= 14) return 40
+  if (len <= 20) return 34
+  return 29
 }
 
 // ── الخطوط: تُدمج كـ data URI ليعمل السكربت بلا شبكة ──────────
@@ -90,9 +114,11 @@ async function fontFaces() {
 
 // ── قالب الغلاف — مطابق لمكوّن Cover.tsx ──────────────────────
 function coverHTML(book, faces) {
-  const color = CATEGORY_COLORS[book.category] || '#063B31'
+  const c = CATEGORY[book.category] || CATEGORY.leadership
+  const sl = seal(book.slug)
   const px = (n) => `${Math.round(n * SCALE)}px`
   const titlePx = `${Math.round(coverTitleSize(book.title) * SCALE)}px`
+  const sealPx = Math.round(148 * SCALE)
 
   return `<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8">
 <style>
@@ -100,26 +126,35 @@ ${faces}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{width:${WIDTH}px;height:${HEIGHT}px;background:transparent;}
 .cover{
-  width:${WIDTH}px;height:${HEIGHT}px;background:${color};
+  width:${WIDTH}px;height:${HEIGHT}px;background:${c.field};
   padding:${px(28)} ${px(24)};
-  display:flex;flex-direction:column;border-radius:0;
+  display:flex;flex-direction:column;border-radius:0;overflow:hidden;
 }
-.rule{width:${px(28)};height:${Math.max(1, Math.round(SCALE))}px;background:rgba(251,247,239,.6);flex:none;}
+.seal{width:${sealPx}px;height:${sealPx}px;margin-inline-start:${px(-4)};margin-top:${px(2)};flex:none;color:${c.accent};}
+.foot{margin-top:auto;}
+.rule{width:${px(30)};height:${Math.max(2, Math.round(2 * SCALE))}px;background:${c.accent};}
 .title{
   font-family:'Amiri',serif;font-weight:700;color:${PAPER};
-  font-size:${titlePx};line-height:1.36;margin-top:${px(14)};
+  font-size:${titlePx};line-height:1.4;margin-top:${px(16)};
   text-wrap:balance;
 }
 .label{
-  margin-top:auto;font-family:'IBM Plex Sans Arabic',sans-serif;font-weight:400;
-  font-size:${px(10)};letter-spacing:${px(1.5)};line-height:1.6;
-  color:rgba(251,247,239,.66);
+  margin-top:${px(16)};font-family:'IBM Plex Sans Arabic',sans-serif;font-weight:400;
+  font-size:${px(11)};letter-spacing:${px(1.6)};line-height:1.6;
+  color:rgba(247,245,238,.6);
 }
 </style></head><body>
 <div class="cover">
-  <div class="rule"></div>
-  <h1 class="title">${escapeHtml(book.title)}</h1>
-  <p class="label">بهجة · ${escapeHtml(book.categoryLabel)}</p>
+  <svg class="seal" viewBox="-74 -74 148 148" fill="none">
+    <circle r="68" stroke="currentColor" stroke-opacity=".28" stroke-width="1"/>
+    <path d="${sl.d}" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round"/>
+    <circle r="${sl.inner}" stroke="currentColor" stroke-opacity=".55" stroke-width="1"/>
+  </svg>
+  <div class="foot">
+    <div class="rule"></div>
+    <h1 class="title">${escapeHtml(book.title)}</h1>
+    <p class="label">بهجة · ${escapeHtml(book.categoryLabel)}</p>
+  </div>
 </div>
 </body></html>`
 }

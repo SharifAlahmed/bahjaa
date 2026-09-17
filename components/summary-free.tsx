@@ -12,7 +12,7 @@ export default function SummaryFree({ c }: { c: ContentFree }) {
       {(s1.problem || s1.core_idea || s1.verdict) && (
         <Section num={1} title="ملخص الـ 30 ثانية">
           <p className="bh-body mb-4 text-bh-muted">
-            قبل أن تقرأ السطر الأول — إليك كل ما تحتاج معرفته عن هذا الكتاب في 30 ثانية
+            قبل أن تقرأ السطر الأول — إليك كل ما تحتاج معرفته عن هذا الكتاب في ٣٠ ثانية
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             {s1.problem && (

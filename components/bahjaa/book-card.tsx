@@ -18,7 +18,7 @@ type Props = {
 export function BookCard({ slug, title, author, category, categoryLabel, readingMinutes, promise }: Props) {
   return (
     <Link className="book-card" href={`/s/${slug}`}>
-      <Cover title={title} category={category} categoryLabel={categoryLabel} />
+      <Cover title={title} slug={slug} category={category} categoryLabel={categoryLabel} />
       <h3 className="h-sub">{title}</h3>
       <p className="author">{author}</p>
       <p className="meta facts">{categoryLabel} · {readingLabel(readingMinutes)}</p>

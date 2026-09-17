@@ -23,7 +23,7 @@ export function RelatedBooks({ books }: { books: RelatedBook[] }) {
       <div className="related">
         {books.map((b) => (
           <Link className="rel-card" href={`/s/${b.slug}`} key={b.slug}>
-            <Cover title={b.title} category={b.category} categoryLabel={b.categoryLabel} />
+            <Cover title={b.title} slug={b.slug} category={b.category} categoryLabel={b.categoryLabel} />
             <div>
               <h3>{b.title}</h3>
               <p className="author">{b.author}</p>

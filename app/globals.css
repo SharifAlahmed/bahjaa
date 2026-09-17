@@ -314,13 +314,21 @@ a{color:inherit;}
   box-shadow:var(--shadow-3);
   padding:28px 24px;
   display:flex;flex-direction:column;border-radius:0;
+  position:relative;overflow:hidden;
 }
-.cover-rule{width:28px;height:1px;background:var(--on-dark-soft);flex:none;}
-.cover-title{font-family:var(--serif);font-weight:700;color:var(--paper);line-height:1.36;margin:14px 0 0;text-wrap:balance;}
-.cover-title.lg{font-size:clamp(32px,3.6vw,46px);}
-.cover-title.md{font-size:clamp(27px,3vw,38px);}
-.cover-title.sm{font-size:clamp(22px,2.4vw,30px);}
-.cover-label{margin-top:auto;font-family:var(--sans);font-weight:400;font-size:10px;letter-spacing:1.5px;line-height:1.6;color:var(--on-dark-soft);}
+/* الخَتْم — علامة الكتاب المولّدة. اللون من لكنة القسم. */
+.cover-seal{
+  width:41%;max-width:148px;aspect-ratio:1;flex:none;
+  margin-block-start:2px;margin-inline-start:-4px;
+  color:var(--cat-accent, var(--brand-mint));
+}
+.cover-foot{margin-top:auto;display:flex;flex-direction:column;align-items:flex-start;}
+.cover-rule{width:30px;height:2px;background:var(--cat-accent, var(--on-dark-soft));flex:none;}
+.cover-title{font-family:var(--serif);font-weight:700;color:var(--paper);line-height:1.4;margin:16px 0 0;text-wrap:balance;}
+.cover-title.lg{font-size:clamp(28px,3.2vw,40px);}
+.cover-title.md{font-size:clamp(24px,2.7vw,34px);}
+.cover-title.sm{font-size:clamp(20px,2.2vw,29px);}
+.cover-label{margin:16px 0 0;font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:1.6px;line-height:1.6;color:var(--on-dark-soft);}
 
 /* ── رفّ الملخصات ─────────────────────────────────────── */
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 34px;}
@@ -476,7 +484,8 @@ a{color:inherit;}
 @media (max-width:600px){ .related{grid-template-columns:1fr;gap:36px;} }
 .rel-card{display:flex;gap:18px;text-decoration:none;color:inherit;align-items:flex-start;}
 .rel-card .cover{width:88px;flex:none;padding:12px 10px;box-shadow:var(--shadow-2);}
-.rel-card .cover-rule{width:16px;}
+.rel-card .cover-seal{display:none;}
+.rel-card .cover-rule{width:16px;height:1px;}
 .rel-card .cover-title{font-size:14px;line-height:1.3;margin-top:8px;}
 .rel-card .cover-label{font-size:6px;letter-spacing:.6px;}
 .rel-card h3{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.4;margin:0;color:var(--ink);}

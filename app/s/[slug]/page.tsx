@@ -84,6 +84,7 @@ export default async function SummaryPage({ params }: Props) {
       <header className="book-head">
         <Cover
           title={summary.book_title_ar}
+          slug={summary.slug}
           category={(category?.slug || "leadership") as CategorySlug}
           categoryLabel={category?.name_ar || "بهجة"}
         />

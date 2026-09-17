@@ -80,7 +80,7 @@ export default async function HomePage() {
               const catLabel = cat?.name_ar || "بهجة";
               return (
                 <Link className="book-card" href={`/s/${s.slug}`} key={s.id}>
-                  <Cover title={s.book_title_ar} category={catSlug} categoryLabel={catLabel} />
+                  <Cover title={s.book_title_ar} slug={s.slug} category={catSlug} categoryLabel={catLabel} />
                   <h3 className="h-sub">{s.book_title_ar}</h3>
                   {s.author && <p className="author">{s.author}</p>}
                   <p className="meta facts">
