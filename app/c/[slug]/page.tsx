@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: c.name_ar,
     description: c.description_ar || `ملخصات بهجة في ${c.name_ar}`,
+    alternates: { canonical: `/c/${slug}` },
   };
 }
 

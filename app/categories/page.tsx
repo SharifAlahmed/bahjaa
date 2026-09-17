@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "الأقسام",
   description:
     "تصفّح ملخصات بهجة حسب المجال: القيادة، ريادة الأعمال، الإنتاجية، الاستراتيجية، الفرق، والمال والأعمال.",
+  alternates: { canonical: "/categories" },
 };
 
 export default async function CategoriesPage() {

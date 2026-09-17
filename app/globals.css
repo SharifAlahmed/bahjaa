@@ -32,7 +32,12 @@
   --color-background:    #F7F5EE;  /* خلفية الصفحة والقراءة */
   --color-surface:       #FFFFFF;  /* بطاقات · حقول · ألواح محتوى */
   --color-border:        #E6ECE9;  /* كل فاصل وكل حد */
-  --color-accent-gold:   #C99A45;  /* تمييز — عنصر واحد كحد أقصى في الصفحة */
+  --color-accent-gold:   #C99A45;
+  /* نسختان للأسطح الفاتحة: لونا الهوية يسقطان في التباين على الورق
+     (الأخضر ٣٫١٠:١ والنحاسي ٢٫٣٥:١ — المطلوب ٤٫٥:١ للنص).
+     الأصلان يبقيان كما هما على اللوحات الداكنة حيث يمرّان بلا مشكلة. */
+  --color-brand-ink:     #177F5E;
+  --color-accent-ink:    #8E6A29;  /* تمييز — عنصر واحد كحد أقصى في الصفحة */
 
   /* ⚠️ ليس على لوحة الهوية — اللوحة لا تعرّف لون خطأ.
      مستعار حتى يُعتمد لون رسمي. لرسائل الخطأ وحدها. */
@@ -41,7 +46,7 @@
 
   /* ── مشتقات الشفافية ───────────────────────────────── */
   --color-ink-soft:   rgba(21,51,42,.72);   /* نص ثانوي على فاتح */
-  --color-ink-muted:  rgba(21,51,42,.55);   /* بيانات وصفية */
+  --color-ink-muted:  rgba(21,51,42,.67);   /* بيانات وصفية */
   --color-on-dark:    rgba(247,245,238,.86);/* نص على داكن */
   --color-on-dark-soft: rgba(247,245,238,.66);
   --color-on-dark-line: rgba(247,245,238,.22);
@@ -71,7 +76,7 @@
   /* ── توافق: أسماء الهوية السابقة معاد ربطها باللوحة ──
      تبقى حتى تُعاد كتابة المكوّنات السبعة القديمة، ثم تُحذف.
      ترتيب الحذف: أعد كتابة المكوّن أولاً، ثم احذف رمزه. */
-  --color-bh-primary:       #1D9E75;
+  --color-bh-primary:       #177F5E;
   --color-bh-primary-light: #FFFFFF;
   --color-bh-primary-dark:  #15332A;
   --color-bh-bg:            #F7F5EE;
@@ -101,6 +106,8 @@
   --green:      var(--color-brand-primary);
   --mint:       var(--color-brand-mint);
   --brass:      var(--color-accent-gold);
+  --brass-ink:  var(--color-accent-ink);
+  --green-ink:  var(--color-brand-ink);
   --rule:       var(--color-border);
 
   --on-dark:      var(--color-on-dark);
@@ -155,7 +162,7 @@ body{
 }
 img{max-width:100%;}
 a{color:inherit;}
-:focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+:focus-visible{outline:2px solid var(--brass-ink);outline-offset:3px;}
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
@@ -165,7 +172,7 @@ a{color:inherit;}
 /* ── مقياس الطباعة ────────────────────────────────────── */
 .eyebrow{
   font-family:var(--sans);font-weight:400;font-size:11px;
-  letter-spacing:2.2px;line-height:1.8;color:var(--brass);margin:0;
+  letter-spacing:2.2px;line-height:1.8;color:var(--brass-ink);margin:0;
 }
 .h-hero{font-family:var(--serif);font-weight:700;font-size:clamp(34px,7.2vw,64px);line-height:1.32;margin:0;text-wrap:balance;}
 .h-sec{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,32px);line-height:1.5;margin:0;color:var(--ink);text-wrap:balance;}
@@ -203,7 +210,7 @@ a{color:inherit;}
   font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink-soft);
   cursor:pointer;
 }
-.mini-action svg{color:var(--brass);flex:none;}
+.mini-action svg{color:var(--brass-ink);flex:none;}
 .mini-action:hover{border-color:var(--brass);color:var(--ink);}
 
 
@@ -278,7 +285,7 @@ a{color:inherit;}
   font-size:15px;line-height:1.7;font-weight:400;color:var(--ink-soft);
 }
 .trust .t-item:first-child{border-inline-start:0;}
-.trust svg{color:var(--brass);flex:none;}
+.trust svg{color:var(--brass-ink);flex:none;}
 @media (max-width:820px){
   .trust{grid-template-columns:1fr;}
   .trust .t-item{border-inline-start:0;border-top:1px solid var(--rule);padding:16px 4px;}
@@ -294,7 +301,7 @@ a{color:inherit;}
   padding-inline-start:26px;
 }
 .inside-item:nth-child(3n+1){border-inline-start:0;padding-inline-start:0;}
-.inside-num{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1;color:var(--brass);}
+.inside-num{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1;color:var(--brass-ink);}
 .inside-item h3{font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.4;margin:12px 0 0;color:var(--ink);}
 .inside-item p{margin:8px 0 0;font-size:15px;line-height:1.9;font-weight:400;color:var(--ink-soft);}
 @media (max-width:900px){
@@ -368,7 +375,7 @@ a{color:inherit;}
   border-bottom:1px solid transparent;padding-bottom:2px;align-self:flex-start;
 }
 .book-card:hover .go{border-bottom-color:var(--brass);color:var(--ink);}
-.book-card .go svg{color:var(--brass);}
+.book-card .go svg{color:var(--brass-ink);}
 
 /* ── صفوف الأقسام ─────────────────────────────────────── */
 .cat-row{
@@ -379,7 +386,7 @@ a{color:inherit;}
 .cat-row .name{font-family:var(--serif);font-weight:700;font-size:clamp(22px,3vw,27px);line-height:1.4;color:var(--deep);}
 .cat-row .outcome{font-size:16px;line-height:1.9;font-weight:400;color:var(--ink-soft);}
 .cat-row .count{font-size:14px;font-weight:300;color:var(--muted);}
-.cat-row .arrow{justify-self:end;color:var(--brass);display:flex;}
+.cat-row .arrow{justify-self:end;color:var(--brass-ink);display:flex;}
 .cat-row:last-of-type{border-bottom:1px solid var(--rule);}
 .cat-row:hover .name{color:var(--ink);}
 @media (max-width:820px){
@@ -415,7 +422,7 @@ a{color:inherit;}
 }
 .book-meta .bm{padding:16px 0;padding-inline-end:30px;margin-inline-end:30px;border-inline-end:1px solid var(--rule);}
 .book-meta .bm:last-child{border-inline-end:0;margin-inline-end:0;padding-inline-end:0;}
-.book-meta .bm-label{font-size:11px;letter-spacing:1.6px;color:var(--brass);line-height:1.8;}
+.book-meta .bm-label{font-size:11px;letter-spacing:1.6px;color:var(--brass-ink);line-height:1.8;}
 .book-meta .bm-value{font-size:15px;font-weight:500;line-height:1.7;color:var(--ink);}
 @media (max-width:600px){
   .book-meta{display:grid;grid-template-columns:1fr 1fr;}
@@ -432,7 +439,7 @@ a{color:inherit;}
   min-height:44px;
 }
 .toc > summary::-webkit-details-marker{display:none;}
-.toc > summary::after{content:'▾';color:var(--brass);font-size:16px;transition:transform .2s ease;}
+.toc > summary::after{content:'▾';color:var(--brass-ink);font-size:16px;transition:transform .2s ease;}
 .toc[open] > summary::after{transform:rotate(180deg);}
 .toc-list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:0 0;}
 .toc-list li{width:50%;border-top:1px solid var(--rule);}
@@ -442,7 +449,7 @@ a{color:inherit;}
   padding-inline-end:14px;
 }
 .toc-list a:hover{color:var(--ink);}
-.toc-list .n{font-family:var(--serif);font-size:15px;color:var(--brass);min-width:22px;}
+.toc-list .n{font-family:var(--serif);font-size:15px;color:var(--brass-ink);min-width:22px;}
 .toc-list .lockmark{margin-inline-start:auto;color:var(--muted);display:flex;}
 @media (max-width:700px){ .toc-list li{width:100%;} .toc{padding:20px;} }
 
@@ -515,7 +522,7 @@ a{color:inherit;}
 .rel-card .facts{margin:2px 0 0;}
 .rel-card .go{margin-top:10px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--deep);border-bottom:1px solid transparent;padding-bottom:2px;}
 .rel-card:hover .go{border-bottom-color:var(--brass);color:var(--ink);}
-.rel-card .go svg{color:var(--brass);}
+.rel-card .go svg{color:var(--brass-ink);}
 
 /* ── التذييل ──────────────────────────────────────────── */
 .site-footer{background:var(--deep-2);color:var(--on-dark-soft);}
@@ -550,7 +557,7 @@ a{color:inherit;}
 .bh-card-label  {font-family:var(--sans);font-size:15px;font-weight:600;color:var(--deep);}
 .bh-body        {font-family:var(--sans);font-size:18px;font-weight:300;line-height:2.15;color:var(--ink);}
 .bh-sub         {font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.8;color:var(--muted);}
-.bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:2.2px;color:var(--brass);}
+.bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:2.2px;color:var(--brass-ink);}
 
 /* البطاقة صارت خطوطاً: حد رفيع على الورق، بلا تعبئة بيضاء وبلا ظل */
 .bh-card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-sm);}
@@ -616,9 +623,33 @@ a{color:inherit;}
   display:flex;align-items:center;gap:10px;padding:13px 2px;
   font-size:15px;line-height:1.6;color:var(--ink-muted);cursor:default;
 }
-.toc-shut .lockmark{margin-inline-start:2px;color:var(--brass);display:inline-flex;align-items:center;}
+.toc-shut .lockmark{margin-inline-start:2px;color:var(--brass-ink);display:inline-flex;align-items:center;}
 
 .sr-only{
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
 }
+
+/* ── تخطّي إلى المحتوى ────────────────────────────────────
+   مستخدم لوحة المفاتيح لا يُجبَر على المرور بالترويسة في كل صفحة.
+   مخفي بصرياً حتى يستقبل التركيز. */
+.skip-link{
+  position:absolute;inset-inline-start:-9999px;top:0;z-index:100;
+  background:var(--brand-primary);color:#fff;font-family:var(--sans);
+  font-size:15px;font-weight:500;line-height:1.6;
+  padding:14px 22px;border-end-end-radius:var(--radius-sm);
+  text-decoration:none;
+}
+.skip-link:focus{inset-inline-start:0;}
+
+/* ── النحاسي على اللوحات الداكنة ──────────────────────────
+   #C99A45 يسقط على الورق (٢٫٣٥:١) ويمرّ على الداكن (٥٫٣٢–٧٫٢٩:١).
+   فالافتراضي صار نسخة الورق، وهذه القاعدة تعيد الأصل حيث يصحّ. */
+.hero .eyebrow,
+.dark-panel .eyebrow,
+.site-header .eyebrow,
+.site-footer .eyebrow{color:var(--brass);}
+.hero :focus-visible,
+.dark-panel :focus-visible,
+.site-header :focus-visible,
+.site-footer :focus-visible{outline-color:var(--brass);}

@@ -65,6 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `ملخص كتاب ${summary.book_title_ar}`,
     description: desc.slice(0, 160),
+    alternates: { canonical: `/s/${slug}` },
     openGraph: {
       title: `ملخص كتاب ${summary.book_title_ar}`,
       description: desc.slice(0, 160),

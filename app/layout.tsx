@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     title: `${SITE_NAME} — من المعرفة إلى الأثر`,
     description: SITE_DESC,
   },
+  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
 };
 
@@ -32,8 +33,9 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className="min-h-screen flex flex-col">
+        <a href="#main" className="skip-link">تخطَّ إلى المحتوى</a>
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">{children}</main>
         <SiteFooter />
       </body>
     </html>
