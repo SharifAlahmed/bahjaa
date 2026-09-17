@@ -20,7 +20,7 @@ export function BookCard({ slug, title, author, category, categoryLabel, reading
     <Link className="book-card" href={`/s/${slug}`}>
       <Cover title={title} slug={slug} category={category} categoryLabel={categoryLabel} />
       <h3 className="h-sub">{title}</h3>
-      <p className="author">{author}</p>
+      {author ? <p className="author">{author}</p> : null}
       <p className="meta facts">{categoryLabel} · {readingLabel(readingMinutes)}</p>
       {promise ? <p className="promise">{promise}</p> : null}
       <span className="go">ابدأ القراءة <ArrowIcon width={18} height={18} /></span>

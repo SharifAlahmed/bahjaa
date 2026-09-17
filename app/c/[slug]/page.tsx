@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import SummaryCard from "@/components/summary-card";
+import { BookCard } from "@/components/bahjaa/book-card";
+import { type CategorySlug } from "@/components/bahjaa/cover";
+import { countLabel } from "@/components/bahjaa/format";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
 // تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
@@ -43,25 +46,50 @@ export default async function CategoryPage({ params }: Props) {
     .order("published_at", { ascending: false });
 
   const list = (data || []) as SummaryListItem[];
+  const catSlug = category.slug as CategorySlug;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12">
-      <h1 className="bh-sec-title text-bh-primary-dark">{category.name_ar}</h1>
+    <div className="wrap section-block">
+      <p className="eyebrow">قسم</p>
+      <h1 className="h-sec" style={{ marginTop: 14, maxWidth: "18ch" }}>
+        {category.name_ar}
+      </h1>
       {category.description_ar && (
-        <p className="bh-body mt-2 max-w-2xl">{category.description_ar}</p>
+        <p className="read col" style={{ marginTop: 20 }}>{category.description_ar}</p>
       )}
+      <p className="meta" style={{ marginTop: 18 }}>
+        {countLabel(list.length)} · الأقسام الأربعة الأولى من كل ملخص مفتوحة بلا تسجيل
+      </p>
+
+      <hr className="rule" style={{ margin: "34px 0 44px" }} />
 
       {list.length === 0 ? (
-        <div className="bh-card p-10 text-center mt-8">
-          <p className="bh-card-label mb-2">لا توجد ملخصات في هذا القسم بعد</p>
-          <p className="bh-sub">نعمل عليها.</p>
-        </div>
+        <>
+          <p className="read">لا ملخصات في هذا القسم بعد — نعمل عليها.</p>
+          <p style={{ marginTop: 24 }}>
+            <Link href="/categories" className="textlink">تصفّح الأقسام الأخرى</Link>
+          </p>
+        </>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 mt-8">
-          {list.map((s) => (
-            <SummaryCard key={s.id} s={s} />
-          ))}
-        </div>
+        <>
+          <div className="shelf">
+            {list.map((s) => (
+              <BookCard
+                key={s.id}
+                slug={s.slug}
+                title={s.book_title_ar}
+                author={s.author || ""}
+                category={catSlug}
+                categoryLabel={category.name_ar}
+                readingMinutes={s.reading_minutes || 8}
+                promise={s.content_free?.s1?.problem}
+              />
+            ))}
+          </div>
+          <p style={{ marginTop: 40 }}>
+            <Link href="/categories" className="textlink">تصفّح كل الأقسام</Link>
+          </p>
+        </>
       )}
     </div>
   );

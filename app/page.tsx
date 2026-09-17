@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Cover, type CategorySlug } from "@/components/bahjaa/cover";
+import { type CategorySlug } from "@/components/bahjaa/cover";
+import { BookCard } from "@/components/bahjaa/book-card";
 import { TrustBar } from "@/components/bahjaa/trust-bar";
 import { InsideSummary } from "@/components/bahjaa/inside-summary";
-import { ArrowIcon } from "@/components/bahjaa/icons";
-import { readingLabel } from "@/components/bahjaa/format";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
 // تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
@@ -78,23 +77,17 @@ export default async function HomePage() {
           <div className="shelf">
             {list.map((s) => {
               const cat = s.category_id ? catById.get(s.category_id) : undefined;
-              const catSlug = (cat?.slug || "leadership") as CategorySlug;
-              const catLabel = cat?.name_ar || "بهجة";
               return (
-                <Link className="book-card" href={`/s/${s.slug}`} key={s.id}>
-                  <Cover title={s.book_title_ar} slug={s.slug} category={catSlug} categoryLabel={catLabel} />
-                  <h3 className="h-sub">{s.book_title_ar}</h3>
-                  {s.author && <p className="author">{s.author}</p>}
-                  <p className="meta facts">
-                    {catLabel} · {readingLabel(s.reading_minutes || 8)}
-                  </p>
-                  {s.content_free?.s1?.problem && (
-                    <p className="promise">{s.content_free.s1.problem}</p>
-                  )}
-                  <span className="go">
-                    ابدأ القراءة <ArrowIcon width={18} height={18} />
-                  </span>
-                </Link>
+                <BookCard
+                  key={s.id}
+                  slug={s.slug}
+                  title={s.book_title_ar}
+                  author={s.author || ""}
+                  category={(cat?.slug || "leadership") as CategorySlug}
+                  categoryLabel={cat?.name_ar || "بهجة"}
+                  readingMinutes={s.reading_minutes || 8}
+                  promise={s.content_free?.s1?.problem}
+                />
               );
             })}
           </div>
