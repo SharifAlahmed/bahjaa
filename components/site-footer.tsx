@@ -8,7 +8,7 @@ export default function SiteFooter() {
         <div>
           <Image
             className="logo-mark"
-            src="/logo/logo-paper.png"
+            src="/logo/bahjaa-logo.png"
             width={40}
             height={40}
             alt="شعار بهجة"

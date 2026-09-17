@@ -21,7 +21,7 @@ export default async function SiteHeader() {
         <Link href="/" className="logo-lockup" aria-label="بهجة — الصفحة الرئيسية">
           <Image
             className="logo-mark"
-            src="/logo/logo-paper.png"
+            src="/logo/bahjaa-logo.png"
             width={46}
             height={46}
             alt="شعار بهجة"
