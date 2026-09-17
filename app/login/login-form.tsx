@@ -30,7 +30,10 @@ function arabicError(raw: string): string {
  * يُستخدم في /login وداخل الجدار في صفحة الملخص. لا نسخة ثانية منه.
  * nextOverride: وجهة العودة حين لا يكون في العنوان ?next (كالجدار داخل الصفحة).
  */
-export default function LoginForm({ nextOverride }: { nextOverride?: string } = {}) {
+export default function LoginForm({
+  nextOverride,
+  submitLabel = "أرسل رمز الدخول",
+}: { nextOverride?: string; submitLabel?: string } = {}) {
   const params = useSearchParams();
   const rawNext = nextOverride || params.get("next") || "/";
   const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/";
@@ -228,7 +231,7 @@ export default function LoginForm({ nextOverride }: { nextOverride?: string } = 
         disabled={busy}
         className="w-full rounded-xl bg-bh-primary text-white font-bold py-3.5 hover:bg-bh-primary-dark transition disabled:opacity-60"
       >
-        {busy ? "جارٍ الإرسال…" : "أرسل رمز الدخول"}
+        {busy ? "جارٍ الإرسال…" : submitLabel}
       </button>
 
       {error && (

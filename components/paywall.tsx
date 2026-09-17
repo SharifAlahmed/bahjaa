@@ -29,16 +29,17 @@ export default function Paywall({ slug }: { slug: string }) {
 
       <section className="gate" id="email-gate" aria-labelledby="gate-title">
         <h2 id="gate-title" className="gate-title">
-          لمواصلة قراءة الملخص مجاناً، أدخل بريدك الإلكتروني
+          لإكمال قراءة بقية الأقسام، اشترك بإيميلك
         </h2>
 
         <p className="gate-sub">
-          بلا اشتراك ولا بطاقة — يصلك رمز من ٨ أرقام، وتُكمل من هنا.
+          الاشتراك مجاني بالكامل: لا بطاقة ولا كلمة مرور. يصلك رمز من ٨ أرقام،
+          وتُكمل من حيث توقّفت.
         </p>
 
         <div className="gate-form">
           <Suspense fallback={<div style={{ minHeight: 188 }} />}>
-            <LoginForm nextOverride={`/s/${slug}`} />
+            <LoginForm nextOverride={`/s/${slug}`} submitLabel="اشترك وأكمل القراءة" />
           </Suspense>
         </div>
 
