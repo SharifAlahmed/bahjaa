@@ -438,35 +438,22 @@ a{color:inherit;}
   position:absolute;inset-inline:0;bottom:0;height:150px;pointer-events:none;
   background:linear-gradient(to bottom, rgba(247,245,238,0) 0%, var(--paper) 100%);
 }
-.gate{background:var(--paper-2);border:1px solid var(--rule);padding:48px 52px;margin-top:34px;scroll-margin-top:24px;}
-.gate .lock-line{display:flex;align-items:center;gap:12px;}
-.gate .lock-line svg{color:var(--brass);flex:none;}
-.gate .explain{margin-top:16px;max-width:60ch;}
-.gate .unlocks{list-style:none;margin:34px 0 0;padding-block:26px;padding-inline:0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px 26px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
-.gate .unlocks li{display:flex;gap:12px;align-items:baseline;}
-.gate .u-num{flex:none;}
-.gate .u-num{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1.1;color:var(--brass);}
-.gate .u-txt{font-size:15px;line-height:1.75;font-weight:400;color:var(--ink-soft);}
-.gate .field{margin-top:30px;}
-.gate label{display:block;font-size:14px;font-weight:500;line-height:1.8;color:var(--ink);margin-bottom:8px;}
-.gate .field-row{display:flex;gap:12px;flex-wrap:wrap;}
-.gate input{
-  flex:1 1 260px;min-width:0;min-height:56px;padding-inline:18px;
-  background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-sm);
-  font-family:var(--sans);font-size:16px;font-weight:400;color:var(--ink);
+.gate{
+  background:var(--paper-2);border:1px solid var(--rule);
+  padding:clamp(32px,5vw,56px) clamp(20px,4vw,52px);
+  margin-top:34px;scroll-margin-block-start:96px;
+  text-align:center;
 }
-.gate input::placeholder{color:var(--muted);}
-.gate input[aria-invalid="true"]{border-color:var(--color-danger);}
-.gate .helper{margin-top:12px;}
-.gate .status{margin-top:14px;font-size:15px;line-height:1.8;font-weight:400;min-height:1.8em;}
-.gate .status[data-state="ok"]{color:var(--deep);}
-.gate .status[data-state="err"]{color:var(--color-danger);}
-.gate .have-code{margin-top:18px;}
-@media (max-width:700px){
-  .gate{padding:30px 20px;}
-  .gate .unlocks{grid-template-columns:1fr;gap:18px;}
-  .gate .field-row{flex-direction:column;}
-  .gate input{min-height:52px;flex:none;width:100%;}
+.gate .gate-sub{
+  margin:14px auto 0;max-width:46ch;
+  font-size:16px;line-height:1.9;font-weight:400;color:var(--ink-soft);
+}
+/* النموذج نفسه المستخدم في /login — عرض محدود ليقرأ كنداء واحد لا كصفحة */
+.gate .gate-form{max-width:400px;margin-inline:auto;text-align:start;}
+.gate .gate-rest{
+  margin:32px auto 0;max-width:62ch;padding-top:22px;
+  border-top:1px solid var(--rule);
+  font-size:14px;line-height:2;font-weight:400;color:var(--ink-muted);
 }
 
 /* ── خطوة بهجة لهذا اليوم ─────────────────────────────── */
@@ -566,8 +553,9 @@ a{color:inherit;}
 
 /* عنوان البوابة حين يكون h2 */
 .gate .gate-title{
-  font-family:var(--serif);font-weight:700;font-size:clamp(24px,4vw,36px);
-  line-height:1.4;margin:18px 0 0;color:var(--ink);text-wrap:balance;
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(23px,3.4vw,32px);line-height:1.5;
+  margin:0 auto;max-width:34ch;color:var(--ink);text-wrap:balance;
 }
 
 /* صفحة الملخص */

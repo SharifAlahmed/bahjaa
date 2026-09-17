@@ -25,9 +25,14 @@ function arabicError(raw: string): string {
   return "حدث خطأ غير متوقع. حاول مرة أخرى.";
 }
 
-export default function LoginForm() {
+/**
+ * نموذج الدخول — منطق OTP الوحيد في المشروع.
+ * يُستخدم في /login وداخل الجدار في صفحة الملخص. لا نسخة ثانية منه.
+ * nextOverride: وجهة العودة حين لا يكون في العنوان ?next (كالجدار داخل الصفحة).
+ */
+export default function LoginForm({ nextOverride }: { nextOverride?: string } = {}) {
   const params = useSearchParams();
-  const rawNext = params.get("next") || "/";
+  const rawNext = nextOverride || params.get("next") || "/";
   const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/";
 
   const [step, setStep] = useState<"email" | "code">("email");

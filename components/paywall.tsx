@@ -1,14 +1,14 @@
-import Link from "next/link";
-import { LockIcon } from "@/components/bahjaa/icons";
+import { Suspense } from "react";
+import LoginForm from "@/app/login/login-form";
 
 /**
  * الجدار — يظهر بعد القسم الرابع لغير المسجّل.
  *
  * اللمحة أشكال لا نصّ: الزائر لا يملك صلاحية قراءة content_full،
  * وأي نصّ نكتبه هنا سيكون مختلَقاً ويظهر على كل كتاب بلا تمييز.
- * الأشكال تنقل «هناك المزيد» بصدق، بلا ادّعاء محتوى.
  *
- * لا يحمل نموذجاً خاصاً به: يوجّه إلى /login حيث يعيش منطق OTP كاملاً.
+ * النموذج نفسه هو LoginForm المستخدم في /login — لا نسخة ثانية من منطق OTP.
+ * القارئ يُكمل من مكانه بلا انتقال، ويعود إلى هذا الملخص بعد التحقق.
  */
 export default function Paywall({ slug }: { slug: string }) {
   const lines = [96, 88, 93, 74, 90, 62];
@@ -28,43 +28,24 @@ export default function Paywall({ slug }: { slug: string }) {
       </div>
 
       <section className="gate" id="email-gate" aria-labelledby="gate-title">
-        <p className="lock-line">
-          <LockIcon />
-          <span className="eyebrow">بقية الملخص — ستة أقسام</span>
+        <h2 id="gate-title" className="gate-title">
+          لمواصلة قراءة الملخص مجاناً، أدخل بريدك الإلكتروني
+        </h2>
+
+        <p className="gate-sub">
+          بلا اشتراك ولا بطاقة — يصلك رمز من ٨ أرقام، وتُكمل من هنا.
         </p>
 
-        <h2 id="gate-title" className="gate-title">أكمل من حيث بدأت</h2>
-        <p className="explain incard">
-          قرأتَ الأقسام الأربعة الأولى. الستة الباقية تحمل الكتاب كاملاً، وخطوة تطبّقها الليلة. تُفتح لك في كل ملخصات بهجة ببريدك وحده.
-        </p>
+        <div className="gate-form">
+          <Suspense fallback={<div style={{ minHeight: 188 }} />}>
+            <LoginForm nextOverride={`/s/${slug}`} />
+          </Suspense>
+        </div>
 
-        {/* الأقسام الستة المقفولة بأسمائها الحقيقية.
-            لا نذكر عدد المحاور ولا عدد الاقتباسات: يتغيّران من كتاب لآخر،
-            وأي رقم ثابت هنا وعدٌ كاذب على بعض الكتب. */}
-        <ul className="unlocks">
-          {[
-            ['٥', 'المحاور الكاملة للكتاب — لكل محور جوهره وفخّه الشائع'],
-            ['٦', 'الاقتباسات الذهبية بتفسير فريق بهجة'],
-            ['٧', 'مثال واقعي من بيئة الأعمال'],
-            ['٨', 'مسار التحويل — من المعرفة إلى التطبيق'],
-            ['٩', 'رؤية فريق بهجة النقدية'],
-            ['١٠', 'تقييم فريق بهجة'],
-          ].map(([n, t]) => (
-            <li key={n}>
-              <span className="u-num">{n}</span>
-              <span className="u-txt">{t}</span>
-            </li>
-          ))}
-        </ul>
-
-        <p style={{ marginTop: 30 }}>
-          <Link href={`/login?next=/s/${slug}`} className="btn btn-primary">
-            افتح الملخص كاملاً — بإيميلك فقط
-          </Link>
-        </p>
-
-        <p className="meta helper">
-          أدخل بريدك، وسنرسل لك رمز دخول من ٨ أرقام. لا بطاقة ولا كلمة مرور.
+        {/* ما يبقى: أسماء الأقسام الستة وحدها — أعدادها الداخلية تتغيّر من كتاب لآخر */}
+        <p className="gate-rest">
+          يبقى ستة أقسام: المحاور الكاملة للكتاب · الاقتباسات الذهبية بتفسير فريق بهجة ·
+          مثال واقعي من بيئة الأعمال · مسار التحويل · رؤية فريق بهجة النقدية · التقييم.
         </p>
       </section>
     </div>
