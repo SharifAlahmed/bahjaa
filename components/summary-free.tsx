@@ -8,9 +8,9 @@ export default function SummaryFree({ c }: { c: ContentFree }) {
 
   return (
     <>
-      {/* 1 — ملخص الـ 30 ثانية */}
+      {/* ١ — ملخص الـ٣٠ ثانية */}
       {(s1.problem || s1.core_idea || s1.verdict) && (
-        <Section num={1} title="ملخص الـ 30 ثانية">
+        <Section num={1} title="ملخص الـ٣٠ ثانية">
           <p className="bh-body mb-4 text-bh-muted">
             قبل أن تقرأ السطر الأول — إليك كل ما تحتاج معرفته عن هذا الكتاب في ٣٠ ثانية
           </p>

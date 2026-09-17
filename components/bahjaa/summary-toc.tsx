@@ -1,17 +1,23 @@
 // components/bahjaa/summary-toc.tsx — فهرس «في هذا الملخص»
-// مفتوح على سطح المكتب، مطوي على الجوال (CSS + سمة open الافتراضية).
+//
+// الأقسام العشرة كما هي في ملخص بهجة العشاري — لا تُضاف ولا تُدمج ولا يُعاد ترتيبها.
+// المراسي تطابق id={`sec-${num}`} في components/section.tsx.
+// ١–٤ مفتوحة للجميع · ٥–١٠ خلف البريد.
 import { LockIcon } from './icons'
 
-export type TocItem = { label: string; href: string; num?: string; locked?: boolean }
+export type TocItem = { num: string; label: string; href: string; locked?: boolean }
 
 const DEFAULT_ITEMS: TocItem[] = [
-  { num: '١', label: 'ملخص الـ٣٠ ثانية',      href: '#sec-brief' },
-  { num: '٢', label: 'لحظة التعرّف',          href: '#sec-recognition' },
-  { num: '٣', label: 'لماذا هذا الكتاب الآن؟', href: '#sec-why-now' },
-  { num: '٤', label: 'الفكرة المحورية',        href: '#sec-core-idea' },
-  { num: '٥', label: 'المحاور الكاملة',        href: '#sec-pillars', locked: true },
-  {            label: 'الاقتباسات',            href: '#email-gate',  locked: true },
-  {            label: 'خطوة اليوم',            href: '#today-action' },
+  { num: '١',  label: 'ملخص الـ٣٠ ثانية',       href: '#sec-1' },
+  { num: '٢',  label: 'لحظة التعرّف',            href: '#sec-2' },
+  { num: '٣',  label: 'لماذا هذا الكتاب الآن؟',  href: '#sec-3' },
+  { num: '٤',  label: 'الفكرة المحورية',         href: '#sec-4' },
+  { num: '٥',  label: 'المحاور الكاملة للكتاب',  href: '#sec-5',  locked: true },
+  { num: '٦',  label: 'الاقتباسات الذهبية',      href: '#sec-6',  locked: true },
+  { num: '٧',  label: 'مثال واقعي من بيئة الأعمال', href: '#sec-7',  locked: true },
+  { num: '٨',  label: 'مسار التحويل',            href: '#sec-8',  locked: true },
+  { num: '٩',  label: 'رؤية فريق بهجة النقدية',  href: '#sec-9',  locked: true },
+  { num: '١٠', label: 'تقييم فريق بهجة',         href: '#sec-10', locked: true },
 ]
 
 export function SummaryToc({ items = DEFAULT_ITEMS, locked = true }: { items?: TocItem[]; locked?: boolean }) {
@@ -19,20 +25,36 @@ export function SummaryToc({ items = DEFAULT_ITEMS, locked = true }: { items?: T
     <details className="toc" open>
       <summary>في هذا الملخص</summary>
       <ul className="toc-list">
-        {items.map((item) => (
-          <li key={item.href + item.label}>
-            <a href={item.href}>
-              <span className="n" aria-hidden="true">{item.num ?? '·'}</span>
-              {item.label}
-              {locked && item.locked && <span className="lockmark" aria-hidden="true"><LockIcon width={14} height={14} /></span>}
-            </a>
-          </li>
-        ))}
+        {items.map((item) => {
+          const shut = locked && item.locked
+          // المقفول ليس رابطاً: لا هدف له في الصفحة، ولا يستقبل تركيز لوحة المفاتيح
+          return (
+            <li key={item.href}>
+              {shut ? (
+                <span className="toc-shut">
+                  <span className="n" aria-hidden="true">{item.num}</span>
+                  {item.label}
+                  <span className="lockmark"><LockIcon width={14} height={14} /><span className="sr-only">مقفول — يُفتح بالبريد</span></span>
+                </span>
+              ) : (
+                <a href={item.href}>
+                  <span className="n" aria-hidden="true">{item.num}</span>
+                  {item.label}
+                </a>
+              )}
+            </li>
+          )
+        })}
       </ul>
       <p className="meta" style={{ marginTop: 16 }}>
-        {locked
-          ? "الأقسام ١–٤ مفتوحة بلا تسجيل. بقية الملخص — المحاور والاقتباسات المفسّرة وخطوة التطبيق — تُفتح ببريدك."
-          : "الملخص مفتوح لك كاملاً — عشرة أقسام."}
+        {locked ? (
+          <>
+            الأقسام ١–٤ مفتوحة بلا تسجيل. بقية الملخص تُفتح ببريدك —{' '}
+            <a href="#email-gate" className="textlink">افتحه الآن</a>.
+          </>
+        ) : (
+          'الملخص مفتوح لك كاملاً — عشرة أقسام.'
+        )}
       </p>
     </details>
   )

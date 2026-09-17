@@ -30,28 +30,32 @@ export default function Paywall({ slug }: { slug: string }) {
       <section className="gate" id="email-gate" aria-labelledby="gate-title">
         <p className="lock-line">
           <LockIcon />
-          <span className="eyebrow">أكمل بقية تجربة الملخص</span>
+          <span className="eyebrow">بقية الملخص — ستة أقسام</span>
         </p>
 
         <h2 id="gate-title" className="gate-title">أكمل من حيث بدأت</h2>
         <p className="explain incard">
-          افتح بقية المحاور، الاقتباسات المفسّرة، وخطوة التطبيق لهذا الكتاب — مع كل ملخصات بهجة.
+          قرأتَ الأقسام الأربعة الأولى. الستة الباقية تحمل الكتاب كاملاً، وخطوة تطبّقها الليلة. تُفتح لك في كل ملخصات بهجة ببريدك وحده.
         </p>
 
-        <div className="unlocks">
-          <div>
-            <div className="u-num">٧</div>
-            <div className="u-txt">محاور تغطي الكتاب كاملاً، لكل محور جوهره وفخّه الشائع</div>
-          </div>
-          <div>
-            <div className="u-num">٥</div>
-            <div className="u-txt">اقتباسات من النص الأصلي بتفسير فريق بهجة</div>
-          </div>
-          <div>
-            <div className="u-num">٤</div>
-            <div className="u-txt">خطوات في مسار التطبيق، تبدأ بخمس دقائق الليلة</div>
-          </div>
-        </div>
+        {/* الأقسام الستة المقفولة بأسمائها الحقيقية.
+            لا نذكر عدد المحاور ولا عدد الاقتباسات: يتغيّران من كتاب لآخر،
+            وأي رقم ثابت هنا وعدٌ كاذب على بعض الكتب. */}
+        <ul className="unlocks">
+          {[
+            ['٥', 'المحاور الكاملة للكتاب — لكل محور جوهره وفخّه الشائع'],
+            ['٦', 'الاقتباسات الذهبية بتفسير فريق بهجة'],
+            ['٧', 'مثال واقعي من بيئة الأعمال'],
+            ['٨', 'مسار التحويل — من المعرفة إلى التطبيق'],
+            ['٩', 'رؤية فريق بهجة النقدية'],
+            ['١٠', 'تقييم فريق بهجة'],
+          ].map(([n, t]) => (
+            <li key={n}>
+              <span className="u-num">{n}</span>
+              <span className="u-txt">{t}</span>
+            </li>
+          ))}
+        </ul>
 
         <p style={{ marginTop: 30 }}>
           <Link href={`/login?next=/s/${slug}`} className="btn btn-primary">
