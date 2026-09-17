@@ -46,10 +46,12 @@ export default async function HomePage() {
             <Link href="#inside-summary" className="btn btn-ghost-light">كيف تعمل بهجة؟</Link>
           </div>
 
+          {/* أرقام النموذج العشاري وحدها: ثابتة على كل كتاب.
+              عدد المحاور والاقتباسات يتغيّر، فلا يُذكر هنا. */}
           <ul className="value-strip" aria-label="ما يحتويه كل ملخص">
-            <li className="vs-item"><div className="vs-num">٧</div><div className="vs-txt">محاور تغطي جوهر الكتاب</div></li>
-            <li className="vs-item"><div className="vs-num">٥</div><div className="vs-txt">اقتباسات مع تفسير بهجة</div></li>
-            <li className="vs-item"><div className="vs-num">١</div><div className="vs-txt">خطوة عملية تنفّذها اليوم</div></li>
+            <li className="vs-item"><div className="vs-num">١٠</div><div className="vs-txt">أقسام تعيد بناء الكتاب كاملاً</div></li>
+            <li className="vs-item"><div className="vs-num">٤</div><div className="vs-txt">منها مفتوحة بلا تسجيل</div></li>
+            <li className="vs-item"><div className="vs-num">١</div><div className="vs-txt">خطوة تنفّذها الليلة قبل النوم</div></li>
           </ul>
         </div>
       </section>
