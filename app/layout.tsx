@@ -8,7 +8,7 @@ const SITE_DESC =
   "ليست ملخصات — محرك يحوّل المعرفة إلى خطوة تطبّقها اليوم. للقادة ورواد الأعمال العرب.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://app.bahjaa.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://bahjaa.com"),
   title: {
     default: `${SITE_NAME} — من المعرفة إلى الأثر`,
     template: `%s · ${SITE_NAME}`,

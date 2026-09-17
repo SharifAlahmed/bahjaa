@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://app.bahjaa.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://bahjaa.com";
   const supabase = await createClient();
 
   const [{ data: summaries }, { data: categories }] = await Promise.all([
