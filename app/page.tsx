@@ -33,11 +33,10 @@ export default async function HomePage() {
         <div className="wrap">
           <p className="eyebrow">منصة بهجة للمعرفة التطبيقية</p>
           <h1 className="h-hero" id="hero-title">نحوّل المعرفة إلى أثر</h1>
+          {/* ≤ ٢٠ كلمة، ≤ ٤ أسطر — قاعدة 4.7 */}
           <p className="lede">
-            ملخصات عملية تعيد بناء أهم الكتب للقائد المشغول: الفكرة المحورية، والمحاور،
-            والاقتباسات، والفخاخ التي يجب الانتباه لها.
+            نعيد بناء أهم الكتب للقائد المشغول، ونسلّمه خطوة واحدة يطبّقها الليلة.
           </p>
-          <p className="promise">اقرأ الخلاصة في دقائق، ثم اخرج بخطوة واحدة تطبّقها اليوم.</p>
 
           {/* زر أخضر واحد في هذه المنطقة */}
           <div className="actions">
@@ -45,18 +44,12 @@ export default async function HomePage() {
             <Link href="#inside-summary" className="btn btn-ghost-light">كيف تعمل بهجة؟</Link>
           </div>
 
-          {/* أرقام النموذج العشاري وحدها: ثابتة على كل كتاب.
-              عدد المحاور والاقتباسات يتغيّر، فلا يُذكر هنا. */}
-          <ul className="value-strip" aria-label="ما يحتويه كل ملخص">
-            <li className="vs-item"><div className="vs-num">١٠</div><div className="vs-txt">أقسام تعيد بناء الكتاب كاملاً</div></li>
-            <li className="vs-item"><div className="vs-num">٤</div><div className="vs-txt">منها مفتوحة بلا تسجيل</div></li>
-            <li className="vs-item"><div className="vs-num">١</div><div className="vs-txt">خطوة تنفّذها الليلة قبل النوم</div></li>
-          </ul>
         </div>
       </section>
 
-      {/* شريط الثقة — حقائق منتج فقط */}
-      <section className="wrap" aria-label="حقائق البدء">
+      {/* شريط الحقائق — دُمج مع شريط القيمة الذي كان داخل الهيرو.
+          كانا يكرّران «٤ أقسام مجاناً»، وكانا عائلة تخطيط واحدة مرّتين. */}
+      <section className="wrap" aria-label="ما يحتويه كل ملخص">
         <TrustBar />
       </section>
 
@@ -65,6 +58,8 @@ export default async function HomePage() {
 
       {/* أحدث الملخصات */}
       <section className="wrap section-block" id="latest-summaries" aria-labelledby="latest-title">
+        {/* اللافتة باقية: تسمّي القسم فعلاً. قاعدة EYEBROW RESTRAINT مكتوبة
+            ضد لافتات زخرفية فوق كل قسم في صفحات الهبوط التسويقية. */}
         <p className="eyebrow">أحدث الملخصات</p>
         <h2 className="h-sec" id="latest-title" style={{ marginTop: 14 }}>
           ابدأ من الكتاب الذي يشبه سؤالك اليوم

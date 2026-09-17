@@ -668,3 +668,33 @@ a{color:inherit;}
   font-size:clamp(19px,2.5vw,23px);line-height:1.75;
   color:var(--deep);margin:0;text-wrap:balance;
 }
+
+/* ── شريط الحقائق (تحت الهيرو، لا داخله) ────────────────
+   قاعدة 4.7: الهيرو أربعة عناصر نصية كحد أقصى، والشريط الإثباتي
+   يعيش في قسم مستقل تحته. */
+.facts-strip{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-block:1px solid var(--rule);
+}
+.facts-strip .fact{
+  display:flex;align-items:baseline;gap:14px;
+  padding:26px 22px;border-inline-start:1px solid var(--rule);
+}
+.facts-strip .fact:first-child{border-inline-start:0;padding-inline-start:0;}
+.fact-num{font-family:var(--serif);font-weight:700;font-size:34px;line-height:1;color:var(--brass-ink);flex:none;}
+.fact-txt{font-size:15px;line-height:1.8;font-weight:400;color:var(--ink-soft);}
+@media (max-width:760px){
+  .facts-strip{grid-template-columns:1fr;}
+  .facts-strip .fact{border-inline-start:0;border-top:1px solid var(--rule);padding:18px 0;}
+  .facts-strip .fact:first-child{border-top:0;}
+  .fact-num{font-size:28px;}
+}
+
+/* ── 4.5 لمسة مادية عند الضغط · 6 احترام تقليل الحركة ────── */
+.btn:active,.nav-cta:active,.nav-cta-button:active{transform:translateY(1px);}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;scroll-behavior:auto !important;}
+  .book-card:hover .cover{transform:none;}
+}

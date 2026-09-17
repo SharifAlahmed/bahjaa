@@ -1,12 +1,23 @@
-// components/bahjaa/trust-bar.tsx — حقائق منتج فقط. ممنوع اختلاق أرقام أو شهادات.
-import { FreeIcon, NoCardIcon, MailIcon } from './icons'
-
+// components/bahjaa/trust-bar.tsx — شريط الحقائق تحت الهيرو.
+//
+// دُمج فيه «شريط القيمة» الذي كان داخل الهيرو: كانا يكرّران «٤ أقسام مجاناً»،
+// وكانا عائلة تخطيط واحدة تتكرّر في قسمين متتاليين.
+// الأرقام كلها ثابتة في النموذج العشاري — لا عدد يتغيّر من كتاب لآخر.
 export function TrustBar() {
+  const facts = [
+    ["١٠", "أقسام تعيد بناء الكتاب كاملاً"],
+    ["٤", "منها مفتوحة بلا تسجيل ولا بطاقة"],
+    ["١", "خطوة تنفّذها الليلة قبل النوم"],
+  ] as const
+
   return (
-    <ul className="trust" aria-label="حقائق البدء">
-      <li className="t-item"><FreeIcon width={20} height={20} />أول ٤ أقسام من كل ملخص متاحة مجاناً</li>
-      <li className="t-item"><NoCardIcon width={20} height={20} />لا بطاقة دفع مطلوبة للبدء</li>
-      <li className="t-item"><MailIcon width={20} height={20} />رمز دخول آمن يصل إلى بريدك</li>
+    <ul className="facts-strip" aria-label="ما يحتويه كل ملخص">
+      {facts.map(([n, t]) => (
+        <li className="fact" key={n}>
+          <span className="fact-num">{n}</span>
+          <span className="fact-txt">{t}</span>
+        </li>
+      ))}
     </ul>
   )
 }
