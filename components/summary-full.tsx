@@ -2,12 +2,13 @@ import { Section } from "./section";
 import type { ContentFull } from "@/lib/types";
 import { toArabicDigits } from "@/components/bahjaa/format";
 
-function Stars({ n }: { n: number }) {
+/** درجة من عشرة — بالأرقام العربية الهندية كبقية أرقام الموقع */
+function Score({ n }: { n: number }) {
   const filled = Math.max(0, Math.min(10, Math.round(n)));
   return (
-    <span className="font-black text-bh-primary text-lg tabular-nums">
-      {filled}
-      <span className="text-bh-muted text-sm font-bold">/10</span>
+    <span className="font-black text-bh-primary text-lg">
+      {toArabicDigits(filled)}
+      <span className="text-bh-muted text-sm font-bold"> من ١٠</span>
     </span>
   );
 }
@@ -70,9 +71,10 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
           <div className="space-y-4">
             {quotes.map((q, i) => (
               <blockquote key={i} className="bh-card p-6">
-                <p className="text-[16px] font-bold italic leading-[1.9] text-bh-primary-dark">
-                  “{q.quote}”
-                </p>
+                {/* لا italic: العربية لا تملك مائلاً حقيقياً، والمتصفّح
+                    يميل الحروف هندسياً فتنكسر وصلاتها. الوزن والحجم
+                    والخط المشجّر تحمل التمييز بدلاً منه. */}
+                <p className="quote-ar">«{q.quote}»</p>
                 {q.interpretation && (
                   <div className="mt-4 pt-4 border-t border-bh-border">
                     <p className="text-[14px] font-bold text-bh-primary mb-1.5">
@@ -127,13 +129,15 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
             <div className="grid sm:grid-cols-2 gap-px bg-bh-border">
               {([
                 ["١ — التشخيص", s8.diagnosis],
-                ["٢ — الخطوة الصفرية (٥ دقائق اليوم)", s8.zero_step],
-              ] as const).map(([label, val]) => (
-                <div key={label} className="bg-bh-surface p-5">
-                  <p className="bh-card-label mb-1.5">{label}</p>
-                  <p className="bh-body">{val || "—"}</p>
-                </div>
-              ))}
+                ["٢ — الخطوة الصفرية (٥ دقائق كحد أقصى)", s8.zero_step],
+              ] as const).map(([label, val]) =>
+                val ? (
+                  <div key={label} className="bg-bh-surface p-5">
+                    <p className="bh-card-label mb-1.5">{label}</p>
+                    <p className="bh-body">{val}</p>
+                  </div>
+                ) : null
+              )}
 
               <div className="bg-bh-surface p-5">
                 <p className="bh-card-label mb-1.5">٣ — خطة الأسبوع الأول</p>
@@ -148,14 +152,12 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
                       </li>
                     ))}
                   </ol>
-                ) : (
-                  <p className="bh-body">—</p>
-                )}
+                ) : null}
               </div>
 
               <div className="bg-bh-surface p-5">
                 <p className="bh-card-label mb-1.5">٤ — السؤال المحوري للفريق</p>
-                <p className="bh-body">{s8.team_question || "—"}</p>
+                {s8.team_question ? <p className="bh-body">{s8.team_question}</p> : null}
               </div>
             </div>
 
@@ -206,7 +208,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
               <div key={label} className="p-5">
                 <div className="flex items-center justify-between gap-3">
                   <p className="bh-card-label">{label}</p>
-                  <Stars n={typeof score === "number" ? score : 0} />
+                  <Score n={typeof score === "number" ? score : 0} />
                 </div>
                 {why && <p className="bh-sub mt-1.5">{why}</p>}
               </div>
@@ -215,9 +217,6 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
         </Section>
       )}
 
-      <p className="bh-sub mt-12 pt-6 border-t border-bh-border">
-        إعداد فريق بهجة · منصة بهجة للمعرفة التطبيقية
-      </p>
     </>
   );
 }

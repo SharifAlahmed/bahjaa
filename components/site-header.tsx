@@ -22,12 +22,17 @@ export default async function SiteHeader() {
           <Image
             className="logo-mark"
             src="/logo/bahjaa-logo.png"
-            width={46}
-            height={46}
-            alt="شعار بهجة"
+            width={152}
+            height={152}
+            alt=""
             priority
           />
-          <span className="logo-tag">نحوّل المعرفة إلى أثر</span>
+          {/* الاسم نصاً: تفاصيل الملف كثيرة على مقاس الترويسة فلا تُقرأ.
+              العلامة تبقى كما هي، والكلمة تحمل القراءة. */}
+          <span className="logo-word">
+            <span className="logo">بهجة</span>
+            <span className="logo-tag">نحوّل المعرفة إلى أثر</span>
+          </span>
         </Link>
 
         <nav className="site-nav" aria-label="التنقل الرئيسي">

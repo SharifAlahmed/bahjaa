@@ -219,11 +219,13 @@ a{color:inherit;}
 /* ── الترويسة ─────────────────────────────────────────── */
 .site-header{background:var(--deep);color:var(--paper);}
 .site-header .wrap{display:flex;align-items:center;gap:20px;min-height:76px;}
-.logo{font-family:var(--logo);font-weight:700;font-size:23px;color:var(--paper);letter-spacing:.5px;}
-.logo-mark{height:60px;width:60px;display:block;flex:none;}
-@media (max-width:600px){ .logo-mark{height:52px;width:52px;} }
+.logo{font-family:var(--logo);font-weight:700;font-size:24px;line-height:1.2;color:var(--paper);letter-spacing:.5px;}
+@media (max-width:600px){ .logo{font-size:20px;} }
+.logo-mark{height:76px;width:76px;display:block;flex:none;}
+@media (max-width:600px){ .logo-mark{height:60px;width:60px;} }
 .site-footer .logo-mark{height:40px;width:40px;}
 .logo-lockup{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-word{display:flex;flex-direction:column;gap:2px;}
 .logo-tag{font-family:var(--sans);font-weight:400;font-size:12px;letter-spacing:.6px;line-height:1.5;color:var(--on-dark-soft);}
 .site-nav{display:flex;align-items:center;gap:6px;margin-inline-start:auto;}
 .site-nav a{
@@ -398,7 +400,7 @@ a{color:inherit;}
 }
 
 /* ── صفحة الملخص ──────────────────────────────────────── */
-.book-head{display:grid;grid-template-columns:230px 1fr;gap:46px;align-items:start;}
+.book-head{display:grid;grid-template-columns:168px 1fr;gap:30px;align-items:start;}
 @media (max-width:760px){
   /* الغلاف رآه القارئ في الرفّ للتوّ. هنا يقف بجانب العنوان لا فوقه —
      يوفّر شاشة كاملة قبل أن يبدأ القارئ فعلاً. */
@@ -432,7 +434,7 @@ a{color:inherit;}
 .book-actions{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
 
 /* فهرس المحتوى */
-.toc{margin-top:34px;background:var(--paper-2);border:1px solid var(--rule);padding:26px 30px;}
+.toc{margin-top:28px;background:var(--paper-2);border:1px solid var(--rule);padding:18px 22px;}
 .toc > summary{
   font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.5;color:var(--ink);
   cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -441,7 +443,7 @@ a{color:inherit;}
 .toc > summary::-webkit-details-marker{display:none;}
 .toc > summary::after{content:'▾';color:var(--brass-ink);font-size:16px;transition:transform .2s ease;}
 .toc[open] > summary::after{transform:rotate(180deg);}
-.toc-list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:0 0;}
+.toc-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:0 0;}
 .toc-list li{width:50%;border-top:1px solid var(--rule);}
 .toc-list a{
   display:flex;align-items:center;gap:10px;min-height:44px;
@@ -555,12 +557,12 @@ a{color:inherit;}
 .bh-sec-title   {font-family:var(--serif);font-size:clamp(25px,4.4vw,32px);font-weight:700;line-height:1.5;}
 .bh-pillar-title{font-family:var(--serif);font-size:clamp(19px,2.6vw,22px);font-weight:700;line-height:1.4;}
 .bh-card-label  {font-family:var(--sans);font-size:15px;font-weight:600;color:var(--deep);}
-.bh-body        {font-family:var(--sans);font-size:18px;font-weight:300;line-height:2.15;color:var(--ink);}
+.bh-body        {font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:var(--lh-body);color:var(--ink);}
 .bh-sub         {font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.8;color:var(--muted);}
 .bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:2.2px;color:var(--brass-ink);}
 
 /* البطاقة صارت خطوطاً: حد رفيع على الورق، بلا تعبئة بيضاء وبلا ظل */
-.bh-card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--radius-sm);}
+.bh-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--radius-sm);box-shadow:var(--shadow-1);}
 
 /* الفخ الشائع — يبقى كما هو، فهو جزء من نظام الملخص */
 .bh-trap{background:var(--color-bh-trap-bg);border-inline-start:3px solid var(--color-bh-trap-border);color:var(--color-bh-trap-text);border-radius:var(--radius-sm);}
@@ -600,7 +602,10 @@ a{color:inherit;}
 }
 
 /* صفحة الملخص */
-.summary-page{padding-block:clamp(40px,6vw,64px);}
+/* مقياس واحد للصفحة كلها. كانت الترويسة تمتدّ ١١٢٠ بينما كل قسم مقيّد
+   بـ٧٢٠ وبلا margin:auto، فيلتصق بالبداية تاركاً شريطاً فارغاً بعرض
+   ٤٠٠ بكسل على طول الصفحة. */
+.summary-page{padding-block:clamp(40px,6vw,64px);max-width:780px;}
 .summary-page .book-title{font-size:clamp(28px,5.4vw,44px);margin-top:14px;}
 .summary-page .book-head{margin-bottom:clamp(32px,5vw,48px);}
 .summary-foot{margin-top:clamp(40px,6vw,64px);padding-top:26px;border-top:1px solid var(--rule);}
@@ -608,12 +613,12 @@ a{color:inherit;}
 
 /* القسم الحرّ والكامل يرثان عمود القراءة */
 .summary-page > section,
-.summary-page > div{max-width:720px;}
+.summary-page > div{max-width:100%;}
 
 /* لمحة الجدار — أشكال لا نصّ مختلَق */
-.skeleton-head{height:22px;width:58%;background:var(--rule);margin-bottom:26px;}
-.skeleton-lines{display:flex;flex-direction:column;gap:14px;}
-.skeleton-line{height:11px;background:var(--rule);}
+.skeleton-head{height:20px;width:52%;background:var(--color-border);margin-bottom:20px;opacity:.9;}
+.skeleton-lines{display:flex;flex-direction:column;gap:12px;}
+.skeleton-line{height:10px;background:var(--color-border);opacity:.9;}
 
 /* ── مراسي الأقسام ────────────────────────────────────── */
 .bh-anchor{scroll-margin-block-start:96px;}
@@ -653,3 +658,13 @@ a{color:inherit;}
 .dark-panel :focus-visible,
 .site-header :focus-visible,
 .site-footer :focus-visible{outline-color:var(--brass);}
+
+/* ── الاقتباس الذهبي ──────────────────────────────────────
+   بلا italic: العربية لا تملك مائلاً حقيقياً، والمتصفّح يميل الحروف
+   ميلاً هندسياً فتنكسر وصلاتها ويبدو الخط مشوّهاً. التمييز يحمله
+   الخط المشجّر والحجم وعلامتا الاقتباس العربيتان. */
+.quote-ar{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(19px,2.5vw,23px);line-height:1.75;
+  color:var(--deep);margin:0;text-wrap:balance;
+}

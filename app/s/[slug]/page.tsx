@@ -99,11 +99,9 @@ export default async function SummaryPage({ params }: Props) {
             </p>
           )}
 
+          {/* المؤلف قبل زمن القراءة: في صفحة كتاب هو الأهم.
+              حُذف «الإعداد · فريق بهجة» — يظهر على كل ملخص وفي التذييل. */}
           <dl className="book-meta">
-            <div className="bm">
-              <dt className="bm-label">قراءة</dt>
-              <dd className="bm-value">{readingLabel(summary.reading_minutes || 8).replace("قراءة ", "")}</dd>
-            </div>
             {summary.author && (
               <div className="bm">
                 <dt className="bm-label">المؤلف</dt>
@@ -111,14 +109,14 @@ export default async function SummaryPage({ params }: Props) {
               </div>
             )}
             <div className="bm">
+              <dt className="bm-label">قراءة</dt>
+              <dd className="bm-value">{readingLabel(summary.reading_minutes || 8).replace("قراءة ", "")}</dd>
+            </div>
+            <div className="bm">
               <dt className="bm-label">الوصول</dt>
               <dd className="bm-value">
                 {isLoggedIn ? "الملخص كاملاً مفتوح لك" : "أول ٤ أقسام مفتوحة مجاناً"}
               </dd>
-            </div>
-            <div className="bm">
-              <dt className="bm-label">الإعداد</dt>
-              <dd className="bm-value">فريق بهجة</dd>
             </div>
           </dl>
 
@@ -137,7 +135,6 @@ export default async function SummaryPage({ params }: Props) {
       )}
 
       <p className="summary-foot meta">
-        إعداد فريق بهجة · منصة بهجة للمعرفة التطبيقية ·{" "}
         <Link href="/categories" className="textlink">تصفّح ملخصات أخرى</Link>
       </p>
     </article>
