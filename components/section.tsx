@@ -1,3 +1,5 @@
+import { toArabicDigits } from "@/components/bahjaa/format";
+
 export function Section({
   num,
   title,
@@ -13,7 +15,7 @@ export function Section({
     <section className={`mt-10 ${className}`}>
       <div className="flex items-center gap-3 mb-4">
         <span className="bh-sec-num text-bh-primary bg-bh-primary-light px-2.5 py-1 rounded-full shrink-0">
-          القسم {num}
+          القسم {toArabicDigits(num)}
         </span>
         <h2 className="bh-sec-title text-bh-primary-dark">{title}</h2>
       </div>

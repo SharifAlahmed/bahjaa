@@ -39,7 +39,7 @@ export default function SummaryFree({ c }: { c: ContentFree }) {
       {/* 2 — لحظة التعرّف */}
       {c.s2?.text && (
         <Section num={2} title="لحظة التعرّف">
-          <div className="bh-card p-6 border-r-[3px] border-r-bh-primary">
+          <div className="bh-card p-6 border-s-[3px] border-s-[var(--color-brand-primary)]">
             <p className="bh-body whitespace-pre-line">{c.s2.text}</p>
           </div>
         </Section>
@@ -75,7 +75,7 @@ export default function SummaryFree({ c }: { c: ContentFree }) {
       {/* 4 — الفكرة المحورية */}
       {c.s4?.text && (
         <Section num={4} title="الفكرة المحورية">
-          <p className="bh-sub text-center mb-3">
+          <p className="bh-sub mb-3">
             إذا نسيت كل شيء وتذكّرت جملة واحدة فقط
           </p>
           <div className="rounded-xl bg-bh-primary text-white text-center px-6 py-8">

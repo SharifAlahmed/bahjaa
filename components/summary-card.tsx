@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { SummaryListItem } from "@/lib/types";
+import { readingLabel } from "@/components/bahjaa/format";
 
 export default function SummaryCard({ s }: { s: SummaryListItem }) {
   const idea = s.content_free?.s4?.text || s.content_free?.s1?.core_idea || "";
@@ -29,7 +30,7 @@ export default function SummaryCard({ s }: { s: SummaryListItem }) {
         {s.author && <p className="bh-sub mt-0.5">{s.author}</p>}
         {idea && <p className="bh-body mt-2 line-clamp-2">{idea}</p>}
         <p className="bh-sub mt-2 text-xs">
-          قراءة {s.reading_minutes || 8} دقائق
+          {readingLabel(s.reading_minutes || 8)}
         </p>
       </div>
     </Link>

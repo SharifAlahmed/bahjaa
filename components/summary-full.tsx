@@ -160,7 +160,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
 
             {s8.success_marker && (
               <footer className="bg-bh-primary-light px-5 py-4">
-                <p className="bh-card-label mb-1">مؤشر النجاح بعد 30 يوماً</p>
+                <p className="bh-card-label mb-1">مؤشر النجاح بعد ٣٠ يوماً</p>
                 <p className="bh-body">{s8.success_marker}</p>
               </footer>
             )}
@@ -214,7 +214,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
         </Section>
       )}
 
-      <p className="bh-sub text-center mt-12 pt-6 border-t border-bh-border">
+      <p className="bh-sub mt-12 pt-6 border-t border-bh-border">
         إعداد فريق بهجة · منصة بهجة للمعرفة التطبيقية
       </p>
     </>
