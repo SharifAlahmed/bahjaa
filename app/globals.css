@@ -213,7 +213,8 @@ a{color:inherit;}
 .site-header{background:var(--deep);color:var(--paper);}
 .site-header .wrap{display:flex;align-items:center;gap:20px;min-height:76px;}
 .logo{font-family:var(--logo);font-weight:700;font-size:23px;color:var(--paper);letter-spacing:.5px;}
-.logo-mark{height:46px;width:46px;display:block;flex:none;}
+.logo-mark{height:60px;width:60px;display:block;flex:none;}
+@media (max-width:600px){ .logo-mark{height:52px;width:52px;} }
 .site-footer .logo-mark{height:40px;width:40px;}
 .logo-lockup{display:flex;align-items:center;gap:12px;text-decoration:none;}
 .logo-tag{font-family:var(--sans);font-weight:400;font-size:12px;letter-spacing:.6px;line-height:1.5;color:var(--on-dark-soft);}
@@ -224,7 +225,8 @@ a{color:inherit;}
   display:inline-flex;align-items:center;min-height:44px;padding-inline:10px;
 }
 .site-nav a:hover{color:var(--paper);}
-.nav-cta{border:1px solid var(--on-dark-edge);border-radius:var(--radius-sm);color:var(--paper) !important;font-size:14px;padding-inline:18px !important;}
+.nav-cta{border:1px solid var(--on-dark-line);border-radius:var(--radius-sm);color:var(--on-dark) !important;font-size:14px;padding-inline:18px !important;}
+.nav-cta:hover{border-color:var(--on-dark-edge);color:var(--paper) !important;}
 @media (max-width:600px){
   .logo-tag{display:none;}
   .site-nav .hide-sm{display:none;}
@@ -333,7 +335,25 @@ a{color:inherit;}
 /* ── رفّ الملخصات ─────────────────────────────────────── */
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 34px;}
 @media (max-width:1000px){ .shelf{grid-template-columns:repeat(2,1fr);gap:36px 24px;} }
-@media (max-width:600px){ .shelf{grid-template-columns:1fr;gap:44px;} }
+@media (max-width:600px){
+  /* عمودان لا عمود: في عمود واحد يصير الغلاف ٣:٤ بعرض الشاشة كاملاً —
+     كتاب واحد لكل شاشة، وثلثاه فراغ. */
+  .shelf{grid-template-columns:repeat(2,1fr);gap:30px 14px;}
+  .book-card h3{margin-top:14px;font-size:17px;line-height:1.5;}
+  .book-card .author{margin-top:4px;font-size:13px;}
+  .book-card .facts{font-size:12px;}
+  .book-card .promise{display:none;}   /* سطر طويل لا يعمل في نصف عرض الشاشة */
+  .book-card .go{margin-top:10px;font-size:14px;}
+  /* الخَتْم يصغر مع الغلاف، والعنوان يبقى مقروءاً */
+  .cover{padding:16px 14px;}
+  .cover-seal{width:46%;}
+  .cover-rule{width:20px;height:1.5px;}
+  .cover-title{margin-top:10px;line-height:1.35;}
+  .cover-title.lg{font-size:19px;}
+  .cover-title.md{font-size:17px;}
+  .cover-title.sm{font-size:15px;}
+  .cover-label{margin-top:8px;font-size:9px;letter-spacing:1px;}
+}
 
 .book-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;}
 .book-card .cover{transition:transform .22s ease, box-shadow .22s ease;}
@@ -372,7 +392,21 @@ a{color:inherit;}
 
 /* ── صفحة الملخص ──────────────────────────────────────── */
 .book-head{display:grid;grid-template-columns:230px 1fr;gap:46px;align-items:start;}
-@media (max-width:760px){ .book-head{grid-template-columns:1fr;gap:28px;} .book-head .cover{max-width:210px;} }
+@media (max-width:760px){
+  /* الغلاف رآه القارئ في الرفّ للتوّ. هنا يقف بجانب العنوان لا فوقه —
+     يوفّر شاشة كاملة قبل أن يبدأ القارئ فعلاً. */
+  .book-head{grid-template-columns:118px 1fr;gap:18px;align-items:start;}
+  .book-head .cover{max-width:118px;padding:12px 10px;}
+  .book-head .cover-seal{width:52%;}
+  .book-head .cover-rule{width:16px;height:1.5px;}
+  .book-head .cover-title{margin-top:8px;font-size:14px;line-height:1.35;}
+  .book-head .cover-label{margin-top:6px;font-size:8px;letter-spacing:.8px;}
+}
+@media (max-width:420px){
+  .book-head{grid-template-columns:92px 1fr;gap:14px;}
+  .book-head .cover{max-width:92px;}
+  .book-head .cover-title{font-size:12px;}
+}
 
 /* شريط بيانات الكتاب */
 .book-meta{
@@ -540,8 +574,8 @@ a{color:inherit;}
 
 /* زر الخروج داخل الترويسة — نفس شكل nav-cta */
 .nav-cta-button{
-  background:transparent;border:1px solid var(--on-dark-edge);border-radius:var(--radius-sm);
-  color:var(--paper);font-family:var(--sans);font-size:14px;font-weight:400;
+  background:transparent;border:1px solid var(--on-dark-line);border-radius:var(--radius-sm);
+  color:var(--on-dark);font-family:var(--sans);font-size:14px;font-weight:400;
   padding-inline:18px;min-height:44px;display:inline-flex;align-items:center;cursor:pointer;
 }
 .nav-cta-button:hover{color:var(--paper);border-color:var(--on-dark);}
