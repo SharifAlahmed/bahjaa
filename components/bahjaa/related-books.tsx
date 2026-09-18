@@ -7,6 +7,7 @@ import { readingLabel } from './format'
 export type RelatedBook = {
   slug: string
   title: string
+  coverUrl?: string | null
   author: string
   category: CategorySlug
   categoryLabel: string
@@ -23,7 +24,7 @@ export function RelatedBooks({ books }: { books: RelatedBook[] }) {
       <div className="related">
         {books.map((b) => (
           <Link className="rel-card" href={`/s/${b.slug}`} key={b.slug}>
-            <Cover title={b.title} slug={b.slug} category={b.category} categoryLabel={b.categoryLabel} />
+            <Cover title={b.title} slug={b.slug} category={b.category} categoryLabel={b.categoryLabel} coverUrl={b.coverUrl} />
             <div>
               <h3>{b.title}</h3>
               <p className="author">{b.author}</p>

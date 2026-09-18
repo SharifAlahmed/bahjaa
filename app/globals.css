@@ -698,3 +698,34 @@ a{color:inherit;}
     transition-duration:.01ms !important;scroll-behavior:auto !important;}
   .book-card:hover .cover{transform:none;}
 }
+
+/* ── الغلاف المصوَّر ──────────────────────────────────────
+   نسبة ٢:٣ كأغلفة الكتب المطبوعة (المولّد يبقى ٣:٤ لأنه مصمَّم لا مصوَّر).
+   الخَتْم ينكمش إلى علامة ركن: يبقى حاضراً كتوقيع بهجة بلا أن يحجب الكتاب. */
+.cover-photo{
+  aspect-ratio:2/3;
+  position:relative;overflow:hidden;padding:0;
+  background:var(--cat, var(--deep));
+  box-shadow:var(--shadow-2);
+}
+.cover-img{object-fit:cover;}
+.cover-mark{
+  position:absolute;inset-block-start:8px;inset-inline-start:8px;
+  width:34px;height:34px;display:grid;place-items:center;
+  border-radius:var(--radius-full);
+  background:color-mix(in srgb, var(--deep) 72%, transparent);
+  backdrop-filter:blur(3px);
+}
+.cover-mark .cover-seal{width:100%;height:100%;margin:0;color:var(--cat-accent, var(--brand-mint));}
+.book-card:hover .cover-photo{transform:translateY(-3px);box-shadow:var(--shadow-3);}
+
+/* ── شارة الغلاف ─────────────────────────────────────────
+   deep على الذهبي = ٧٫٢٩:١ — محسوبة لا مقدّرة. */
+.cover-wrap{position:relative;}
+.cover-badge{
+  position:absolute;inset-block-start:10px;inset-inline-end:10px;z-index:2;
+  background:var(--brass);color:var(--deep-2);
+  font-family:var(--sans);font-size:11px;font-weight:700;line-height:1;
+  padding:5px 10px;border-radius:var(--radius-xs);
+  box-shadow:var(--shadow-1);
+}

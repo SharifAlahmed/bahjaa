@@ -4,6 +4,7 @@
 // يحمله خَتْم نجمي مولّد من معرّف الكتاب، لا لون كامل ولا حرف أول.
 // القيم كلها من app/globals.css — لا قيمة hex في هذا الملف.
 
+import Image from "next/image";
 import { seal } from "@/lib/seal";
 
 export const CATEGORY_SLUGS = [
@@ -56,21 +57,51 @@ type Props = {
   slug: string;
   category: CategorySlug;
   categoryLabel: string;
+  /** غلاف الكتاب الحقيقي. حين يغيب يعود الغلاف المولّد كما هو. */
+  coverUrl?: string | null;
+  /** أولوية التحميل — للغلاف الأول في الصفحة فقط */
+  priority?: boolean;
   className?: string;
 };
 
-export function Cover({ title, slug, category, categoryLabel, className = "" }: Props) {
+export function Cover({
+  title,
+  slug,
+  category,
+  categoryLabel,
+  coverUrl,
+  priority = false,
+  className = "",
+}: Props) {
   const { field, accent } = categoryVars(category);
+  const style = {
+    ["--cat" as string]: field,
+    ["--cat-accent" as string]: accent,
+  } as React.CSSProperties;
+
+  // ── غلاف مصوَّر: نسبة ٢:٣ كأغلفة الكتب المطبوعة،
+  //    والخَتْم ينكمش إلى علامة ركن بدل أن يملأ الحقل.
+  if (coverUrl) {
+    return (
+      <div className={`cover cover-photo ${className}`} style={style}>
+        <Image
+          src={coverUrl}
+          alt={`غلاف كتاب ${title}`}
+          fill
+          sizes="(max-width:600px) 45vw, (max-width:1000px) 30vw, 260px"
+          className="cover-img"
+          priority={priority}
+        />
+        <span className="cover-mark" aria-hidden="true">
+          <CoverSeal slug={slug} />
+        </span>
+      </div>
+    );
+  }
+
+  // ── الاحتياط: الغلاف المولّد، بلا تغيير عمّا كان
   return (
-    <div
-      className={`cover ${className}`}
-      style={
-        {
-          ["--cat" as string]: field,
-          ["--cat-accent" as string]: accent,
-        } as React.CSSProperties
-      }
-    >
+    <div className={`cover ${className}`} style={style}>
       <CoverSeal slug={slug} />
       <div className="cover-foot">
         <div className="cover-rule" />

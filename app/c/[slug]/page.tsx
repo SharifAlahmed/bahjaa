@@ -74,9 +74,12 @@ export default async function CategoryPage({ params }: Props) {
       ) : (
         <>
           <div className="shelf">
-            {list.map((s) => (
+            {list.map((s, i) => (
               <BookCard
                 key={s.id}
+                coverUrl={s.cover_url}
+                publishedAt={s.published_at}
+                priority={i === 0}
                 slug={s.slug}
                 title={s.book_title_ar}
                 author={s.author || ""}

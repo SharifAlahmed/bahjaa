@@ -70,11 +70,14 @@ export default async function HomePage() {
           <p className="read">أول الملخصات في الطريق.</p>
         ) : (
           <div className="shelf">
-            {list.map((s) => {
+            {list.map((s, i) => {
               const cat = s.category_id ? catById.get(s.category_id) : undefined;
               return (
                 <BookCard
                   key={s.id}
+                  coverUrl={s.cover_url}
+                  publishedAt={s.published_at}
+                  priority={i === 0}
                   slug={s.slug}
                   title={s.book_title_ar}
                   author={s.author || ""}
