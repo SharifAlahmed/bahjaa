@@ -1,10 +1,14 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Cover, type CategorySlug } from "@/components/bahjaa/cover";
+import { type CategorySlug } from "@/components/bahjaa/cover";
 import { BookCard } from "@/components/bahjaa/book-card";
-import { TrustBar } from "@/components/bahjaa/trust-bar";
-import { InsideSummary } from "@/components/bahjaa/inside-summary";
+import { HeroSection } from "@/components/bahjaa/hero-section";
 import { CategoryStrip } from "@/components/bahjaa/category-strip";
+import { KnowledgeJourney } from "@/components/bahjaa/knowledge-journey";
+import { VisualCTA } from "@/components/bahjaa/visual-cta";
+import { WhyBahjaa } from "@/components/bahjaa/why-bahjaa";
+import { AudienceSection } from "@/components/bahjaa/audience-section";
+import { FinalCTA } from "@/components/bahjaa/final-cta";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
 // تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
@@ -38,71 +42,27 @@ export default async function HomePage() {
     name: c.name_ar,
     count: tally.get(c.id) || 0,
   }));
+  const totalPublished = (tallyRows || []).length;
 
   return (
     <>
       {/* الهيرو — اللوحة الداكنة الوحيدة في هذه الصفحة.
-          مقسوم: النصّ في البداية، ورفّ أغلفة في النهاية.
           الأغلفة من البيانات — أحدث ثلاثة منشورة، لا مختارة يدوياً. */}
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="wrap hero-split">
-          <div className="hero-copy">
-            <p className="eyebrow">منصة بهجة للمعرفة التطبيقية</p>
-            <h1 className="h-hero" id="hero-title">نحوّل المعرفة إلى أثر</h1>
-            {/* ≤ ٢٠ كلمة، ≤ ٤ أسطر — قاعدة 4.7 */}
-            <p className="lede">
-              نعيد بناء أهم الكتب للقائد المشغول، ونسلّمه خطوة واحدة يطبّقها الليلة.
-            </p>
+      <HeroSection list={list} catById={catById} />
 
-            {/* زر أخضر واحد في هذه المنطقة */}
-            <div className="actions">
-              <Link href="#latest-summaries" className="btn btn-primary">استكشف الملخصات</Link>
-              <Link href="#inside-summary" className="btn btn-ghost-light">كيف تعمل بهجة؟</Link>
-            </div>
-          </div>
-
-          {list.length > 0 && (
-            <div className="hero-shelf" aria-hidden="true">
-              {list.slice(0, 3).map((s, i) => {
-                const cat = s.category_id ? catById.get(s.category_id) : undefined;
-                return (
-                  <div className={`hs-slot hs-${i}`} key={s.id}>
-                    <Cover
-                      title={s.book_title_ar}
-                      slug={s.slug}
-                      category={(cat?.slug || "leadership") as CategorySlug}
-                      categoryLabel={cat?.name_ar || "بهجة"}
-                      coverUrl={s.cover_url}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
+      {/* شريط الاكتشاف — مباشرة بعد الهيرو، الأقسام الحقيقية فقط */}
+      <section className="wrap" aria-label="اكتشف حسب القسم">
+        <CategoryStrip items={stripItems} total={totalPublished} />
       </section>
 
-      {/* تصفّح حسب القسم — قبل الحقائق: القارئ يبحث عن مجاله أولاً */}
-      <section className="wrap" aria-label="الأقسام">
-        <CategoryStrip items={stripItems} />
-      </section>
-
-      {/* شريط الحقائق — دُمج مع شريط القيمة الذي كان داخل الهيرو.
-          كانا يكرّران «٤ أقسام مجاناً»، وكانا عائلة تخطيط واحدة مرّتين. */}
-      <section className="wrap" aria-label="ما يحتويه كل ملخص">
-        <TrustBar />
-      </section>
-
-      {/* ماذا ستجد داخل كل ملخص؟ */}
-      <InsideSummary />
+      {/* رحلة المعرفة — المكوّن التوقيعي: افهم، استخرج، طبّق، قِس */}
+      <KnowledgeJourney />
 
       {/* أحدث الملخصات */}
       <section className="wrap section-block" id="latest-summaries" aria-labelledby="latest-title">
-        {/* اللافتة باقية: تسمّي القسم فعلاً. قاعدة EYEBROW RESTRAINT مكتوبة
-            ضد لافتات زخرفية فوق كل قسم في صفحات الهبوط التسويقية. */}
-        <p className="eyebrow">أحدث الملخصات</p>
+        <p className="eyebrow">اكتشف ما يستحق وقتك</p>
         <h2 className="h-sec" id="latest-title" style={{ marginTop: 14 }}>
-          ابدأ من الكتاب الذي يشبه سؤالك اليوم
+          أفكار مختارة من الكتب، مصمَّمة لتساعدك على الفهم والتطبيق
         </h2>
         <hr className="rule" style={{ margin: "34px 0 44px" }} />
 
@@ -135,6 +95,18 @@ export default async function HomePage() {
           <Link href="/categories" className="textlink">تصفّح كل الأقسام</Link>
         </p>
       </section>
+
+      {/* بانر بصري — راحة بصرية بعد شبكة البطاقات */}
+      <VisualCTA />
+
+      {/* لماذا بهجة */}
+      <WhyBahjaa />
+
+      {/* لمن بهجة — إثبات بلا أرقام مختلَقة */}
+      <AudienceSection />
+
+      {/* الإغلاق القوي */}
+      <FinalCTA />
     </>
   );
 }
