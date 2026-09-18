@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { Cover, type CategorySlug } from './cover'
 import { ArrowIcon } from './icons'
-import { readingLabel } from './format'
+import { readingLabel, toArabicDigits } from './format'
 
 type Props = {
   slug: string
@@ -16,6 +16,9 @@ type Props = {
   priority?: boolean
   /** تاريخ النشر — منه وحده تُشتقّ شارة «جديد» */
   publishedAt?: string | null
+  /** تقييم بهجة للقيمة (٠–١٠). لا يُمرَّر في الرئيسية:
+      هي للاكتشاف، والحكم مكانه صفحة القسم وصفحة الملخص. */
+  rating?: number | null
   /** وعد بسطر واحد: الفائدة لا الوصف */
   promise?: string
 }
@@ -28,7 +31,7 @@ function isNew(publishedAt?: string | null): boolean {
   return days >= 0 && days <= 21
 }
 
-export function BookCard({ slug, title, author, category, categoryLabel, readingMinutes, coverUrl, priority, publishedAt, promise }: Props) {
+export function BookCard({ slug, title, author, category, categoryLabel, readingMinutes, coverUrl, priority, publishedAt, rating, promise }: Props) {
   const fresh = isNew(publishedAt)
   return (
     <Link className="book-card" href={`/s/${slug}`}>
@@ -39,6 +42,13 @@ export function BookCard({ slug, title, author, category, categoryLabel, reading
       <h3 className="h-sub">{title}</h3>
       {author ? <p className="author">{author}</p> : null}
       <p className="meta facts">{categoryLabel} · {readingLabel(readingMinutes)}</p>
+      {typeof rating === 'number' ? (
+        <p className="rating-line">
+          <span className="rating-num">{toArabicDigits(rating)}</span>
+          <span className="rating-of">من ١٠</span>
+          <span className="rating-lbl">تقييم بهجة للقيمة</span>
+        </p>
+      ) : null}
       {promise ? <p className="promise">{promise}</p> : null}
       <span className="go">ابدأ القراءة <ArrowIcon width={18} height={18} /></span>
     </Link>

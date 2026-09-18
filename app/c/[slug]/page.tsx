@@ -79,6 +79,7 @@ export default async function CategoryPage({ params }: Props) {
                 key={s.id}
                 coverUrl={s.cover_url}
                 publishedAt={s.published_at}
+                rating={s.rating_value}
                 priority={i === 0}
                 slug={s.slug}
                 title={s.book_title_ar}

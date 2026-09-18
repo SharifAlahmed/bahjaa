@@ -4,7 +4,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Cover, type CategorySlug } from "@/components/bahjaa/cover";
 import { SummaryToc } from "@/components/bahjaa/summary-toc";
-import { readingLabel } from "@/components/bahjaa/format";
+import { readingLabel, toArabicDigits } from "@/components/bahjaa/format";
 import SummaryFree from "@/components/summary-free";
 import SummaryFull from "@/components/summary-full";
 import Paywall from "@/components/paywall";
@@ -27,8 +27,8 @@ async function getSummary(slug: string) {
   } = await supabase.auth.getUser();
 
   const columns = user
-    ? "id, slug, book_title_ar, book_title_en, author, cover_url, category_id, reading_minutes, status, published_at, content_free, content_full"
-    : "id, slug, book_title_ar, book_title_en, author, cover_url, category_id, reading_minutes, status, published_at, content_free";
+    ? "id, slug, book_title_ar, book_title_en, author, cover_url, category_id, reading_minutes, status, published_at, rating_value, content_free, content_full"
+    : "id, slug, book_title_ar, book_title_en, author, cover_url, category_id, reading_minutes, status, published_at, rating_value, content_free";
 
   const { data } = await supabase
     .from("bh_summaries")
@@ -114,6 +114,14 @@ export default async function SummaryPage({ params }: Props) {
               <dt className="bm-label">قراءة</dt>
               <dd className="bm-value">{readingLabel(summary.reading_minutes || 8).replace("قراءة ", "")}</dd>
             </div>
+            {typeof summary.rating_value === "number" && (
+              <div className="bm">
+                <dt className="bm-label">تقييم بهجة</dt>
+                <dd className="bm-value">
+                  {toArabicDigits(summary.rating_value)} من ١٠ · القيمة للقائد
+                </dd>
+              </div>
+            )}
             <div className="bm">
               <dt className="bm-label">الوصول</dt>
               <dd className="bm-value">

@@ -87,6 +87,9 @@ export type SummaryListItem = {
   category_id: string | null;
   reading_minutes: number | null;
   published_at: string | null;
+  /** نسخة عمومية من s10.value — الرقم وحده بلا مبرّرات.
+      يُملأ بمشغّل في Postgres عند أي كتابة على content_full. */
+  rating_value: number | null;
   content_free: ContentFree;
 };
 
@@ -96,4 +99,4 @@ export type Summary = SummaryListItem & {
 };
 
 export const LIST_COLUMNS =
-  "id, slug, book_title_ar, book_title_en, author, cover_url, category_id, reading_minutes, published_at, content_free";
+  "id, slug, book_title_ar, book_title_en, author, cover_url, category_id, reading_minutes, published_at, rating_value, content_free";
