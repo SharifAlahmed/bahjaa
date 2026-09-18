@@ -59,17 +59,17 @@ export default async function HomePage() {
       <KnowledgeJourney />
 
       {/* أحدث الملخصات */}
-      <section className="wrap section-block" id="latest-summaries" aria-labelledby="latest-title">
+      <section className="wrap section-block bh-anchor" id="latest-summaries" aria-labelledby="latest-title">
         <p className="eyebrow">اكتشف ما يستحق وقتك</p>
         <h2 className="h-sec" id="latest-title" style={{ marginTop: 14 }}>
           أفكار مختارة من الكتب، مصمَّمة لتساعدك على الفهم والتطبيق
         </h2>
-        <hr className="rule" style={{ margin: "34px 0 44px" }} />
+        <hr className="rule" style={{ margin: "26px 0 36px" }} />
 
         {list.length === 0 ? (
           <p className="read">أول الملخصات في الطريق.</p>
         ) : (
-          <div className="shelf">
+          <div className="shelf shelf-featured">
             {list.map((s, i) => {
               const cat = s.category_id ? catById.get(s.category_id) : undefined;
               return (
@@ -78,6 +78,7 @@ export default async function HomePage() {
                   coverUrl={s.cover_url}
                   publishedAt={s.published_at}
                   priority={i === 0}
+                  featured={i === 0}
                   slug={s.slug}
                   title={s.book_title_ar}
                   author={s.author || ""}

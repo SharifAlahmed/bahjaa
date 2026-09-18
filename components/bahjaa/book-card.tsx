@@ -21,6 +21,10 @@ type Props = {
   rating?: number | null
   /** وعد بسطر واحد: الفائدة لا الوصف */
   promise?: string
+  /** البطاقة الأولى في شبكة اكتشاف الرئيسية — أكبر حجماً بصرياً.
+      «أحدث إضافة» ادّعاء حقيقي: القائمة مرتّبة أصلاً بتاريخ النشر تنازلياً،
+      فهذا فعلاً أحدث ما نُشر، لا ترتيب تحريري مختلَق. */
+  featured?: boolean
 }
 
 /** «جديد» = نُشر خلال ٢١ يوماً. لا شارة أخرى: «الأكثر قراءة» تحتاج
@@ -31,7 +35,7 @@ function isNew(publishedAt?: string | null): boolean {
   return days >= 0 && days <= 21
 }
 
-export function BookCard({ slug, title, author, category, categoryLabel, readingMinutes, coverUrl, priority, publishedAt, rating, promise }: Props) {
+export function BookCard({ slug, title, author, category, categoryLabel, readingMinutes, coverUrl, priority, publishedAt, rating, promise, featured }: Props) {
   const fresh = isNew(publishedAt)
   return (
     <Link className="book-card" href={`/s/${slug}`}>
@@ -39,6 +43,7 @@ export function BookCard({ slug, title, author, category, categoryLabel, reading
         <Cover title={title} slug={slug} category={category} categoryLabel={categoryLabel} coverUrl={coverUrl} priority={priority} />
         {fresh ? <span className="cover-badge">جديد</span> : null}
       </div>
+      {featured ? <p className="eyebrow" style={{ marginTop: 22 }}>أحدث إضافة</p> : null}
       <h3 className="h-sub">{title}</h3>
       {author ? <p className="author">{author}</p> : null}
       <p className="meta facts">{categoryLabel} · {readingLabel(readingMinutes)}</p>

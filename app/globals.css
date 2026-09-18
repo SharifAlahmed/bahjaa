@@ -285,6 +285,18 @@ a{color:inherit;}
 /* ── رفّ الملخصات ─────────────────────────────────────── */
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 34px;}
 @media (max-width:1000px){ .shelf{grid-template-columns:repeat(2,1fr);gap:36px 24px;} }
+
+/* البطاقة الأولى أكبر بصرياً — «أحدث إضافة» حقيقية من ترتيب البيانات،
+   لا اختيار تحريري وهمي. سطح مكتب فقط: الجوال له رفّه الأفقي أدناه. */
+@media (min-width:1000px){
+  .shelf.shelf-featured{grid-auto-flow:dense;}
+  .shelf.shelf-featured > *:first-child{grid-column:span 2;grid-row:span 2;}
+  .shelf.shelf-featured > *:first-child .cover-title.lg{font-size:clamp(32px,3.6vw,52px);}
+  .shelf.shelf-featured > *:first-child .cover-title.md{font-size:clamp(28px,3vw,42px);}
+  .shelf.shelf-featured > *:first-child .cover-title.sm{font-size:clamp(24px,2.6vw,36px);}
+  .shelf.shelf-featured > *:first-child .cover-seal{max-width:200px;}
+  .shelf.shelf-featured > *:first-child h3.h-sub{font-size:clamp(22px,2.2vw,28px);}
+}
 @media (max-width:600px){
   /* رفّ أفقي قابل للسحب: كل بطاقة تظهر بحجمها الحقيقي بدل ضغطها في عمود ضيق،
      وحافة البطاقة التالية تُرى فتُلمّح أن هناك المزيد. */
@@ -520,7 +532,7 @@ a{color:inherit;}
 .toast.is-visible{opacity:1;transform:translateY(0);}
 
 /* ── مساعد التباعد بين الأقسام ─────────────────────────── */
-.section-block{padding-block:clamp(48px,7vw,76px);}
+.section-block{padding-block:clamp(40px,6vw,64px);}
 .section-block + .section-block{padding-block-start:0;}
 
 /* ── القوائم داخل النظام ───────────────────────────────── */
@@ -773,9 +785,10 @@ a{color:inherit;}
    ══════════════════════════════════════════════════════════ */
 
 /* ── البطل: الحاوية البصرية (أغلفة + معاينة الرحلة) ──────── */
-.hero-visual{display:flex;flex-direction:column;gap:28px;align-items:center;}
+.hero-visual{display:flex;flex-direction:column;gap:26px;align-items:center;}
 .hero-flow{
-  list-style:none;margin:0;padding:0;
+  list-style:none;margin:0;padding:18px 0 0;max-width:440px;
+  border-top:1px solid var(--on-dark-line);
   display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;
 }
 .hero-flow-node{display:inline-flex;align-items:center;gap:6px;}
@@ -828,7 +841,9 @@ a{color:inherit;}
 .journey-stage::after{
   content:"";position:absolute;top:32px;height:1px;background:var(--rule);
   inset-inline-start:50%;width:100%;z-index:1;
+  transition:background-color .4s ease;
 }
+.journey-stage.is-visible::after{background:var(--green);}
 .journey-stage:last-child::after{content:none;}
 .journey-node{
   position:relative;z-index:2;width:64px;height:64px;margin:0 auto;
@@ -845,6 +860,15 @@ a{color:inherit;}
 }
 .journey-stage h3{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.4;margin:18px 0 0;color:var(--ink);}
 .journey-stage p{margin:8px 0 0;font-size:14px;line-height:1.8;font-weight:400;color:var(--ink-soft);max-width:22ch;margin-inline:auto;}
+
+/* كشف تدريجي خفيف — إضافي بحت، يُفعَّل فقط بعد تأكّد دعم IntersectionObserver
+   عبر [data-reveal] على <ol>. بلا JS أو دعم: كل مرحلة ظاهرة بالكامل فوراً. */
+.journey[data-reveal] .journey-stage{opacity:0;transform:translateY(14px);transition:opacity .45s ease, transform .45s ease;}
+.journey[data-reveal] .journey-stage.is-visible{opacity:1;transform:translateY(0);}
+.journey[data-reveal] .journey-stage:nth-child(1){transition-delay:0ms;}
+.journey[data-reveal] .journey-stage:nth-child(2){transition-delay:90ms;}
+.journey[data-reveal] .journey-stage:nth-child(3){transition-delay:180ms;}
+.journey[data-reveal] .journey-stage:nth-child(4){transition-delay:270ms;}
 @media (max-width:760px){
   .journey{flex-direction:column;gap:36px;align-items:stretch;}
   .journey-stage{padding-inline:0;padding-inline-start:80px;text-align:start;}
@@ -857,19 +881,37 @@ a{color:inherit;}
   }
 }
 
+/* ── نطاق مظلّل — كسر الرتابة بلا لون جديد ────────────────*/
+.tint-band{background:var(--paper-2);border-block:1px solid var(--rule);}
+
 /* ── البانر التحريري ─────────────────────────────────────
    ليس لوحة داكنة ثانية: خلفية فاتحة، ووزن بصري من شريط علوي
    ملوّن وطباعة كبيرة، لا من خلفية سوداء. */
 .editorial-banner{background:var(--paper-2);border-block:3px solid var(--green);}
-.editorial-banner .wrap{padding-block:clamp(48px,7vw,72px);max-width:760px;}
+.editorial-banner .eb-grid{
+  padding-block:clamp(44px,7vw,72px);
+  display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center;
+}
+.editorial-banner .eb-copy{max-width:640px;}
 .editorial-banner .quote{color:var(--deep);}
+.editorial-banner .eb-motif{width:100%;max-width:220px;color:var(--brass-ink);justify-self:center;}
+@media (max-width:860px){
+  .editorial-banner .eb-grid{grid-template-columns:1fr;gap:28px;}
+  .editorial-banner .eb-motif{max-width:180px;justify-self:start;}
+}
+@media (max-width:520px){
+  .editorial-banner .eb-motif{display:none;}
+}
 
 /* ── لماذا بهجة ───────────────────────────────────────────*/
-.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+.why-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr 1.25fr;gap:28px;}
 .why-item{
   position:relative;padding:28px 22px;background:var(--paper-2);
   border:1px solid var(--rule);border-radius:var(--radius-lg);
 }
+.why-item.lg{padding:34px 26px;}
+.why-item.lg .why-icon{width:52px;height:52px;}
+.why-item.lg h3{font-size:22px;}
 .why-icon{
   width:44px;height:44px;border-radius:var(--radius-full);
   background:var(--paper);border:1px solid var(--rule);
@@ -881,7 +923,12 @@ a{color:inherit;}
 }
 .why-item h3{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.4;margin:18px 0 0;color:var(--ink);}
 .why-item p{margin:8px 0 0;font-size:14px;line-height:1.8;font-weight:400;color:var(--ink-soft);}
-@media (max-width:900px){ .why-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:900px){
+  .why-grid{grid-template-columns:repeat(2,1fr);}
+  .why-item.lg{padding:28px 22px;}
+  .why-item.lg .why-icon{width:44px;height:44px;}
+  .why-item.lg h3{font-size:19px;}
+}
 @media (max-width:520px){ .why-grid{grid-template-columns:1fr;} }
 
 /* ── لمن بهجة (الإثبات بلا أرقام) ─────────────────────────*/
@@ -907,9 +954,10 @@ a{color:inherit;}
 
 /* ── الإغلاق القوي ────────────────────────────────────────
    خلفية فاتحة، وإطار أخضر يحيط بالمحتوى بدل خلفية داكنة ثالثة. */
-.final-cta{padding-block:clamp(56px,8vw,90px);}
+.final-cta{padding-block:clamp(48px,7vw,76px);}
 .final-cta .wrap{
   max-width:680px;padding:clamp(36px,6vw,56px) clamp(24px,5vw,48px);
   border:1.5px solid var(--green);border-radius:var(--radius-lg);
   background:var(--paper-2);
 }
+.final-cta .fc-motif{width:150px;height:auto;margin:0 auto 22px;color:var(--brass-ink);display:block;}

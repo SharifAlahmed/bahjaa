@@ -15,7 +15,7 @@ export function AudienceSection() {
   return (
     <section className="wrap section-block" aria-labelledby="audience-title">
       <p className="eyebrow">لمن بهجة</p>
-      <h2 className="h-sec" id="audience-title" style={{ marginTop: 14, marginBottom: 40 }}>
+      <h2 className="h-sec" id="audience-title" style={{ marginTop: 14, marginBottom: 34 }}>
         من يجد في بهجة ما يبحث عنه
       </h2>
       <div className="audience-grid">

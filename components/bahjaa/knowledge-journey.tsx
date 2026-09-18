@@ -1,8 +1,13 @@
+'use client'
 // components/bahjaa/knowledge-journey.tsx — «الكتاب بداية الرحلة، وليس نهايتها»
 //
-// المكوّن التوقيعي: أربع مراحل متصلة بخط تقدّم واحد، لا أربع بطاقات متطابقة.
-// نفس نظام الأيقونات الخطي (شبكة ٢٤، سماكة ١٫٦). «قِس» يعيد استخدام
-// BusinessIcon — نفس المعنى بالضبط، بلا حاجة لأيقونة رابعة جديدة.
+// المكوّن التوقيعي: أربع مراحل متصلة بخط تقدّم يتحوّل إلى أخضر بهجة كلما
+// دخلت مرحلة نطاق الرؤية أثناء التمرير — كشف خفيف عبر IntersectionObserver.
+// إضافي بحت: بلا دعم المتصفح أو قبل تشغيل JS تبقى كل مرحلة ظاهرة بالكامل
+// فوراً (سمة data-reveal لا تُضبط إلا بعد تأكّد الدعم)، ويُحترم
+// prefers-reduced-motion عبر القاعدة العامة في globals.css التي تُلغي
+// كل transition/animation موقعياً.
+import { useEffect, useRef, useState } from 'react'
 import { UnderstandIcon, ExtractIcon, ApplyIcon, BusinessIcon } from './icons'
 
 const STAGES = [
@@ -13,32 +18,58 @@ const STAGES = [
 ] as const
 
 export function KnowledgeJourney() {
-  return (
-    <section className="wrap section-block" id="knowledge-journey" aria-labelledby="journey-title">
-      <p className="eyebrow">رحلة المعرفة في بهجة</p>
-      <h2 className="h-sec" id="journey-title" style={{ marginTop: 14 }}>
-        الكتاب بداية الرحلة، وليس نهايتها
-      </h2>
-      <p className="read col" style={{ marginTop: 18, marginBottom: 48 }}>
-        في بهجة لا نكتفي باختصار المعرفة؛ نعيد تنظيمها لتصبح قابلة للفهم والتطبيق.
-      </p>
+  const listRef = useRef<HTMLOListElement>(null)
+  const [reveal, setReveal] = useState(false)
 
-      <ol className="journey" aria-label="أربع مراحل: افهم، استخرج، طبّق، قِس">
-        {STAGES.map((s, i) => {
-          const Icon = s.icon
-          return (
-            <li className="journey-stage" key={s.key}>
-              <div className="journey-node">
-                <span className="journey-num">{s.n}</span>
-                <span className="journey-icon"><Icon width={26} height={26} /></span>
-              </div>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-              {i < STAGES.length - 1 ? <span className="journey-link" aria-hidden="true" /> : null}
-            </li>
-          )
-        })}
-      </ol>
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined' || !listRef.current) return
+    setReveal(true)
+    const stages = listRef.current.querySelectorAll('.journey-stage')
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('is-visible')
+        })
+      },
+      { threshold: 0.35 }
+    )
+    stages.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <section className="tint-band bh-anchor" id="knowledge-journey" aria-labelledby="journey-title">
+      <div className="wrap section-block">
+        <p className="eyebrow">رحلة المعرفة في بهجة</p>
+        <h2 className="h-sec" id="journey-title" style={{ marginTop: 14 }}>
+          الكتاب بداية الرحلة، وليس نهايتها
+        </h2>
+        <p className="read col" style={{ marginTop: 18, marginBottom: 40 }}>
+          في بهجة لا نكتفي باختصار المعرفة؛ نعيد تنظيمها لتصبح قابلة للفهم والتطبيق.
+        </p>
+
+        <ol
+          ref={listRef}
+          className="journey"
+          data-reveal={reveal || undefined}
+          aria-label="أربع مراحل: افهم، استخرج، طبّق، قِس"
+        >
+          {STAGES.map((s, i) => {
+            const Icon = s.icon
+            return (
+              <li className="journey-stage" key={s.key}>
+                <div className="journey-node">
+                  <span className="journey-num">{s.n}</span>
+                  <span className="journey-icon"><Icon width={26} height={26} /></span>
+                </div>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+                {i < STAGES.length - 1 ? <span className="journey-link" aria-hidden="true" /> : null}
+              </li>
+            )
+          })}
+        </ol>
+      </div>
     </section>
   )
 }
