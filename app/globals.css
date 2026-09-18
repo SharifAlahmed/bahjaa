@@ -671,8 +671,8 @@ a{color:inherit;}
    مخفي بصرياً حتى يستقبل التركيز. */
 .skip-link{
   position:absolute;inset-inline-start:-9999px;top:0;z-index:100;
-  background:var(--brand-primary);color:#fff;font-family:var(--sans);
-  font-size:15px;font-weight:500;line-height:1.6;
+  background:var(--brand-primary);color:var(--deep-2);font-family:var(--sans);
+  font-size:15px;font-weight:600;line-height:1.6;
   padding:14px 22px;border-end-end-radius:var(--radius-sm);
   text-decoration:none;
 }

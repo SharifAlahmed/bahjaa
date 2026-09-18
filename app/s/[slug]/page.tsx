@@ -118,7 +118,7 @@ export default async function SummaryPage({ params }: Props) {
               <div className="bm">
                 <dt className="bm-label">تقييم بهجة</dt>
                 <dd className="bm-value">
-                  {toArabicDigits(summary.rating_value)} من ١٠ · القيمة للقائد
+                  {toArabicDigits(summary.rating_value)} من ١٠ · القيمة{"\u00A0"}للقائد
                 </dd>
               </div>
             )}
