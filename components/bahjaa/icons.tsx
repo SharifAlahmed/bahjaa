@@ -44,3 +44,36 @@ export const NoCardIcon = (p: SVGProps<SVGSVGElement>) => (
 export const MailIcon = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base} {...p}><rect x="3" y="5.5" width="18" height="13" /><path d="m3 7 9 6 9-6" /></svg>
 )
+
+/* ── أيقونات الأقسام الستة — خطّية، شبكة ٢٤، سماكة ١٫٦ ────────
+   لا مكتبة خارجية ولا إيموجي. اللون يُورَّث من الأب. */
+
+/** القيادة — بوصلة: الاتجاه لا السرعة */
+export const LeadershipIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}><circle cx="12" cy="12" r="9" /><path d="m15.5 8.5-2 5.5-5.5 2 2-5.5z" /></svg>
+)
+
+/** ريادة الأعمال — بذرة تنبت */
+export const EntrepreneurshipIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}><path d="M12 21v-8" /><path d="M12 13c0-3 2-5 5-5 0 3-2 5-5 5z" /><path d="M12 15c0-2.5-1.7-4.5-4.5-4.5 0 2.5 1.7 4.5 4.5 4.5z" /></svg>
+)
+
+/** الإنتاجية — ساعة */
+export const ProductivityIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" /></svg>
+)
+
+/** الاستراتيجية — رقعة شطرنج بحجر */
+export const StrategyIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}><path d="M4 20h16" /><path d="M9 20V9l3-5 3 5v11" /><path d="M9 13h6" /></svg>
+)
+
+/** الفرق والثقافة — ثلاثة أشخاص */
+export const TeamsIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}><circle cx="12" cy="8" r="3" /><path d="M6.5 20a5.5 5.5 0 0 1 11 0" /><path d="M3 17a4 4 0 0 1 3.2-3.9" /><path d="M21 17a4 4 0 0 0-3.2-3.9" /></svg>
+)
+
+/** المال والأعمال — رسم بياني صاعد */
+export const BusinessIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}><path d="M4 19h16" /><path d="M7 19v-5" /><path d="M12 19V8" /><path d="M17 19v-8" /></svg>
+)
