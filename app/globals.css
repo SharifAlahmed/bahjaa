@@ -805,6 +805,136 @@ a{color:inherit;}
   .hero-flow-icon{width:30px;height:30px;}
 }
 
+
+/* ══ V3 · مساحة العمل المعرفية (Sprint 1 · سبتمبر ٢٠٢٦) ══════════════
+   ثلاث طبقات: واجهة قراءة (z:2) · كتاب خلفي (z:1) · كتاب أمامي (z:4)
+   + بطاقتان عائمتان (z:5) + موتيف زخرفي (z:3).
+   كل خاصية موضع: inset-inline-* (RTL-safe) لا left/right.
+   ══════════════════════════════════════════════════════════════════════ */
+.hw-workspace{
+  position:relative;
+  width:clamp(280px,37vw,380px);
+  aspect-ratio:9/10;
+  flex:none;
+}
+
+/* واجهة القراءة — سطح زجاجي داكن مجرّد */
+.hw-interface{
+  position:absolute;
+  inset-inline-start:0;
+  inset-block-start:0;
+  width:70%;
+  background:var(--deep-2);
+  border-radius:var(--radius-sm);
+  border:1px solid var(--on-dark-line);
+  box-shadow:0 20px 52px rgba(11,20,18,.68);
+  z-index:2;
+  overflow:hidden;
+}
+.hw-iface-topbar{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px 8px;
+  border-block-end:1px solid var(--on-dark-line);
+}
+.hw-iface-brand{font-size:11px;font-weight:700;color:var(--green);letter-spacing:.3px;}
+.hw-iface-divider{width:1px;height:10px;background:var(--on-dark-line);flex:none;}
+.hw-iface-subtitle{font-size:10px;color:var(--on-dark-soft);}
+.hw-iface-tabs{
+  display:flex;gap:0;padding-inline:12px;
+  border-block-end:1px solid var(--on-dark-line);
+  overflow:hidden;
+}
+.hw-iface-tab{
+  font-size:10px;color:var(--on-dark-soft);
+  padding:8px 8px 6px;border-block-end:1.5px solid transparent;white-space:nowrap;
+}
+.hw-tab-active{color:var(--green);border-block-end-color:var(--green);}
+.hw-iface-body{padding:12px 14px 18px;}
+.hw-iface-lbl{
+  display:block;font-size:9px;font-weight:700;letter-spacing:1.1px;
+  color:var(--brass);margin-block-end:10px;
+}
+.hw-iface-lines{display:flex;flex-direction:column;gap:8px;}
+.hw-iface-line{
+  height:6px;border-radius:var(--radius-xs);
+  background:var(--on-dark-line);display:block;
+}
+
+/* كتاب خلفي — يتراجع خلف الواجهة، مائل، شبه شفاف */
+.hw-book-bg{
+  position:absolute;
+  inset-inline-end:0;
+  inset-block-start:0;
+  width:clamp(108px,14.5vw,144px);
+  z-index:1;
+  transform:rotate(5deg);
+  opacity:.42;
+  filter:drop-shadow(0 10px 22px rgba(11,20,18,.5));
+  pointer-events:none;
+}
+
+/* كتاب أمامي — البطل، يتقدّم على الواجهة */
+.hw-book-fg{
+  position:absolute;
+  inset-inline-start:10%;
+  inset-block-end:0;
+  width:clamp(126px,16.5vw,162px);
+  z-index:4;
+  transform:rotate(-1.5deg);
+  filter:drop-shadow(0 22px 46px rgba(11,20,18,.62));
+}
+
+/* بطاقات عائمة */
+.hw-card{
+  position:absolute;z-index:5;
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--paper);border:1px solid var(--rule);
+  border-radius:var(--radius-full);
+  padding:6px 13px 6px 10px;
+  box-shadow:0 5px 16px rgba(0,0,0,.13);
+  white-space:nowrap;
+}
+.hw-card-icon{display:flex;align-items:center;color:var(--green-ink);flex:none;}
+.hw-card-lbl{font-size:12px;font-weight:600;color:var(--ink);line-height:1;}
+.hw-card-a{inset-inline-end:6px;inset-block-start:48px;transform:rotate(-1.5deg);}
+.hw-card-b{inset-inline-start:4px;inset-block-end:88px;transform:rotate(1.2deg);}
+
+/* موتيف بهجة الزخرفي */
+.hw-motif{
+  position:absolute;
+  inset-inline-end:10px;
+  inset-block-end:10px;
+  width:54px;opacity:.2;z-index:3;
+  color:var(--paper);pointer-events:none;
+}
+.hw-motif svg{display:block;}
+
+/* hero-visual: يحتضن workspace فقط */
+.hero-split .hero-visual{
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* hero-flow في عمود النص — محاذاة start لا center */
+.hero-flow-copy{
+  justify-content:flex-start;
+  max-width:none;
+  margin-block-start:28px;
+  margin-block-end:0;
+  padding-block-start:18px;
+}
+
+/* جوال: workspace مضغوطة تحت النص */
+@media (max-width:860px){
+  .hw-workspace{width:clamp(234px,66vw,310px);}
+  .hw-book-bg{width:clamp(86px,22vw,112px);}
+  .hw-book-fg{width:clamp(102px,25.5vw,132px);}
+  .hw-interface{width:68%;}
+  .hw-card{padding:5px 10px 5px 8px;}
+  .hw-card-lbl{font-size:11px;}
+  .hw-card-a{inset-block-start:36px;}
+  .hw-card-b{inset-block-end:72px;}
+}
+
 /* ── شريط الاكتشاف ────────────────────────────────────────
    رقائق (chips) قابلة للسحب أفقياً على الجوال، وتلتفّ على
    الشاشات الواسعة. الأقسام الحقيقية فقط — لا نوع محتوى وهمي. */
