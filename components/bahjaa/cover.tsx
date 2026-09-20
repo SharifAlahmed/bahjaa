@@ -64,6 +64,25 @@ type Props = {
   className?: string;
 };
 
+/** أغلفة محلية عالية الدقة تُستخدم عندما لا يرسل الملخص cover_url. */
+function localCoverFor(slug: string): string | null {
+  const key = slug.toLowerCase();
+  const covers: Record<string, string> = {
+    "atomic-habits": "/covers/atomic-habits.png",
+    "good-to-great": "/covers/good-to-great.png",
+    "lean-startup": "/covers/lean-startup.png",
+    "napoleon-hill": "/covers/napoleon-hill.png",
+    "psychology-of-money": "/covers/psychology-of-money.png",
+    "seven-habits": "/covers/seven-habits.png",
+    "win-friends": "/covers/win-friends.png",
+    "winning": "/covers/winning.png",
+  };
+  const exact = covers[key];
+  if (exact) return exact;
+  const match = Object.keys(covers).find((name) => key.includes(name));
+  return match ? covers[match] : null;
+}
+
 export function Cover({
   title,
   slug,
@@ -79,13 +98,15 @@ export function Cover({
     ["--cat-accent" as string]: accent,
   } as React.CSSProperties;
 
+  const resolvedCoverUrl = coverUrl || localCoverFor(slug);
+
   // ── غلاف مصوَّر: نسبة ٢:٣ كأغلفة الكتب المطبوعة،
   //    والخَتْم ينكمش إلى علامة ركن بدل أن يملأ الحقل.
-  if (coverUrl) {
+  if (resolvedCoverUrl) {
     return (
       <div className={`cover cover-photo ${className}`} style={style}>
         <Image
-          src={coverUrl}
+          src={resolvedCoverUrl}
           alt={`غلاف كتاب ${title}`}
           fill
           sizes="(max-width:600px) 45vw, (max-width:1000px) 30vw, 260px"
