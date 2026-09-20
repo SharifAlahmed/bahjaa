@@ -810,12 +810,12 @@ a{color:inherit;}
    النصّ في البداية، ورفّ ثلاثة أغلفة متراكبة في النهاية.
    مخفيّ عن قارئ الشاشة: زخرفة لا محتوى (العناوين نفسها أسفل الصفحة). */
 .hero-split{
-  display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(36px,6vw,84px);
+  display:grid;grid-template-columns:1.18fr .82fr;gap:clamp(40px,6vw,88px);
   align-items:center;text-align:start;
 }
 .hero-kicker{display:flex;align-items:center;gap:10px;margin:0;color:var(--brass);font-size:13px;font-weight:500;letter-spacing:.5px;}
 .hero-kicker span{display:block;width:28px;height:1px;background:var(--brass);}
-.hero-split .h-hero{max-width:12ch;margin:18px 0 0;font-size:clamp(42px,6.2vw,72px);line-height:1.22;}
+.hero-split .h-hero{max-width:16ch;margin:18px 0 0;font-size:clamp(42px,5.4vw,64px);line-height:1.24;}
 .hero-split .h-hero span{display:block;color:var(--mint);}
 .hero-split .lede{max-width:46ch;margin-inline:0;}
 .hero-split .actions{justify-content:flex-start;}
@@ -823,20 +823,20 @@ a{color:inherit;}
 .hero-split .btn-primary:hover span{transform:translateX(-4px);}
 
 .hero-journey{
-  list-style:none;margin:34px 0 0;padding:22px 0 0;border-top:1px solid var(--on-dark-line);
+  list-style:none;margin:34px 0 0;padding:22px 0 0;border-top:1px solid var(--on-dark-edge);
   display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;
 }
-.hero-journey li{position:relative;display:flex;align-items:center;gap:9px;color:var(--on-dark-soft);font-size:13px;}
+.hero-journey li{position:relative;display:flex;align-items:center;gap:9px;color:var(--on-dark);font-size:14px;}
 .hero-journey li:not(:last-child)::after{
   content:"";position:absolute;left:8px;width:16px;height:1px;background:var(--on-dark-line);
 }
 .hero-journey span{
-  display:grid;place-items:center;width:26px;height:26px;border:1px solid var(--on-dark-edge);
-  border-radius:var(--radius-full);font-family:var(--serif);font-size:13px;color:var(--brass);flex:none;
+  display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--brass);
+  border-radius:var(--radius-full);font-family:var(--serif);font-size:14px;color:var(--brass);flex:none;
 }
-.hero-journey strong{font-weight:500;color:var(--paper);}
+.hero-journey strong{font-weight:600;color:var(--paper);}
 
-.hero-visual{position:relative;padding:34px 24px 22px;border:1px solid var(--on-dark-line);border-radius:var(--radius-lg);background:color-mix(in srgb,var(--deep-2) 55%,transparent);}
+.hero-visual{position:relative;width:min(100%,460px);justify-self:center;padding:30px 20px 20px;border:1px solid var(--on-dark-line);border-radius:var(--radius-lg);background:color-mix(in srgb,var(--deep-2) 55%,transparent);}
 .hero-visual::before,.hero-visual::after{content:"";position:absolute;width:8px;height:8px;border-color:var(--brass);border-style:solid;}
 .hero-visual::before{top:14px;right:14px;border-width:1px 1px 0 0;}
 .hero-visual::after{bottom:14px;left:14px;border-width:0 0 1px 1px;}
@@ -844,10 +844,10 @@ a{color:inherit;}
 
 .hero-shelf{
   position:relative;display:flex;justify-content:center;align-items:center;
-  min-height:clamp(230px,30vw,340px);
+  min-height:clamp(220px,27vw,310px);
 }
 .hero-shelf .hs-slot{
-  width:clamp(120px,17vw,190px);flex:none;
+  width:clamp(112px,15vw,170px);flex:none;
   transition:transform .3s ease;
 }
 .hero-shelf .cover{box-shadow:0 18px 40px rgba(0,0,0,.34);}
@@ -867,7 +867,7 @@ a{color:inherit;}
 
 @media (max-width:860px){
   .hero-split{grid-template-columns:1fr;gap:34px;}
-  .hero-split .h-hero{max-width:14ch;}
+  .hero-split .h-hero{max-width:16ch;}
   .hero-visual{margin-top:8px;}
   .hero-shelf{min-height:240px;}
   .hero-shelf .hs-slot{width:clamp(96px,26vw,140px);}
@@ -876,10 +876,10 @@ a{color:inherit;}
 @media (max-width:600px){
   .hero::before{background:radial-gradient(circle at 15% 12%,color-mix(in srgb,var(--green) 18%,transparent),transparent 34%);}
   .hero .wrap{padding-block:44px 52px;}
-  .hero-split .h-hero{font-size:clamp(38px,12vw,52px);}
+  .hero-split .h-hero{max-width:15ch;font-size:clamp(36px,11vw,48px);line-height:1.28;}
   .hero-split .lede{font-size:16px;line-height:1.9;}
   .hero-journey{margin-top:28px;padding-top:18px;gap:4px;}
-  .hero-journey li{flex-direction:column;align-items:flex-start;gap:6px;font-size:12px;}
+  .hero-journey li{flex-direction:column;align-items:flex-start;gap:6px;font-size:13px;}
   .hero-journey li:not(:last-child)::after{top:13px;left:5px;width:12px;}
   .hero-visual{padding:26px 12px 16px;}
   .hero-shelf{min-height:210px;}
