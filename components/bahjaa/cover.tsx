@@ -111,9 +111,6 @@ export function Cover({
           className="cover-img"
           loading={priority ? "eager" : "lazy"}
           decoding="async"
-          onError={(event) => {
-            event.currentTarget.style.display = "none";
-          }}
         />
         <span className="cover-mark" aria-hidden="true">
           <CoverSeal slug={slug} />
