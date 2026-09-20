@@ -736,10 +736,44 @@ a{color:inherit;}
 .cover-photo{
   aspect-ratio:2/3;
   position:relative;overflow:hidden;padding:0;
-  background:var(--cat, var(--deep));
-  box-shadow:var(--shadow-2);
+  background:var(--paper);
+  /* المنتج يجب أن يبدو ككتاب حقيقي، لا كصورة مسطحة داخل البطاقة */
+  box-shadow:8px 10px 0 -6px color-mix(in srgb, var(--deep) 22%, transparent), var(--shadow-2);
+  border:1px solid color-mix(in srgb, var(--deep) 16%, transparent);
+  border-radius:2px;
 }
-.cover-img{object-fit:cover;}
+.cover-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;
+  transform:scale(.94) translateX(-1.5%);
+  transform-origin:center;
+  filter:brightness(1.85) saturate(1.12) contrast(1.08) drop-shadow(7px 8px 5px rgb(8 45 35 / .18));
+}
+.cover-photo::after{
+  content:"";
+  position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:none;
+  mix-blend-mode:normal;
+}
+.cover-sprite{
+  aspect-ratio:3/4;
+  padding:0;
+  background-image:url('/covers/bahjaa-realistic-covers.png');
+  background-repeat:no-repeat;
+  background-size:400% 200%;
+  background-color:var(--deep);
+  box-shadow:8px 10px 0 -6px color-mix(in srgb, var(--deep) 22%, transparent),var(--shadow-2);
+  border:1px solid color-mix(in srgb, var(--deep) 16%, transparent);
+}
+.cover-sprite-1{background-position:0 0;}
+.cover-sprite-2{background-position:33.333% 0;}
+.cover-sprite-3{background-position:66.666% 0;}
+.cover-sprite-4{background-position:100% 0;}
+.cover-sprite-5{background-position:0 100%;}
+.cover-sprite-6{background-position:33.333% 100%;}
+.cover-sprite-7{background-position:66.666% 100%;}
+.cover-sprite-8{background-position:100% 100%;}
+.cover-sprite .cover-mark{z-index:2;}
 .cover-mark{
   position:absolute;inset-block-start:8px;inset-inline-start:8px;
   width:34px;height:34px;display:grid;place-items:center;
@@ -748,7 +782,7 @@ a{color:inherit;}
   backdrop-filter:blur(3px);
 }
 .cover-mark .cover-seal{width:100%;height:100%;margin:0;color:var(--cat-accent, var(--brand-mint));}
-.book-card:hover .cover-photo{transform:translateY(-3px);box-shadow:var(--shadow-3);}
+.book-card:hover .cover-photo{transform:translateY(-3px);box-shadow:9px 12px 0 -6px color-mix(in srgb, var(--deep) 25%, transparent),var(--shadow-3);}
 
 /* ── شارة الغلاف ─────────────────────────────────────────
    deep على الذهبي = ٧٫٢٩:١ — محسوبة لا مقدّرة. */
