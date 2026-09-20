@@ -49,7 +49,7 @@ export default async function HomePage() {
     <>
       {/* الهيرو — اللوحة الداكنة الوحيدة في هذه الصفحة.
           الأغلفة من البيانات — أحدث ثلاثة منشورة، لا مختارة يدوياً. */}
-      <HeroSection list={list} catById={catById} />
+      <HeroSection />
 
       {/* شريط الاكتشاف — مباشرة بعد الهيرو، الأقسام الحقيقية فقط */}
       <section className="wrap" aria-label="اكتشف حسب القسم">
