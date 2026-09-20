@@ -4,6 +4,7 @@
 // يحمله خَتْم نجمي مولّد من معرّف الكتاب، لا لون كامل ولا حرف أول.
 // القيم كلها من app/globals.css — لا قيمة hex في هذا الملف.
 
+import Image from "next/image";
 import { seal } from "@/lib/seal";
 
 export const CATEGORY_SLUGS = [
@@ -63,33 +64,6 @@ type Props = {
   className?: string;
 };
 
-/** أغلفة محلية عالية الدقة تُستخدم عندما لا يرسل الملخص cover_url. */
-function localCoverFor(slug: string, title: string): string | null {
-  const key = `${slug} ${title}`.toLowerCase();
-  const covers: Record<string, string> = {
-    "atomic-habits": "/covers/atomic-habits-realistic.png",
-    "psychology-of-money": "/covers/psychology-money.png",
-    "good-to-great": "/covers/good-to-great-realistic.png",
-    "win-friends": "/covers/win-friends-realistic.png",
-    "winning": "/covers/winning-realistic.png",
-    "seven-habits": "/covers/seven-habits-realistic.png",
-    "napoleon-hill": "/covers/napoleon-hill-realistic.png",
-    "lean-startup": "/covers/flexible-company.png",
-    "الشركة الناشئة": "/covers/flexible-company.png",
-    "سيكولوجية المال": "/covers/psychology-money.png",
-    "العادات السبع": "/covers/seven-habits-realistic.png",
-    "العادات الذرية": "/covers/atomic-habits-realistic.png",
-    "قواعد نابليون": "/covers/napoleon-hill-realistic.png",
-    "تكسب الأصدقاء": "/covers/win-friends-realistic.png",
-    "من جيد إلى عظيم": "/covers/good-to-great-realistic.png",
-    "الفوز": "/covers/winning-realistic.png",
-  };
-  const exact = covers[key];
-  if (exact) return exact;
-  const match = Object.keys(covers).find((name) => key.includes(name));
-  return match ? covers[match] : null;
-}
-
 export function Cover({
   title,
   slug,
@@ -105,20 +79,18 @@ export function Cover({
     ["--cat-accent" as string]: accent,
   } as React.CSSProperties;
 
-  // الأصول المحلية الواقعية تتقدم دائمًا على روابط Supabase القديمة أو المعطلة.
-  const resolvedCoverUrl = localCoverFor(slug, title) || coverUrl;
-
   // ── غلاف مصوَّر: نسبة ٢:٣ كأغلفة الكتب المطبوعة،
   //    والخَتْم ينكمش إلى علامة ركن بدل أن يملأ الحقل.
-  if (resolvedCoverUrl) {
+  if (coverUrl) {
     return (
       <div className={`cover cover-photo ${className}`} style={style}>
-        <img
-          src={resolvedCoverUrl}
+        <Image
+          src={coverUrl}
           alt={`غلاف كتاب ${title}`}
+          fill
+          sizes="(max-width:600px) 45vw, (max-width:1000px) 30vw, 260px"
           className="cover-img"
-          loading={priority ? "eager" : "lazy"}
-          decoding="async"
+          priority={priority}
         />
         <span className="cover-mark" aria-hidden="true">
           <CoverSeal slug={slug} />
