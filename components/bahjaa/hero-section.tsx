@@ -90,6 +90,9 @@ export function HeroSection({
                 </div>
                 <div className="hw-iface-body">
                   <span className="hw-iface-lbl">الفكرة المحورية</span>
+                  {featured?.book_title_ar && (
+                    <p className="hw-iface-book-title">{featured.book_title_ar}</p>
+                  )}
                   <div className="hw-iface-lines">
                     <span className="hw-iface-line" style={{width:'88%'}} />
                     <span className="hw-iface-line" style={{width:'74%'}} />
@@ -133,6 +136,12 @@ export function HeroSection({
               <div className="hw-card hw-card-b">
                 <span className="hw-card-icon"><ApplyIcon width={14} height={14} /></span>
                 <span className="hw-card-lbl">مسار التطبيق</span>
+              </div>
+
+              {/* بطاقة ج */}
+              <div className="hw-card hw-card-c">
+                <span className="hw-card-icon"><BusinessIcon width={14} height={14} /></span>
+                <span className="hw-card-lbl">أدوات عملية</span>
               </div>
 
               {/* موتيف زخرفي */}
