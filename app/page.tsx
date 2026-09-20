@@ -9,7 +9,6 @@ import { VisualCTA } from "@/components/bahjaa/visual-cta";
 import { WhyBahjaa } from "@/components/bahjaa/why-bahjaa";
 import { AudienceSection } from "@/components/bahjaa/audience-section";
 import { FinalCTA } from "@/components/bahjaa/final-cta";
-import { InsideSummary } from "@/components/bahjaa/inside-summary";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
 // تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
