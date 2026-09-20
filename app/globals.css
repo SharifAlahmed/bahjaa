@@ -73,20 +73,7 @@
   --font-ar: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
   --font-display: "Amiri", "Times New Roman", serif;
 
-  /* ── توافق: أسماء الهوية السابقة معاد ربطها باللوحة ──
-     تبقى حتى تُعاد كتابة المكوّنات السبعة القديمة، ثم تُحذف.
-     ترتيب الحذف: أعد كتابة المكوّن أولاً، ثم احذف رمزه. */
-  --color-bh-primary:       #177F5E;
-  --color-bh-primary-light: #FFFFFF;
-  --color-bh-primary-dark:  #15332A;
-  --color-bh-bg:            #F7F5EE;
-  --color-bh-surface:       #FFFFFF;
-  --color-bh-border:        #E6ECE9;
-  --color-bh-text:          #15332A;
-  --color-bh-muted:         rgba(21,51,42,.72);
-  --color-bh-trap-bg:       #F7F5EE;
-  --color-bh-trap-border:   #C99A45;
-  --color-bh-trap-text:     #15332A;
+  /* ── توافق: خط وزاوية الهوية السابقة (رموز الألوان القديمة حُذفت) ── */
   --font-bh: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
   --radius-bh: 8px;
 }
@@ -553,7 +540,7 @@ a{color:inherit;}
 .bh-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--radius-sm);box-shadow:var(--shadow-1);}
 
 /* الفخ الشائع — يبقى كما هو، فهو جزء من نظام الملخص */
-.bh-trap{background:var(--color-bh-trap-bg);border-inline-start:3px solid var(--color-bh-trap-border);color:var(--color-bh-trap-text);border-radius:var(--radius-sm);}
+.bh-trap{background:var(--color-background);border-inline-start:3px solid var(--color-accent-gold);color:var(--color-brand-dark);border-radius:var(--radius-sm);}
 
 /* تدرّج الإخفاء فوق الجدار */
 .bh-fade{-webkit-mask-image:linear-gradient(to bottom,var(--mask-solid) 0%,transparent 100%);mask-image:linear-gradient(to bottom,var(--mask-solid) 0%,transparent 100%);}

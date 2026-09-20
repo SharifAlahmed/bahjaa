@@ -125,7 +125,7 @@ export default function LoginForm({
   if (step === "code") {
     return (
       <form onSubmit={verify} className="mt-8">
-        <div className="bh-card p-4 bg-bh-primary-light border-bh-primary text-center mb-6">
+        <div className="bh-card p-4 bg-surface border-brand-ink text-center mb-6">
           <p className="bh-body">
             أرسلنا رمز الدخول إلى
             <br />
@@ -155,13 +155,13 @@ export default function LoginForm({
           }}
           placeholder="••••••••"
           dir="ltr"
-          className="w-full rounded-xl border border-bh-border bg-bh-bg px-4 py-4 text-center text-[26px] font-black tracking-[0.35em] outline-none focus:border-bh-primary focus:ring-2 focus:ring-bh-primary/20 transition"
+          className="w-full rounded-xl border border-border bg-background px-4 py-4 text-center text-[26px] font-black tracking-[0.35em] outline-none focus:border-brand-ink focus:ring-2 focus:ring-brand-ink/20 transition"
         />
 
         <button
           type="submit"
           disabled={busy || done || code.length < 6}
-          className="w-full mt-4 rounded-xl bg-bh-primary text-white font-bold py-3.5 hover:bg-bh-primary-dark transition disabled:opacity-50"
+          className="w-full mt-4 rounded-xl bg-brand-ink text-white font-bold py-3.5 hover:bg-brand-dark transition disabled:opacity-50"
         >
           {done ? "تم — جارٍ فتح الملخصات…" : busy ? "جارٍ التحقق…" : "ادخل"}
         </button>
@@ -177,12 +177,12 @@ export default function LoginForm({
             type="button"
             onClick={() => sendCode()}
             disabled={cooldown > 0 || busy}
-            className="font-bold text-bh-primary hover:text-bh-primary-dark transition disabled:text-bh-muted disabled:cursor-default"
+            className="font-bold text-brand-ink hover:text-brand-dark transition disabled:text-ink-soft disabled:cursor-default"
           >
             {cooldown > 0 ? `إعادة الإرسال بعد ${cooldown} ثانية` : "أرسل رمزاً جديداً"}
           </button>
 
-          <span className="text-bh-border">·</span>
+          <span className="text-border">·</span>
 
           <button
             type="button"
@@ -191,7 +191,7 @@ export default function LoginForm({
               setError("");
               setCode("");
             }}
-            className="font-bold text-bh-muted hover:text-bh-primary-dark transition"
+            className="font-bold text-ink-soft hover:text-brand-dark transition"
           >
             تغيير البريد
           </button>
@@ -223,13 +223,13 @@ export default function LoginForm({
           setError("");
         }}
         placeholder="you@example.com"
-        className="w-full rounded-xl border border-bh-border bg-bh-bg px-4 py-3 text-[15px] outline-none focus:border-bh-primary focus:ring-2 focus:ring-bh-primary/20 transition"
+        className="w-full rounded-xl border border-border bg-background px-4 py-3 text-[15px] outline-none focus:border-brand-ink focus:ring-2 focus:ring-brand-ink/20 transition"
       />
 
       <button
         type="submit"
         disabled={busy}
-        className="w-full rounded-xl bg-bh-primary text-white font-bold py-3.5 hover:bg-bh-primary-dark transition disabled:opacity-60"
+        className="w-full rounded-xl bg-brand-ink text-white font-bold py-3.5 hover:bg-brand-dark transition disabled:opacity-60"
       >
         {busy ? "جارٍ الإرسال…" : submitLabel}
       </button>

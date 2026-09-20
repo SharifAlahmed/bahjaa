@@ -11,7 +11,7 @@ export default function SummaryFree({ c }: { c: ContentFree }) {
       {/* ١ — ملخص الـ٣٠ ثانية */}
       {(s1.problem || s1.core_idea || s1.verdict) && (
         <Section num={1} title="ملخص الـ٣٠ ثانية">
-          <p className="bh-body mb-4 text-bh-muted">
+          <p className="bh-body mb-4 text-ink-soft">
             قبل أن تقرأ السطر الأول — إليك كل ما تحتاج معرفته عن هذا الكتاب في ٣٠ ثانية
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -53,7 +53,7 @@ export default function SummaryFree({ c }: { c: ContentFree }) {
               <ul className="space-y-2.5 mb-4">
                 {s3.questions.map((q, i) => (
                   <li key={i} className="flex gap-2.5">
-                    <span className="text-bh-primary font-bold shrink-0">؟</span>
+                    <span className="text-brand-ink font-bold shrink-0">؟</span>
                     <span className="bh-body">{q}</span>
                   </li>
                 ))}
@@ -64,7 +64,7 @@ export default function SummaryFree({ c }: { c: ContentFree }) {
             )}
             {s3.gains && <p className="bh-body">{s3.gains}</p>}
             {s3.author_note && (
-              <p className="bh-sub mt-4 pt-4 border-t border-bh-border">
+              <p className="bh-sub mt-4 pt-4 border-t border-border">
                 {s3.author_note}
               </p>
             )}
@@ -78,7 +78,7 @@ export default function SummaryFree({ c }: { c: ContentFree }) {
           <p className="bh-sub mb-3">
             إذا نسيت كل شيء وتذكّرت جملة واحدة فقط
           </p>
-          <div className="rounded-xl bg-bh-primary text-white text-center px-6 py-8">
+          <div className="rounded-xl bg-brand-ink text-white text-center px-6 py-8">
             <p className="text-[22px] font-black leading-[1.7]">{c.s4.text}</p>
           </div>
         </Section>

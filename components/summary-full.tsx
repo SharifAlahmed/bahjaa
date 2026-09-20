@@ -6,9 +6,9 @@ import { toArabicDigits } from "@/components/bahjaa/format";
 function Score({ n }: { n: number }) {
   const filled = Math.max(0, Math.min(10, Math.round(n)));
   return (
-    <span className="font-black text-bh-primary text-lg">
+    <span className="font-black text-brand-ink text-lg">
       {toArabicDigits(filled)}
-      <span className="text-bh-muted text-sm font-bold"> من ١٠</span>
+      <span className="text-ink-soft text-sm font-bold"> من ١٠</span>
     </span>
   );
 }
@@ -31,8 +31,8 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
             {pillars.map((p, i) => (
               <div key={i}>
                 <article className="bh-card overflow-hidden">
-                  <header className="bg-bh-primary-light px-5 py-3">
-                    <h3 className="bh-pillar-title text-bh-primary-dark">
+                  <header className="bg-surface px-5 py-3">
+                    <h3 className="bh-pillar-title text-brand-dark">
                       {toArabicDigits(i + 1)}. {p.title}
                     </h3>
                   </header>
@@ -56,7 +56,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
                 </article>
                 {i < pillars.length - 1 && (
                   <div className="flex justify-center py-1">
-                    <span className="text-bh-primary text-sm font-bold">↓</span>
+                    <span className="text-brand-ink text-sm font-bold">↓</span>
                   </div>
                 )}
               </div>
@@ -76,8 +76,8 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
                     والخط المشجّر تحمل التمييز بدلاً منه. */}
                 <p className="quote-ar">«{q.quote}»</p>
                 {q.interpretation && (
-                  <div className="mt-4 pt-4 border-t border-bh-border">
-                    <p className="text-[14px] font-bold text-bh-primary mb-1.5">
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <p className="text-[14px] font-bold text-brand-ink mb-1.5">
                       تفسير فريق بهجة
                     </p>
                     <p className="text-[13px] leading-[1.95]">{q.interpretation}</p>
@@ -107,7 +107,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
               ) : null
             )}
             {s7.lesson && (
-              <div className="bg-bh-primary-light rounded-lg p-4">
+              <div className="bg-surface rounded-lg p-4">
                 <p className="bh-card-label mb-1">الدرس</p>
                 <p className="bh-body">{s7.lesson}</p>
               </div>
@@ -119,33 +119,33 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
       {/* 8 — مسار التحويل (القسم المحوري) */}
       {s8 && (
         <Section num={8} title="مسار التحويل — من المعرفة إلى التطبيق">
-          <div className="rounded-xl border-[1.5px] border-bh-primary overflow-hidden bg-bh-surface">
-            <header className="bg-bh-primary text-white px-5 py-3">
+          <div className="rounded-xl border-[1.5px] border-brand-ink overflow-hidden bg-surface">
+            <header className="bg-brand-ink text-white px-5 py-3">
               <p className="font-black text-[15px]">
                 هنا يتحوّل ما قرأته إلى أثر قابل للقياس
               </p>
             </header>
 
-            <div className="grid sm:grid-cols-2 gap-px bg-bh-border">
+            <div className="grid sm:grid-cols-2 gap-px bg-border">
               {([
                 ["١ — التشخيص", s8.diagnosis],
                 ["٢ — الخطوة الصفرية (٥ دقائق كحد أقصى)", s8.zero_step],
               ] as const).map(([label, val]) =>
                 val ? (
-                  <div key={label} className="bg-bh-surface p-5">
+                  <div key={label} className="bg-surface p-5">
                     <p className="bh-card-label mb-1.5">{label}</p>
                     <p className="bh-body">{val}</p>
                   </div>
                 ) : null
               )}
 
-              <div className="bg-bh-surface p-5">
+              <div className="bg-surface p-5">
                 <p className="bh-card-label mb-1.5">٣ — خطة الأسبوع الأول</p>
                 {s8.week_plan && s8.week_plan.length > 0 ? (
                   <ol className="space-y-2">
                     {s8.week_plan.map((d, i) => (
                       <li key={i} className="flex gap-2">
-                        <span className="shrink-0 w-5 h-5 grid place-items-center rounded-full bg-bh-primary-light text-bh-primary text-[11px] font-bold mt-0.5">
+                        <span className="shrink-0 w-5 h-5 grid place-items-center rounded-full bg-surface text-brand-ink text-[11px] font-bold mt-0.5">
                           {toArabicDigits(i + 1)}
                         </span>
                         <span className="bh-body">{d}</span>
@@ -155,14 +155,14 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
                 ) : null}
               </div>
 
-              <div className="bg-bh-surface p-5">
+              <div className="bg-surface p-5">
                 <p className="bh-card-label mb-1.5">٤ — السؤال المحوري للفريق</p>
                 {s8.team_question ? <p className="bh-body">{s8.team_question}</p> : null}
               </div>
             </div>
 
             {s8.success_marker && (
-              <footer className="bg-bh-primary-light px-5 py-4">
+              <footer className="bg-surface px-5 py-4">
                 <p className="bh-card-label mb-1">مؤشر النجاح بعد ٣٠ يوماً</p>
                 <p className="bh-body">{s8.success_marker}</p>
               </footer>
@@ -174,8 +174,8 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
       {/* 9 — رؤية فريق بهجة النقدية */}
       {s9 && (s9.liked || s9.wished || s9.arab_context) && (
         <Section num={9} title="رؤية فريق بهجة النقدية">
-          <div className="rounded-xl border border-bh-primary overflow-hidden bg-bh-surface">
-            <header className="bg-bh-primary-light px-5 py-3">
+          <div className="rounded-xl border border-brand-ink overflow-hidden bg-surface">
+            <header className="bg-surface px-5 py-3">
               <p className="bh-card-label">رأي محلل — لا نقل محايد</p>
             </header>
             <div className="p-5 space-y-5">
@@ -199,7 +199,7 @@ export default function SummaryFull({ c }: { c: ContentFull }) {
       {/* 10 — التقييم */}
       {s10 && (
         <Section num={10} title="تقييم فريق بهجة">
-          <div className="bh-card divide-y divide-bh-border">
+          <div className="bh-card divide-y divide-border">
             {([
               ["القيمة للقائد المشغول", s10.value, s10.justifications?.value],
               ["قابلية التطبيق الفوري", s10.applicability, s10.justifications?.applicability],

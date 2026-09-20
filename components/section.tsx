@@ -14,10 +14,10 @@ export function Section({
   return (
     <section id={`sec-${num}`} className={`bh-anchor mt-10 ${className}`}>
       <div className="flex items-center gap-3 mb-4">
-        <span className="bh-sec-num text-bh-primary bg-bh-primary-light px-2.5 py-1 rounded-full shrink-0">
+        <span className="bh-sec-num text-brand-ink bg-surface px-2.5 py-1 rounded-full shrink-0">
           القسم {toArabicDigits(num)}
         </span>
-        <h2 className="bh-sec-title text-bh-primary-dark">{title}</h2>
+        <h2 className="bh-sec-title text-brand-dark">{title}</h2>
       </div>
       {children}
     </section>

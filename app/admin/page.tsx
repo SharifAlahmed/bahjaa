@@ -29,13 +29,13 @@ export default async function AdminPage() {
     return (
       <div className="mx-auto max-w-md px-4 py-24 text-center">
         <div className="bh-card p-8">
-          <h1 className="bh-sec-title text-bh-primary-dark">لوحة التحكم</h1>
+          <h1 className="bh-sec-title text-brand-dark">لوحة التحكم</h1>
           <p className="bh-body mt-3">
             هذه الصفحة للأدمن فقط. سجّل الدخول بإيميل الأدمن.
           </p>
           <Link
             href="/login?next=/admin"
-            className="inline-block mt-6 px-6 py-3 rounded-xl bg-bh-primary text-white font-bold hover:bg-bh-primary-dark transition"
+            className="inline-block mt-6 px-6 py-3 rounded-xl bg-brand-ink text-white font-bold hover:bg-brand-dark transition"
           >
             دخول
           </Link>
@@ -58,7 +58,7 @@ export default async function AdminPage() {
     <div className="mx-auto max-w-4xl px-4 py-12">
       <div className="flex items-end justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="bh-sec-title text-bh-primary-dark">لوحة التحكم</h1>
+          <h1 className="bh-sec-title text-brand-dark">لوحة التحكم</h1>
           <p className="bh-sub mt-1">{email}</p>
         </div>
         <div className="flex gap-3">
@@ -67,7 +67,7 @@ export default async function AdminPage() {
         </div>
       </div>
 
-      <div className="bh-card p-5 mt-6 bg-bh-primary-light border-bh-primary">
+      <div className="bh-card p-5 mt-6 bg-surface border-brand-ink">
         <p className="bh-card-label mb-1">كيف تضيف ملخصاً</p>
         <p className="bh-body">
           أرسل لكلود: «لخّص وانشر كتاب [الاسم]». سيصل هنا كمسودة خلال دقائق، تراجعه وتضغط
@@ -84,7 +84,7 @@ export default async function AdminPage() {
 function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div className="bh-card px-4 py-2 text-center">
-      <p className="font-black text-xl text-bh-primary tabular-nums">{value}</p>
+      <p className="font-black text-xl text-brand-ink tabular-nums">{value}</p>
       <p className="bh-sub text-xs">{label}</p>
     </div>
   );
@@ -93,17 +93,17 @@ function Stat({ label, value }: { label: string; value: number }) {
 function Group({ title, rows, empty }: { title: string; rows: Row[]; empty: string }) {
   return (
     <section className="mt-10">
-      <h2 className="bh-pillar-title text-bh-primary-dark mb-3">{title}</h2>
+      <h2 className="bh-pillar-title text-brand-dark mb-3">{title}</h2>
       {rows.length === 0 ? (
         <div className="bh-card p-6 text-center">
           <p className="bh-sub">{empty}</p>
         </div>
       ) : (
-        <div className="bh-card divide-y divide-bh-border">
+        <div className="bh-card divide-y divide-border">
           {rows.map((r) => (
             <div key={r.id} className="p-4 flex flex-wrap items-center gap-3">
               <div className="min-w-0 flex-1">
-                <p className="bh-pillar-title text-bh-primary-dark truncate">
+                <p className="bh-pillar-title text-brand-dark truncate">
                   {r.book_title_ar}
                 </p>
                 <p className="bh-sub text-xs truncate">
@@ -116,20 +116,20 @@ function Group({ title, rows, empty }: { title: string; rows: Row[]; empty: stri
               <div className="flex items-center gap-2 shrink-0">
                 <Link
                   href={`/admin/preview/${r.slug}`}
-                  className="px-3 py-1.5 rounded-lg border border-bh-border text-sm font-bold text-bh-muted hover:bg-bh-bg transition"
+                  className="px-3 py-1.5 rounded-lg border border-border text-sm font-bold text-ink-soft hover:bg-background transition"
                 >
                   معاينة
                 </Link>
 
                 {r.status === "draft" ? (
                   <form action={publishSummary.bind(null, r.id, r.slug)}>
-                    <button className="px-3 py-1.5 rounded-lg bg-bh-primary text-white text-sm font-bold hover:bg-bh-primary-dark transition">
+                    <button className="px-3 py-1.5 rounded-lg bg-brand-ink text-white text-sm font-bold hover:bg-brand-dark transition">
                       نشر
                     </button>
                   </form>
                 ) : (
                   <form action={unpublishSummary.bind(null, r.id, r.slug)}>
-                    <button className="px-3 py-1.5 rounded-lg border border-bh-border text-sm font-bold text-bh-muted hover:bg-bh-bg transition">
+                    <button className="px-3 py-1.5 rounded-lg border border-border text-sm font-bold text-ink-soft hover:bg-background transition">
                       إخفاء
                     </button>
                   </form>

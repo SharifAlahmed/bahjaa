@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Cover, type CategorySlug } from "@/components/bahjaa/cover";
+import { type CategorySlug } from "@/components/bahjaa/cover";
+import { BookCard } from "@/components/bahjaa/book-card";
 
 import { CategoryStrip } from "@/components/bahjaa/category-strip";
 import { HeroSection } from "@/components/bahjaa/hero-section";
