@@ -823,7 +823,7 @@ a{color:inherit;}
   position:absolute;
   inset-inline-start:0;
   inset-block-start:0;
-  width:74%;
+  width:78%;
   background:var(--paper);
   border-radius:var(--radius-sm);
   border:1px solid var(--rule);
@@ -865,12 +865,12 @@ a{color:inherit;}
 /* كتاب خلفي — يتراجع خلف الواجهة، مائل، شبه شفاف */
 .hw-book-bg{
   position:absolute;
-  inset-inline-end:0;
-  inset-block-start:0;
-  width:clamp(108px,14.5vw,144px);
+  inset-inline-end:8%;
+  inset-block-start:12%;
+  width:clamp(96px,12.5vw,124px);
   z-index:1;
-  transform:rotate(5deg);
-  opacity:.42;
+  transform:rotate(4deg);
+  opacity:.28;
   filter:drop-shadow(0 10px 22px rgba(11,20,18,.5));
   pointer-events:none;
 }
@@ -878,9 +878,9 @@ a{color:inherit;}
 /* كتاب أمامي — البطل، يتقدّم على الواجهة */
 .hw-book-fg{
   position:absolute;
-  inset-inline-start:4%;
-  inset-block-end:0;
-  width:clamp(142px,18.5vw,188px);
+  inset-inline-end:2%;
+  inset-block-end:-24px;
+  width:clamp(148px,19vw,192px);
   z-index:4;
   transform:rotate(-2.2deg);
   filter:drop-shadow(0 30px 56px rgba(11,20,18,.72));
@@ -898,8 +898,8 @@ a{color:inherit;}
 }
 .hw-card-icon{display:flex;align-items:center;color:var(--green-ink);flex:none;}
 .hw-card-lbl{font-size:12px;font-weight:600;color:var(--ink);line-height:1;}
-.hw-card-a{inset-inline-end:6px;inset-block-start:48px;transform:rotate(-1.5deg);}
-.hw-card-b{inset-inline-start:4px;inset-block-end:88px;transform:rotate(1.2deg);}
+.hw-card-a{inset-inline-start:6px;inset-block-start:40px;transform:rotate(-1.5deg);}
+.hw-card-b{inset-inline-end:8px;inset-block-end:100px;transform:rotate(1.2deg);}
 
 /* موتيف بهجة الزخرفي */
 .hw-motif{
@@ -922,7 +922,7 @@ a{color:inherit;}
 }
 
 /* بطاقة ج */
-.hw-card-c{inset-inline-end:4px;inset-block-end:18px;transform:rotate(.8deg);}
+.hw-card-c{inset-inline-start:8px;inset-block-end:22px;transform:rotate(.8deg);}
 
 /* عنوان الكتاب في الواجهة */
 .hw-iface-book-title{
