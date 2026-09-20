@@ -724,6 +724,33 @@ a{color:inherit;}
 .top-strip svg{color:var(--brass);flex:none;}
 @media (max-width:760px){ .top-strip .hide-sm{display:none;} }
 
+/* ── شريط الأقسام الستة ──────────────────────────────────
+   كل خانة رابط كامل، والعدّاد من البيانات. */
+.cat-strip{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  border-block:1px solid var(--rule);
+}
+.cat-cell{
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  padding:26px 12px;text-decoration:none;color:inherit;
+  border-inline-start:1px solid var(--rule);
+  transition:background .18s ease;
+}
+.cat-cell:first-child{border-inline-start:0;}
+.cat-cell:hover{background:var(--paper-2);}
+.cat-cell svg{color:var(--brass-ink);}
+.cat-cell:hover svg{color:var(--green-ink);}
+.cat-name{font-family:var(--sans);font-size:15px;font-weight:500;line-height:1.5;color:var(--ink);text-align:center;}
+.cat-count{font-size:12px;line-height:1.6;color:var(--ink-muted);}
+@media (max-width:900px){ .cat-strip{grid-template-columns:repeat(3,1fr);}
+  .cat-cell:nth-child(3n+1){border-inline-start:0;}
+  .cat-cell:nth-child(n+4){border-top:1px solid var(--rule);} }
+@media (max-width:480px){ .cat-strip{grid-template-columns:repeat(2,1fr);}
+  .cat-cell{padding:20px 8px;}
+  .cat-cell:nth-child(3n+1){border-inline-start:1px solid var(--rule);}
+  .cat-cell:nth-child(2n+1){border-inline-start:0;}
+  .cat-cell:nth-child(n+3){border-top:1px solid var(--rule);} }
+
 /* ── البطل المقسوم ───────────────────────────────────────
    النصّ في البداية، ورفّ ثلاثة أغلفة متراكبة في النهاية.
    مخفيّ عن قارئ الشاشة: زخرفة لا محتوى (العناوين نفسها أسفل الصفحة). */
@@ -732,6 +759,10 @@ a{color:inherit;}
   align-items:center;text-align:start;
 }
 .hero-split .h-hero{max-width:none;margin-inline:0;font-size:clamp(42px,8vw,76px);}
+  display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);
+  align-items:center;text-align:start;
+}
+.hero-split .h-hero{max-width:none;margin-inline:0;}
 .hero-split .lede{max-width:46ch;margin-inline:0;}
 .hero-split .actions{justify-content:flex-start;}
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { type CategorySlug } from "@/components/bahjaa/cover";
+import { Cover, type CategorySlug } from "@/components/bahjaa/cover";
 import { BookCard } from "@/components/bahjaa/book-card";
 import { HeroSection } from "@/components/bahjaa/hero-section";
 import { CategoryStrip } from "@/components/bahjaa/category-strip";
@@ -9,6 +9,9 @@ import { VisualCTA } from "@/components/bahjaa/visual-cta";
 import { WhyBahjaa } from "@/components/bahjaa/why-bahjaa";
 import { AudienceSection } from "@/components/bahjaa/audience-section";
 import { FinalCTA } from "@/components/bahjaa/final-cta";
+import { TrustBar } from "@/components/bahjaa/trust-bar";
+import { InsideSummary } from "@/components/bahjaa/inside-summary";
+import { CategoryStrip } from "@/components/bahjaa/category-strip";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
 // تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
