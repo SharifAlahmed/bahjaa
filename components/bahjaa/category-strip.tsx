@@ -1,12 +1,14 @@
-// components/bahjaa/category-strip.tsx — الأقسام الستة بأيقونات.
+// components/bahjaa/category-strip.tsx — شريط الاكتشاف بعد الهيرو مباشرة.
 //
-// العدّاد من البيانات لا من تقدير، وصيغته عربية سليمة عبر countLabel.
+// الأقسام الستة الحقيقية فقط، بأيقونات، على هيئة رقائق (chips) قابلة
+// للسحب أفقياً على الجوال. لا نوع محتوى وهمي: كل خانة هنا رابط حقيقي
+// إلى صفحة قسم فيها ملخصات فعلاً. العدّاد من البيانات لا من تقدير.
 import Link from 'next/link'
 import { countLabel } from './format'
 import type { CategorySlug } from './cover'
 import {
   LeadershipIcon, EntrepreneurshipIcon, ProductivityIcon,
-  StrategyIcon, TeamsIcon, BusinessIcon,
+  StrategyIcon, TeamsIcon, BusinessIcon, BookmarkIcon,
 } from './icons'
 
 const ICONS = {
@@ -20,20 +22,31 @@ const ICONS = {
 
 export type StripItem = { slug: string; name: string; count: number }
 
-export function CategoryStrip({ items }: { items: StripItem[] }) {
+export function CategoryStrip({ items, total }: { items: StripItem[]; total: number }) {
   if (!items.length) return null
   return (
-    <nav className="cat-strip" aria-label="تصفّح حسب القسم">
-      {items.map((c) => {
-        const Icon = ICONS[c.slug as CategorySlug] ?? BusinessIcon
-        return (
-          <Link className="cat-cell" href={`/c/${c.slug}`} key={c.slug}>
-            <Icon width={24} height={24} />
-            <span className="cat-name">{c.name}</span>
-            <span className="cat-count">{countLabel(c.count)}</span>
+    <nav className="discovery-bar" aria-label="اكتشف حسب القسم">
+      <ul className="discovery-scroll">
+        <li>
+          <Link className="discovery-chip discovery-chip-all" href="/categories">
+            <BookmarkIcon width={20} height={20} />
+            <span className="chip-name">كل الملخصات</span>
+            <span className="chip-count">{countLabel(total)}</span>
           </Link>
-        )
-      })}
+        </li>
+        {items.map((c) => {
+          const Icon = ICONS[c.slug as CategorySlug] ?? BusinessIcon
+          return (
+            <li key={c.slug}>
+              <Link className="discovery-chip" href={`/c/${c.slug}`}>
+                <Icon width={20} height={20} />
+                <span className="chip-name">{c.name}</span>
+                <span className="chip-count">{countLabel(c.count)}</span>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
     </nav>
   )
 }

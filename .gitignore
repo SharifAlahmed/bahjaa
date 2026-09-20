@@ -23,3 +23,9 @@ _kit/
 *.tgz
 *.zip
 .trash/
+.claude/skills/
+
+# لقطات المراجعة وقفل المهارات — ليست من المنتج
+Claude outputs/
+skills-lock.json
+.claude/

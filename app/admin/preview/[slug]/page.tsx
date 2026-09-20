@@ -29,16 +29,16 @@ export default async function PreviewPage({
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12">
-      <div className="bh-card p-4 mb-8 flex items-center justify-between gap-3 flex-wrap bg-bh-trap-bg border-bh-trap-border">
-        <p className="text-[14px] font-bold text-bh-trap-text">
+      <div className="bh-card p-4 mb-8 flex items-center justify-between gap-3 flex-wrap bg-background border-accent-gold">
+        <p className="text-[14px] font-bold text-brand-dark">
           معاينة الأدمن · الحالة: {s.status === "published" ? "منشور" : "مسودة"}
         </p>
-        <Link href="/admin" className="text-sm font-bold text-bh-primary-dark hover:underline">
+        <Link href="/admin" className="text-sm font-bold text-brand-dark hover:underline">
           ← عودة للوحة
         </Link>
       </div>
 
-      <h1 className="text-3xl font-black leading-[1.45] text-bh-primary-dark">
+      <h1 className="text-3xl font-black leading-[1.45] text-brand-dark">
         {s.book_title_ar}
       </h1>
       {s.author && <p className="bh-body mt-1">{s.author}</p>}

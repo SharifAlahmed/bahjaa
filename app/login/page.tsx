@@ -21,7 +21,7 @@ export default async function LoginPage() {
   return (
     <div className="mx-auto max-w-md px-4 py-20">
       <div className="bh-card p-8">
-        <h1 className="bh-sec-title text-bh-primary-dark text-center">
+        <h1 className="bh-sec-title text-brand-dark text-center">
           افتح الملخصات كاملة
         </h1>
         <p className="bh-body text-center mt-2">

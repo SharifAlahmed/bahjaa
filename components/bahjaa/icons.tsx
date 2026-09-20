@@ -77,3 +77,35 @@ export const TeamsIcon = (p: SVGProps<SVGSVGElement>) => (
 export const BusinessIcon = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base} {...p}><path d="M4 19h16" /><path d="M7 19v-5" /><path d="M12 19V8" /><path d="M17 19v-8" /></svg>
 )
+
+/* ── أيقونات رحلة المعرفة — افهم / استخرج / طبّق / قِس ─────────
+   نفس الشبكة والسماكة. «قِس» تُعاد استخدام BusinessIcon (رسم صاعد)
+   بلا داعٍ لأيقونة جديدة — نفس المعنى بالضبط. */
+
+/** افهم — كتاب مفتوح */
+export const UnderstandIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M12 6.5c-1.8-1.3-4-2-6.5-2v13c2.5 0 4.7.7 6.5 2" />
+    <path d="M12 6.5c1.8-1.3 4-2 6.5-2v13c-2.5 0-4.7.7-6.5 2" />
+    <path d="M12 6.5v13" />
+  </svg>
+)
+
+/** استخرج — مصفاة: يفصل الجوهر عمّا حوله */
+export const ExtractIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M4 4h16l-6 8v6l-4 2v-8z" />
+  </svg>
+)
+
+/** طبّق — قائمة تنفيذ بعلامات صح */
+export const ApplyIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="m4.5 7 1.6 1.6L8.5 6" />
+    <path d="M11 7h8.5" />
+    <path d="m4.5 13 1.6 1.6L8.5 12" />
+    <path d="M11 13h8.5" />
+    <path d="M4.5 19h1.6" />
+    <path d="M11 19h8.5" />
+  </svg>
+)
