@@ -65,17 +65,17 @@ type Props = {
 };
 
 /** أغلفة محلية عالية الدقة تُستخدم عندما لا يرسل الملخص cover_url. */
-function localCoverSlot(slug: string): number | null {
+function localCoverFor(slug: string): string | null {
   const key = slug.toLowerCase();
-  const covers: Record<string, number> = {
-    "atomic-habits": 3,
-    "psychology-of-money": 2,
-    "good-to-great": 4,
-    "win-friends": 5,
-    "winning": 6,
-    "seven-habits": 7,
-    "napoleon-hill": 8,
-    "lean-startup": 1,
+  const covers: Record<string, string> = {
+    "atomic-habits": "/covers/atomic-habits-realistic.png",
+    "psychology-of-money": "/covers/psychology-money.png",
+    "good-to-great": "/covers/good-to-great-realistic.png",
+    "win-friends": "/covers/win-friends-realistic.png",
+    "winning": "/covers/winning-realistic.png",
+    "seven-habits": "/covers/seven-habits-realistic.png",
+    "napoleon-hill": "/covers/napoleon-hill-realistic.png",
+    "lean-startup": "/covers/flexible-company.png",
   };
   const exact = covers[key];
   if (exact) return exact;
@@ -98,8 +98,7 @@ export function Cover({
     ["--cat-accent" as string]: accent,
   } as React.CSSProperties;
 
-  const spriteSlot = localCoverSlot(slug);
-  const resolvedCoverUrl = coverUrl;
+  const resolvedCoverUrl = coverUrl || localCoverFor(slug);
 
   // ── غلاف مصوَّر: نسبة ٢:٣ كأغلفة الكتب المطبوعة،
   //    والخَتْم ينكمش إلى علامة ركن بدل أن يملأ الحقل.
@@ -117,14 +116,6 @@ export function Cover({
         <span className="cover-mark" aria-hidden="true">
           <CoverSeal slug={slug} />
         </span>
-      </div>
-    );
-  }
-
-  if (spriteSlot) {
-    return (
-      <div className={`cover cover-sprite cover-sprite-${spriteSlot} ${className}`} style={style} role="img" aria-label={`غلاف كتاب ${title}`}>
-        <span className="cover-mark" aria-hidden="true"><CoverSeal slug={slug} /></span>
       </div>
     );
   }
