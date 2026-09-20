@@ -684,16 +684,8 @@ a{color:inherit;}
   box-shadow:var(--shadow-1);
 }
 
-/* ── الشريط العلوي الرفيع ────────────────────────────────
-   حقائق ثابتة في النموذج، لا أرقام تسويقية. */
-.top-strip{background:var(--deep-2);color:var(--on-dark-soft);}
-.top-strip ul{
-  list-style:none;margin:0;padding:0;min-height:36px;
-  display:flex;align-items:center;gap:26px;flex-wrap:wrap;
-}
-.top-strip li{display:inline-flex;align-items:center;gap:7px;font-size:12px;line-height:1.6;}
-.top-strip svg{color:var(--brass);flex:none;}
-@media (max-width:760px){ .top-strip .hide-sm{display:none;} }
+/* ── الشريط العلوي الرفيع — شريط أسود بلا نص ─────────────── */
+.top-strip{background:var(--deep-2);height:10px;}
 
 /* ── شريط الأقسام الستة ──────────────────────────────────
    كل خانة رابط كامل، والعدّاد من البيانات. */
