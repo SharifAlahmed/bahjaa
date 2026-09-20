@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="mx-auto max-w-md px-4 py-24 text-center">
-      <p className="text-5xl font-black text-surface">404</p>
+      <p className="text-5xl font-black text-brand-ink">404</p>
       <h1 className="bh-sec-title text-brand-dark mt-3">
         لا يوجد شيء هنا
       </h1>
