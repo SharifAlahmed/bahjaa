@@ -27,12 +27,6 @@ export default async function SiteHeader() {
             alt=""
             priority
           />
-          {/* الاسم نصاً: تفاصيل الملف كثيرة على مقاس الترويسة فلا تُقرأ.
-              العلامة تبقى كما هي، والكلمة تحمل القراءة. */}
-          <span className="logo-word">
-            <span className="logo">بهجة</span>
-            <span className="logo-tag">نحوّل المعرفة إلى أثر</span>
-          </span>
         </Link>
 
         <nav className="site-nav" aria-label="التنقل الرئيسي">

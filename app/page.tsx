@@ -46,7 +46,7 @@ export default async function HomePage() {
       <section className="hero" aria-labelledby="hero-title">
         <div className="wrap hero-split">
           <div className="hero-copy">
-            <p className="hero-kicker"><span aria-hidden="true" />منصة معرفة عربية للتطبيق</p>
+            <p className="hero-kicker"><span aria-hidden="true" />منصة عربية تحوّل المعرفة إلى عمل</p>
             <h1 className="h-hero" id="hero-title">
               لا تكتفِ بأن تعرف.
               <span>حوّل ما تقرأ إلى أثر.</span>
@@ -74,7 +74,7 @@ export default async function HomePage() {
 
           {list.length > 0 && (
             <div className="hero-visual" aria-label="أحدث ملخصات بهجة">
-              <p className="hero-visual-label">مختارة لك الآن</p>
+              <p className="hero-visual-label">ابدأ من كتاب يشبه سؤالك اليوم</p>
               <div className="hero-shelf" aria-hidden="true">
               {list.slice(0, 3).map((s, i) => {
                 const cat = s.category_id ? catById.get(s.category_id) : undefined;
