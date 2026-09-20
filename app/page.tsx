@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Cover, type CategorySlug } from "@/components/bahjaa/cover";
-import { BookCard } from "@/components/bahjaa/book-card";
+
 import { CategoryStrip } from "@/components/bahjaa/category-strip";
 import { HeroSection } from "@/components/bahjaa/hero-section";
 import { KnowledgeJourney } from "@/components/bahjaa/knowledge-journey";
@@ -9,7 +9,6 @@ import { VisualCTA } from "@/components/bahjaa/visual-cta";
 import { WhyBahjaa } from "@/components/bahjaa/why-bahjaa";
 import { AudienceSection } from "@/components/bahjaa/audience-section";
 import { FinalCTA } from "@/components/bahjaa/final-cta";
-import { TrustBar } from "@/components/bahjaa/trust-bar";
 import { InsideSummary } from "@/components/bahjaa/inside-summary";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
