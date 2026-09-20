@@ -97,7 +97,8 @@ export function Cover({
     ["--cat-accent" as string]: accent,
   } as React.CSSProperties;
 
-  const resolvedCoverUrl = coverUrl || localCoverFor(slug);
+  // الأصول المحلية الواقعية تتقدم دائمًا على روابط Supabase القديمة أو المعطلة.
+  const resolvedCoverUrl = localCoverFor(slug) || coverUrl;
 
   // ── غلاف مصوَّر: نسبة ٢:٣ كأغلفة الكتب المطبوعة،
   //    والخَتْم ينكمش إلى علامة ركن بدل أن يملأ الحقل.
@@ -110,6 +111,9 @@ export function Cover({
           className="cover-img"
           loading={priority ? "eager" : "lazy"}
           decoding="async"
+          onError={(event) => {
+            event.currentTarget.style.display = "none";
+          }}
         />
         <span className="cover-mark" aria-hidden="true">
           <CoverSeal slug={slug} />
