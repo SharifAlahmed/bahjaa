@@ -218,7 +218,7 @@ a{color:inherit;}
 
 /* ── الترويسة ─────────────────────────────────────────── */
 .site-header{background:var(--deep);color:var(--paper);}
-.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:76px;}
+.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:76px;padding-block:16px;}
 .logo{font-family:var(--logo);font-weight:700;font-size:24px;line-height:1.2;color:var(--paper);letter-spacing:.5px;}
 @media (max-width:600px){ .logo{font-size:20px;} }
 .logo-mark{height:76px;width:76px;display:block;flex:none;}
@@ -249,8 +249,15 @@ a{color:inherit;}
 @media (max-width:600px){ .dark-panel{padding:36px 20px;} }
 
 /* ── الهيرو ───────────────────────────────────────────── */
-.hero{background:var(--deep);color:var(--paper);}
-.hero .wrap{padding-block:clamp(48px,8vw,86px);text-align:center;}
+.hero{background:var(--deep);color:var(--paper);position:relative;overflow:hidden;}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 15% 20%, color-mix(in srgb,var(--green) 18%,transparent), transparent 34%),
+    linear-gradient(90deg,transparent 49.9%,var(--on-dark-line) 50%,transparent 50.1%);
+  opacity:.55;
+}
+.hero .wrap{padding-block:clamp(54px,8vw,96px);text-align:center;position:relative;}
 .hero .h-hero{color:var(--paper);max-width:14ch;margin-inline:auto;margin-top:20px;}
 .hero .lede{max-width:600px;margin:24px auto 0;font-size:clamp(16px,2.3vw,18px);line-height:2;font-weight:300;color:var(--on-dark);}
 .hero .promise{max-width:560px;margin:14px auto 0;font-family:var(--serif);font-weight:400;font-size:clamp(18px,2.8vw,22px);line-height:1.7;color:var(--paper);}
@@ -800,45 +807,88 @@ a{color:inherit;}
   .cat-cell:nth-child(n+3){border-top:1px solid var(--rule);} }
 
 /* ── البطل المقسوم ───────────────────────────────────────
-   النصّ في البداية، ورفّ ثلاثة أغلفة متراكبة في النهاية.
-   مخفيّ عن قارئ الشاشة: زخرفة لا محتوى (العناوين نفسها أسفل الصفحة). */
+   النصّ في البداية، ورفّ ثلاثة أغلفة مستقلة في النهاية.
+   الأغلفة مخفية عن قارئ الشاشة لأن عناوينها نفسها تظهر أسفل الصفحة. */
 .hero-split{
-  display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);
+  display:grid;grid-template-columns:1.18fr .82fr;gap:clamp(40px,6vw,88px);
   align-items:center;text-align:start;
 }
-.hero-split .h-hero{max-width:none;margin-inline:0;}
+.hero-kicker{display:flex;align-items:center;gap:10px;margin:0;color:var(--brass);font-size:13px;font-weight:500;letter-spacing:.5px;}
+.hero-kicker span{display:block;width:28px;height:1px;background:var(--brass);}
+.hero-split .h-hero{max-width:16ch;margin:18px 0 0;font-size:clamp(42px,5.4vw,64px);line-height:1.24;}
+.hero-split .h-hero span{display:block;color:var(--mint);}
 .hero-split .lede{max-width:46ch;margin-inline:0;}
 .hero-split .actions{justify-content:flex-start;}
+.hero-split .btn-primary span{font-size:20px;line-height:1;transition:transform .18s ease;}
+.hero-split .btn-primary:hover span{transform:translateX(-4px);}
+
+.hero-journey{
+  list-style:none;margin:34px 0 0;padding:22px 0 0;border-top:1px solid var(--on-dark-edge);
+  display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;
+}
+.hero-journey li{position:relative;display:flex;align-items:center;gap:9px;color:var(--on-dark);font-size:14px;}
+.hero-journey li:not(:last-child)::after{
+  content:"";position:absolute;left:8px;width:16px;height:1px;background:var(--on-dark-line);
+}
+.hero-journey span{
+  display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--brass);
+  border-radius:var(--radius-full);font-family:var(--serif);font-size:14px;color:var(--brass);flex:none;
+}
+.hero-journey strong{font-weight:600;color:var(--paper);}
+
+.hero-visual{position:relative;width:min(100%,460px);justify-self:center;padding:30px 20px 20px;border:1px solid var(--on-dark-line);border-radius:var(--radius-lg);background:color-mix(in srgb,var(--deep-2) 55%,transparent);}
+.hero-visual::before,.hero-visual::after{content:"";position:absolute;width:8px;height:8px;border-color:var(--brass);border-style:solid;}
+.hero-visual::before{top:14px;right:14px;border-width:1px 1px 0 0;}
+.hero-visual::after{bottom:14px;left:14px;border-width:0 0 1px 1px;}
+.hero-visual-label{margin:0;text-align:center;color:var(--on-dark-soft);font-size:12px;letter-spacing:1.5px;}
 
 .hero-shelf{
-  position:relative;display:flex;justify-content:center;align-items:center;
-  min-height:clamp(240px,34vw,380px);
+  position:relative;display:flex;justify-content:center;align-items:flex-end;gap:12px;
+  padding:24px 4px 18px;
 }
 .hero-shelf .hs-slot{
-  width:clamp(120px,17vw,190px);flex:none;
-  transition:transform .3s ease;
+  position:relative;z-index:1;width:calc((100% - 24px)/3);max-width:132px;flex:none;container-type:inline-size;
+  transition:transform .22s ease;
 }
-.hero-shelf .cover{box-shadow:0 18px 40px rgba(0,0,0,.34);}
-/* مروحة RTL: تُفتح من اليمين. عنوان كل غلاف محاذٍ لحافته اليمنى،
-   فالبطاقة الأولى في المقدّمة وكل تالية تنزلق تحتها — وبذلك يبقى
-   كل عنوان على الحافة المكشوفة من غلافه.
-   (الترتيب المعاكس يضع الأوسط في المقدّمة فيحجب عنواني جاريه.) */
-.hs-0{z-index:3;transform:rotate(-2.5deg);}
-.hs-1{z-index:2;margin-inline-start:-34px;transform:rotate(1.5deg) translateY(16px) scale(.95);}
-.hs-2{z-index:1;margin-inline-start:-34px;transform:rotate(5deg) translateY(32px) scale(.9);}
-.hero-shelf:hover .hs-1{transform:rotate(2.5deg) translateY(10px) scale(.96);}
-.hero-shelf:hover .hs-2{transform:rotate(7deg) translateY(22px) scale(.91);}
+.hero-shelf .cover{box-shadow:0 12px 28px rgba(0,0,0,.28);}
+.hero-shelf .cover:not(.cover-photo){aspect-ratio:2/3;padding:10cqw 8cqw;}
+.hero-shelf .cover-seal{width:28%;margin:0;}
+.hero-shelf .cover-foot{min-width:0;width:100%;}
+.hero-shelf .cover-rule{width:20cqw;height:1px;}
+.hero-shelf .cover-title{margin-top:6cqw;line-height:1.35;overflow-wrap:anywhere;text-align:start;}
+.hero-shelf .cover-title.lg{font-size:17cqw;}
+.hero-shelf .cover-title.md{font-size:15cqw;}
+.hero-shelf .cover-title.sm{font-size:12cqw;}
+.hero-shelf .cover-label{margin-top:6cqw;font-size:6cqw;letter-spacing:0;line-height:1.4;text-align:start;}
+.hero-shelf .cover-img{object-fit:contain;}
+.hero-shelf .hs-slot:hover{transform:translateY(-8px);}
+.hero-visual-note{display:flex;align-items:flex-start;gap:10px;margin:4px auto 0;max-width:390px;padding:16px 18px;border-top:1px solid var(--on-dark-line);}
+.hero-visual-note>span{display:grid;place-items:center;width:22px;height:22px;border-radius:var(--radius-full);background:var(--green);color:var(--deep-2);font-size:12px;font-weight:700;flex:none;margin-top:2px;}
+.hero-visual-note p{margin:0;color:var(--on-dark);font-size:13px;line-height:1.7;}
+.hero-visual-note strong{color:var(--paper);font-weight:600;}
 
 @media (max-width:860px){
   .hero-split{grid-template-columns:1fr;gap:34px;}
-  .hero-shelf{min-height:0;order:2;}
-  .hero-shelf .hs-slot{width:clamp(96px,26vw,140px);}
-  .hs-1,.hs-2{margin-inline-start:-26px;}
+  .hero-split .h-hero{max-width:16ch;}
+  .hero-visual{margin-top:8px;}
+  .hero-shelf .hs-slot{max-width:124px;}
+}
+@media (max-width:600px){
+  .hero::before{background:radial-gradient(circle at 15% 12%,color-mix(in srgb,var(--green) 18%,transparent),transparent 34%);}
+  .hero .wrap{padding-block:44px 52px;}
+  .hero-split .h-hero{max-width:15ch;font-size:clamp(36px,11vw,48px);line-height:1.28;}
+  .hero-split .lede{font-size:16px;line-height:1.9;}
+  .hero-journey{margin-top:28px;padding-top:18px;gap:4px;}
+  .hero-journey li{flex-direction:column;align-items:flex-start;gap:6px;font-size:13px;}
+  .hero-journey li:not(:last-child)::after{top:13px;left:5px;width:12px;}
+  .hero-visual{padding:26px 12px 16px;}
+  .hero-shelf{gap:10px;padding-top:18px;}
+  .hero-shelf .hs-slot{width:calc((100% - 20px)/3);}
+  .hero-visual-note{padding-inline:8px;}
 }
 @media (prefers-reduced-motion:reduce){
-    .hero-shelf .hs-slot{transition:none;}
-  .hero-shelf:hover .hs-1{transform:rotate(1.5deg) translateY(16px) scale(.95);}
-  .hero-shelf:hover .hs-2{transform:rotate(5deg) translateY(32px) scale(.9);}
+  .hero-shelf .hs-slot{transition:none;}
+  .hero-shelf .hs-slot:hover{transform:none;}
 }
 
 /* ── تقييم بهجة على بطاقة القسم ──────────────────────────

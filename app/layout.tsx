@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SiteHeader from "@/components/site-header";
-import { TopStrip } from "@/components/bahjaa/top-strip";
 import SiteFooter from "@/components/site-footer";
 
 const SITE_NAME = "بهجة";
@@ -35,7 +34,6 @@ export default function RootLayout({
     <html lang="ar" dir="rtl">
       <body className="min-h-screen flex flex-col">
         <a href="#main" className="skip-link">تخطَّ إلى المحتوى</a>
-        <TopStrip />
         <SiteHeader />
         <main id="main" className="flex-1">{children}</main>
         <SiteFooter />

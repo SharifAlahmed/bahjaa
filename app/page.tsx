@@ -41,28 +41,41 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* الهيرو — اللوحة الداكنة الوحيدة في هذه الصفحة.
-          مقسوم: النصّ في البداية، ورفّ أغلفة في النهاية.
+      {/* الهيرو — يشرح الوعد والمسار في شاشة واحدة.
           الأغلفة من البيانات — أحدث ثلاثة منشورة، لا مختارة يدوياً. */}
       <section className="hero" aria-labelledby="hero-title">
         <div className="wrap hero-split">
           <div className="hero-copy">
-            <p className="eyebrow">منصة بهجة للمعرفة التطبيقية</p>
-            <h1 className="h-hero" id="hero-title">نحوّل المعرفة إلى أثر</h1>
-            {/* ≤ ٢٠ كلمة، ≤ ٤ أسطر — قاعدة 4.7 */}
+            <p className="hero-kicker"><span aria-hidden="true" />منصة عربية تحوّل المعرفة إلى عمل</p>
+            <h1 className="h-hero" id="hero-title">
+              لا تكتفِ بأن تعرف.
+              <span>حوّل ما تقرأ إلى أثر.</span>
+            </h1>
             <p className="lede">
-              نعيد بناء أهم الكتب للقائد المشغول، ونسلّمه خطوة واحدة يطبّقها الليلة.
+              بهجة تعيد بناء أهم الكتب للقائد المشغول، وتحوّل أفكارها إلى خلاصة واضحة
+              وخطوة عملية تبدأ بها اليوم.
             </p>
 
-            {/* زر أخضر واحد في هذه المنطقة */}
             <div className="actions">
-              <Link href="#latest-summaries" className="btn btn-primary">استكشف الملخصات</Link>
-              <Link href="#inside-summary" className="btn btn-ghost-light">كيف تعمل بهجة؟</Link>
+              <Link href="#latest-summaries" className="btn btn-primary">
+                ابدأ بملخص عملي
+                <span aria-hidden="true">←</span>
+              </Link>
+              <Link href="#inside-summary" className="btn btn-ghost-light">شاهد كيف تعمل</Link>
             </div>
+
+            <ol className="hero-journey" aria-label="رحلة المعرفة في بهجة">
+              <li><span>١</span><strong>افهم</strong></li>
+              <li><span>٢</span><strong>استخرج</strong></li>
+              <li><span>٣</span><strong>طبّق</strong></li>
+              <li><span>٤</span><strong>قِس</strong></li>
+            </ol>
           </div>
 
           {list.length > 0 && (
-            <div className="hero-shelf" aria-hidden="true">
+            <div className="hero-visual" aria-label="أحدث ملخصات بهجة">
+              <p className="hero-visual-label">ابدأ من كتاب يشبه سؤالك اليوم</p>
+              <div className="hero-shelf" aria-hidden="true">
               {list.slice(0, 3).map((s, i) => {
                 const cat = s.category_id ? catById.get(s.category_id) : undefined;
                 return (
@@ -73,10 +86,16 @@ export default async function HomePage() {
                       category={(cat?.slug || "leadership") as CategorySlug}
                       categoryLabel={cat?.name_ar || "بهجة"}
                       coverUrl={s.cover_url}
+                      priority={i === 0}
                     />
                   </div>
                 );
               })}
+              </div>
+              <div className="hero-visual-note">
+                <span aria-hidden="true">✓</span>
+                <p><strong>أكثر من ملخص.</strong> فكرة واضحة، أداة عملية، وخطوة قابلة للقياس.</p>
+              </div>
             </div>
           )}
         </div>
