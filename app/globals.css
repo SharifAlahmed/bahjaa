@@ -208,14 +208,10 @@ a{color:inherit;}
 /* ── الترويسة ─────────────────────────────────────────── */
 .site-header{background:var(--deep);color:var(--paper);}
 .site-header .wrap{display:flex;align-items:center;gap:20px;min-height:76px;}
-.logo{font-family:var(--logo);font-weight:700;font-size:24px;line-height:1.2;color:var(--paper);letter-spacing:.5px;}
-@media (max-width:600px){ .logo{font-size:20px;} }
 .logo-mark{height:76px;width:76px;display:block;flex:none;}
 @media (max-width:600px){ .logo-mark{height:60px;width:60px;} }
 .site-footer .logo-mark{height:40px;width:40px;}
 .logo-lockup{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.logo-word{display:flex;flex-direction:column;gap:2px;}
-.logo-tag{font-family:var(--sans);font-weight:400;font-size:12px;letter-spacing:.6px;line-height:1.5;color:var(--on-dark-soft);}
 .site-nav{display:flex;align-items:center;gap:6px;margin-inline-start:auto;}
 .site-nav a{
   font-size:15px;font-weight:400;color:var(--on-dark);
@@ -226,7 +222,6 @@ a{color:inherit;}
 .nav-cta{border:1px solid var(--on-dark-line);border-radius:var(--radius-sm);color:var(--on-dark) !important;font-size:14px;padding-inline:18px !important;}
 .nav-cta:hover{border-color:var(--on-dark-edge);color:var(--paper) !important;}
 @media (max-width:600px){
-  .logo-tag{display:none;}
   .site-nav .hide-sm{display:none;}
   .site-header .wrap{gap:10px;}
 }
@@ -689,16 +684,8 @@ a{color:inherit;}
   box-shadow:var(--shadow-1);
 }
 
-/* ── الشريط العلوي الرفيع ────────────────────────────────
-   حقائق ثابتة في النموذج، لا أرقام تسويقية. */
-.top-strip{background:var(--deep-2);color:var(--on-dark-soft);}
-.top-strip ul{
-  list-style:none;margin:0;padding:0;min-height:36px;
-  display:flex;align-items:center;gap:26px;flex-wrap:wrap;
-}
-.top-strip li{display:inline-flex;align-items:center;gap:7px;font-size:12px;line-height:1.6;}
-.top-strip svg{color:var(--brass);flex:none;}
-@media (max-width:760px){ .top-strip .hide-sm{display:none;} }
+/* ── الشريط العلوي الرفيع — شريط أسود بلا نص ─────────────── */
+.top-strip{background:var(--deep-2);height:10px;}
 
 /* ── شريط الأقسام الستة ──────────────────────────────────
    كل خانة رابط كامل، والعدّاد من البيانات. */

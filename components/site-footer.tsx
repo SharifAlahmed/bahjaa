@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { Category } from "@/lib/types";
 
 // أربعة أعمدة — كلها روابط حقيقية. لا صفحة مخترعة، لا حساب تواصل غير موجود.
-// الوصول يقتبس حقائق TopStrip حرفياً — لا رقم جديد لا نملكه.
+// حقائق الوصول ثابتة في النموذج العشاري — لا رقم جديد لا نملكه.
 const ACCESS_FACTS = ["أول ٤ أقسام مفتوحة مجاناً", "بلا بطاقة ولا كلمة مرور"];
 
 export default async function SiteFooter() {
