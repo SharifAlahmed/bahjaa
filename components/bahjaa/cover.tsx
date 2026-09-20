@@ -4,7 +4,6 @@
 // يحمله خَتْم نجمي مولّد من معرّف الكتاب، لا لون كامل ولا حرف أول.
 // القيم كلها من app/globals.css — لا قيمة hex في هذا الملف.
 
-import Image from "next/image";
 import { seal } from "@/lib/seal";
 
 export const CATEGORY_SLUGS = [
@@ -105,13 +104,12 @@ export function Cover({
   if (resolvedCoverUrl) {
     return (
       <div className={`cover cover-photo ${className}`} style={style}>
-        <Image
+        <img
           src={resolvedCoverUrl}
           alt={`غلاف كتاب ${title}`}
-          fill
-          sizes="(max-width:600px) 45vw, (max-width:1000px) 30vw, 260px"
           className="cover-img"
-          priority={priority}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
         />
         <span className="cover-mark" aria-hidden="true">
           <CoverSeal slug={slug} />
