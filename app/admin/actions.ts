@@ -18,23 +18,30 @@ function refresh(slug?: string) {
   if (slug) revalidatePath(`/s/${slug}`);
 }
 
+function assertMutationSucceeded(error: { message: string } | null) {
+  if (error) throw new Error(`تعذّر تحديث الملخص: ${error.message}`);
+}
+
 export async function publishSummary(id: string, slug?: string) {
   const supabase = await guard();
-  await supabase
+  const { error } = await supabase
     .from("bh_summaries")
     .update({ status: "published", published_at: new Date().toISOString() })
     .eq("id", id);
+  assertMutationSucceeded(error);
   refresh(slug);
 }
 
 export async function unpublishSummary(id: string, slug?: string) {
   const supabase = await guard();
-  await supabase.from("bh_summaries").update({ status: "draft" }).eq("id", id);
+  const { error } = await supabase.from("bh_summaries").update({ status: "draft" }).eq("id", id);
+  assertMutationSucceeded(error);
   refresh(slug);
 }
 
 export async function deleteSummary(id: string, slug?: string) {
   const supabase = await guard();
-  await supabase.from("bh_summaries").delete().eq("id", id);
+  const { error } = await supabase.from("bh_summaries").delete().eq("id", id);
+  assertMutationSucceeded(error);
   refresh(slug);
 }
