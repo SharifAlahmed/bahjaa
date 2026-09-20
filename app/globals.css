@@ -747,7 +747,7 @@ a{color:inherit;}
   object-fit:cover;
   transform:scale(.94) translateX(-1.5%);
   transform-origin:center;
-  filter:brightness(1.85) saturate(1.12) contrast(1.08) drop-shadow(7px 8px 5px rgb(8 45 35 / .18));
+  filter:none;
 }
 .cover-photo::after{
   content:"";
