@@ -64,8 +64,8 @@ type Props = {
 };
 
 /** أغلفة محلية عالية الدقة تُستخدم عندما لا يرسل الملخص cover_url. */
-function localCoverFor(slug: string): string | null {
-  const key = slug.toLowerCase();
+function localCoverFor(slug: string, title: string): string | null {
+  const key = `${slug} ${title}`.toLowerCase();
   const covers: Record<string, string> = {
     "atomic-habits": "/covers/atomic-habits-realistic.png",
     "psychology-of-money": "/covers/psychology-money.png",
@@ -75,6 +75,14 @@ function localCoverFor(slug: string): string | null {
     "seven-habits": "/covers/seven-habits-realistic.png",
     "napoleon-hill": "/covers/napoleon-hill-realistic.png",
     "lean-startup": "/covers/flexible-company.png",
+    "الشركة الناشئة": "/covers/flexible-company.png",
+    "سيكولوجية المال": "/covers/psychology-money.png",
+    "العادات السبع": "/covers/seven-habits-realistic.png",
+    "العادات الذرية": "/covers/atomic-habits-realistic.png",
+    "قواعد نابليون": "/covers/napoleon-hill-realistic.png",
+    "تكسب الأصدقاء": "/covers/win-friends-realistic.png",
+    "من جيد إلى عظيم": "/covers/good-to-great-realistic.png",
+    "الفوز": "/covers/winning-realistic.png",
   };
   const exact = covers[key];
   if (exact) return exact;
@@ -98,7 +106,7 @@ export function Cover({
   } as React.CSSProperties;
 
   // الأصول المحلية الواقعية تتقدم دائمًا على روابط Supabase القديمة أو المعطلة.
-  const resolvedCoverUrl = localCoverFor(slug) || coverUrl;
+  const resolvedCoverUrl = localCoverFor(slug, title) || coverUrl;
 
   // ── غلاف مصوَّر: نسبة ٢:٣ كأغلفة الكتب المطبوعة،
   //    والخَتْم ينكمش إلى علامة ركن بدل أن يملأ الحقل.
