@@ -7,6 +7,7 @@ import { CategoryStrip } from "@/components/bahjaa/category-strip";
 import { HeroSection } from "@/components/bahjaa/hero-section";
 import { KnowledgeJourney } from "@/components/bahjaa/knowledge-journey";
 import { VisualCTA } from "@/components/bahjaa/visual-cta";
+import { PromoBanner } from "@/components/bahjaa/promo-banner";
 import { WhyBahjaa } from "@/components/bahjaa/why-bahjaa";
 import { AudienceSection } from "@/components/bahjaa/audience-section";
 import { FinalCTA } from "@/components/bahjaa/final-cta";
@@ -58,6 +59,9 @@ export default async function HomePage() {
 
       {/* رحلة المعرفة — المكوّن التوقيعي: افهم، استخرج، طبّق، قِس */}
       <KnowledgeJourney />
+
+      {/* البانر الترويجي — بعد رحلة المعرفة مباشرة */}
+      <PromoBanner />
 
       {/* أحدث الملخصات */}
       <section className="wrap section-block bh-anchor" id="latest-summaries" aria-labelledby="latest-title">

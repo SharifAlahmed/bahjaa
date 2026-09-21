@@ -927,3 +927,59 @@ a{color:inherit;}
   background:var(--paper-2);
 }
 .final-cta .fc-motif{width:150px;height:auto;margin:0 auto 22px;color:var(--brass-ink);display:block;}
+
+/* ══════════════════════════════════════════════════════════════════
+   Promo Banner — «امتلك خلاصة الفكر الريادي في ١٥ دقيقة فقط»
+   يُوضع بعد قسم رحلة المعرفة مباشرة.
+   ══════════════════════════════════════════════════════════════════ */
+.promo-banner{background:var(--paper);}
+
+.pb-eyebrow{text-align:center;}
+.pb-title{text-align:center;margin-top:14px;margin-bottom:44px;}
+
+/* الشبكة: ميزات + صورة */
+.pb-grid{
+  display:grid;
+  grid-template-columns:1fr 480px;
+  gap:48px;
+  align-items:center;
+}
+
+/* ─ قائمة الميزات ─ */
+.pb-features{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:28px;}
+.pb-feature{display:flex;gap:18px;align-items:flex-start;}
+.pb-icon{
+  flex-shrink:0;
+  width:52px;height:52px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(29,158,117,.1);
+  border-radius:var(--radius-md);
+  color:var(--green);
+}
+.pb-feature-text{min-width:0;}
+.pb-feature-title{
+  font-family:var(--serif);font-size:17px;font-weight:700;
+  color:var(--ink);margin:0 0 5px;
+}
+.pb-feature-desc{
+  font-size:14px;line-height:1.85;
+  color:var(--ink-soft);margin:0;
+}
+
+/* ─ الصورة ─ */
+.pb-visual{display:flex;justify-content:center;align-items:center;}
+.pb-img-wrap{width:100%;max-width:480px;}
+.pb-book-img{width:100%;height:auto;display:block;border-radius:var(--radius-sm);}
+
+/* الزر */
+.pb-actions{text-align:center;margin-top:40px;}
+
+/* ─ استجابة الجوّال ─ */
+@media(max-width:860px){
+  .pb-grid{grid-template-columns:1fr;gap:32px;}
+  .pb-visual{order:-1;}
+  .pb-img-wrap{max-width:360px;}
+}
+@media(max-width:480px){
+  .pb-img-wrap{max-width:100%;}
+}
