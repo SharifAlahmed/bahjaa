@@ -41,25 +41,26 @@ export default async function CategoryPage({ params }: Props) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const [{ data }, { data: bookmarkRows }] = await Promise.all([
-    supabase
-      .from("bh_summaries")
-      .select(LIST_COLUMNS)
-      .eq("status", "published")
-      .eq("category_id", category.id)
-      .order("published_at", { ascending: false }),
-    user
-      ? supabase.from("bh_bookmarks").select("summary_id, status").eq("user_id", user.id)
-      : Promise.resolve({ data: [] }),
-  ]);
+  const { data } = await supabase
+    .from("bh_summaries")
+    .select(LIST_COLUMNS)
+    .eq("status", "published")
+    .eq("category_id", category.id)
+    .order("published_at", { ascending: false });
 
   const list = (data || []) as SummaryListItem[];
   const catSlug = category.slug as CategorySlug;
 
-  const bmMap = new Map<string, "want_to_read" | "liked">(
-    ((bookmarkRows || []) as { summary_id: string; status: "want_to_read" | "liked" }[])
-      .map((b) => [b.summary_id, b.status])
-  );
+  const bmMap = new Map<string, "want_to_read" | "liked">();
+  if (user) {
+    const { data: bms } = await supabase
+      .from("bh_bookmarks")
+      .select("summary_id, status")
+      .eq("user_id", user.id);
+    for (const b of (bms ?? []) as Array<{ summary_id: string; status: "want_to_read" | "liked" }>) {
+      bmMap.set(b.summary_id, b.status);
+    }
+  }
 
   return (
     <div className="wrap section-block">

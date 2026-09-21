@@ -18,34 +18,34 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const supabase = await createClient();
-
   const { data: { user } } = await supabase.auth.getUser();
 
-  const [{ data: summaries }, { data: categories }, { data: tallyRows }, { data: bookmarkRows }] =
-    await Promise.all([
-      supabase
-        .from("bh_summaries")
-        .select(LIST_COLUMNS)
-        .eq("status", "published")
-        .order("published_at", { ascending: false })
-        .limit(8),
-      supabase.from("bh_categories").select("*").order("sort_order"),
-      supabase.from("bh_summaries").select("category_id").eq("status", "published"),
-      // bookmarks — null لغير المسجّل فلا طلب إضافي
-      user
-        ? supabase.from("bh_bookmarks").select("summary_id, status").eq("user_id", user.id)
-        : Promise.resolve({ data: [] }),
-    ]);
+  const [{ data: summaries }, { data: categories }, { data: tallyRows }] = await Promise.all([
+    supabase
+      .from("bh_summaries")
+      .select(LIST_COLUMNS)
+      .eq("status", "published")
+      .order("published_at", { ascending: false })
+      .limit(8),
+    supabase.from("bh_categories").select("*").order("sort_order"),
+    supabase.from("bh_summaries").select("category_id").eq("status", "published"),
+  ]);
+
+  // جلب bookmarks للمستخدم المسجّل فقط — منفصل عن Promise.all لتجنّب تعارض الأنواع
+  const bmMap = new Map<string, "want_to_read" | "liked">();
+  if (user) {
+    const { data: bms } = await supabase
+      .from("bh_bookmarks")
+      .select("summary_id, status")
+      .eq("user_id", user.id);
+    for (const b of (bms ?? []) as Array<{ summary_id: string; status: "want_to_read" | "liked" }>) {
+      bmMap.set(b.summary_id, b.status);
+    }
+  }
 
   const list = (summaries || []) as SummaryListItem[];
   const cats = (categories || []) as Category[];
   const catById = new Map(cats.map((c) => [c.id, c]));
-
-  // خريطة سريعة: summaryId → status
-  const bmMap = new Map<string, "want_to_read" | "liked">(
-    ((bookmarkRows || []) as { summary_id: string; status: "want_to_read" | "liked" }[])
-      .map((b) => [b.summary_id, b.status])
-  );
 
   const tally = new Map<string, number>();
   for (const row of (tallyRows || []) as { category_id: string | null }[]) {
@@ -67,7 +67,6 @@ export default async function HomePage() {
       </section>
 
       <KnowledgeJourney />
-
       <PromoBanner />
 
       <section className="wrap section-block bh-anchor" id="latest-summaries" aria-labelledby="latest-title">
