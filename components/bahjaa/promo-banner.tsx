@@ -2,9 +2,10 @@
 // البانر الترويجي: «امتلك خلاصة الفكر الريادي في ١٥ دقيقة فقط»
 // يُوضع في page.tsx بعد <KnowledgeJourney /> مباشرة.
 import Link from 'next/link'
+import Image from 'next/image'
 import type { SVGProps } from 'react'
 
-// ── أيقونات مضمّنة (لا مكتبة خارجية) ──────────────────────────────
+// ── أيقونات مضمّنة ──────────────────────────────────────────────────
 const base = {
   width: 28, height: 28, viewBox: '0 0 24 24', fill: 'none',
   stroke: 'currentColor', strokeWidth: 1.6,
@@ -82,37 +83,20 @@ export function PromoBanner() {
             ))}
           </ul>
 
-          {/* المعاينة البصرية — بطاقة بهجة فوق غلاف الكتاب */}
-          <div className="pb-visual" aria-hidden="true">
-            <div className="pb-card-wrap">
-
-              {/* بطاقة ملخص بهجة */}
-              <div className="pb-summary-card">
-                <div className="pb-card-header">
-                  <span className="pb-card-brand">بهجة</span>
-                  <span className="pb-card-badge">ملخص بهجة</span>
-                </div>
-                <p className="pb-card-book">من جيد إلى عظيم</p>
-                <p className="pb-card-author">جيم كولينز</p>
-                <div className="pb-card-lines" aria-hidden="true">
-                  <span /><span /><span /><span /><span />
-                </div>
-                <div className="pb-card-meta">
-                  <span>٩ صفحات</span>
-                  <span>١٥ دقيقة</span>
-                </div>
-              </div>
-
-              {/* غلاف الكتاب خلف البطاقة */}
-              <div className="pb-book-cover">
-                <p className="pb-book-title">من جيد<br />إلى عظيم</p>
-                <p className="pb-book-pages">٣٨٤ صفحة · ١٠ ساعات</p>
-              </div>
-
-              {/* سهم دلالي */}
-              <span className="pb-arrow" aria-hidden="true">→</span>
+          {/* الصورة الفعلية للكتاب */}
+          <div className="pb-visual">
+            <div className="pb-img-wrap">
+              <Image
+                src="/images/good-to-great-cover.png"
+                alt="ملخص بهجة لكتاب من جيد إلى عظيم — جيم كولينز"
+                width={520}
+                height={420}
+                className="pb-book-img"
+                priority
+              />
             </div>
           </div>
+
         </div>
 
         {/* الزر */}
