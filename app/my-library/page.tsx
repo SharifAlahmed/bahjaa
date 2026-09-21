@@ -41,7 +41,7 @@ export default async function MyLibraryPage() {
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
-  const rows = (data || []) as BookmarkRow[];
+  const rows = (data || []) as unknown as BookmarkRow[];
   const toRead = rows.filter((r) => r.status === "want_to_read");
   const liked = rows.filter((r) => r.status === "liked");
 
