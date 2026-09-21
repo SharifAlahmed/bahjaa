@@ -927,3 +927,137 @@ a{color:inherit;}
   background:var(--paper-2);
 }
 .final-cta .fc-motif{width:150px;height:auto;margin:0 auto 22px;color:var(--brass-ink);display:block;}
+
+/* ══════════════════════════════════════════════════════════════════
+   Promo Banner — «امتلك خلاصة الفكر الريادي في ١٥ دقيقة فقط»
+   يُوضع بعد قسم رحلة المعرفة مباشرة.
+   ══════════════════════════════════════════════════════════════════ */
+.promo-banner{background:var(--paper);}
+
+.pb-eyebrow{text-align:center;}
+.pb-title{text-align:center;margin-top:14px;margin-bottom:44px;}
+
+/* الشبكة: ميزات + مرئي */
+.pb-grid{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:56px;
+  align-items:center;
+}
+
+/* ─ قائمة الميزات ─ */
+.pb-features{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:28px;}
+.pb-feature{display:flex;gap:18px;align-items:flex-start;}
+.pb-icon{
+  flex-shrink:0;
+  width:52px;height:52px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(29,158,117,.1);
+  border-radius:var(--radius-md);
+  color:var(--green);
+}
+.pb-feature-text{min-width:0;}
+.pb-feature-title{
+  font-family:var(--serif);font-size:17px;font-weight:700;
+  color:var(--ink);margin:0 0 5px;
+}
+.pb-feature-desc{
+  font-size:14px;line-height:1.85;
+  color:var(--ink-soft);margin:0;
+}
+
+/* ─ المعاينة البصرية ─ */
+.pb-visual{display:flex;justify-content:center;}
+.pb-card-wrap{
+  position:relative;
+  width:300px;height:320px;
+}
+
+/* بطاقة بهجة */
+.pb-summary-card{
+  position:absolute;
+  top:0;inset-inline-start:0;
+  width:192px;
+  background:var(--green);
+  border-radius:var(--radius-md);
+  padding:16px 18px;
+  color:#fff;
+  z-index:2;
+  box-shadow:0 10px 36px rgba(21,51,42,.22);
+}
+.pb-card-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.pb-card-brand{font-family:var(--serif);font-weight:700;font-size:13px;}
+.pb-card-badge{
+  font-size:9px;font-weight:600;
+  background:rgba(255,255,255,.22);
+  padding:2px 8px;border-radius:20px;
+}
+.pb-card-book{font-family:var(--serif);font-weight:700;font-size:16px;margin:0 0 3px;}
+.pb-card-author{font-size:11px;opacity:.75;margin:0 0 14px;}
+.pb-card-lines{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.pb-card-lines span{height:5px;border-radius:3px;background:rgba(255,255,255,.28);}
+.pb-card-lines span:nth-child(1){width:96%}
+.pb-card-lines span:nth-child(2){width:88%}
+.pb-card-lines span:nth-child(3){width:93%}
+.pb-card-lines span:nth-child(4){width:74%}
+.pb-card-lines span:nth-child(5){width:82%}
+.pb-card-meta{display:flex;gap:8px;}
+.pb-card-meta span{
+  font-size:10px;font-weight:600;
+  background:rgba(255,255,255,.2);
+  padding:3px 8px;border-radius:20px;
+}
+
+/* غلاف الكتاب */
+.pb-book-cover{
+  position:absolute;
+  bottom:0;inset-inline-end:0;
+  width:160px;height:230px;
+  background:linear-gradient(145deg,#b91c1c 0%,#7f1d1d 100%);
+  border-radius:6px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  box-shadow:5px 8px 28px rgba(0,0,0,.22);
+  z-index:1;
+  padding:16px;
+}
+.pb-book-title{
+  font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.3;
+  color:#fff;text-align:center;margin:0;
+}
+.pb-book-pages{
+  font-size:9px;color:rgba(255,255,255,.65);
+  margin-top:12px;text-align:center;
+}
+
+/* السهم */
+.pb-arrow{
+  position:absolute;
+  top:80px;inset-inline-start:185px;
+  font-size:28px;color:var(--green);
+  font-weight:700;z-index:3;
+  transform:scaleX(-1);/* RTL: السهم يشير لليسار */
+}
+
+/* الزر */
+.pb-actions{text-align:center;margin-top:40px;}
+
+/* ─ استجابة الجوّال ─ */
+@media(max-width:860px){
+  .pb-grid{grid-template-columns:1fr;gap:36px;}
+  .pb-visual{order:-1;}
+  .pb-card-wrap{width:260px;height:280px;}
+  .pb-summary-card{width:170px;}
+  .pb-book-cover{width:138px;height:200px;}
+  .pb-arrow{top:72px;inset-inline-start:163px;}
+}
+@media(max-width:480px){
+  .pb-card-wrap{width:230px;height:250px;}
+  .pb-summary-card{width:152px;padding:12px 14px;}
+  .pb-book-cover{width:124px;height:178px;}
+  .pb-book-title{font-size:20px;}
+  .pb-arrow{inset-inline-start:146px;top:62px;}
+}
