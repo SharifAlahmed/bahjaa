@@ -8,7 +8,6 @@ export default async function SiteHeader() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // رابط اللوحة يظهر للأدمن فقط
   let isAdmin = false;
   if (user) {
     const { data } = await supabase.rpc("bh_is_admin");
@@ -31,6 +30,9 @@ export default async function SiteHeader() {
 
         <nav className="site-nav" aria-label="التنقل الرئيسي">
           <Link href="/categories">الأقسام</Link>
+          {user && (
+            <Link href="/my-library" className="nav-library">مكتبتي</Link>
+          )}
           {isAdmin && <Link href="/admin" className="hide-sm">اللوحة</Link>}
           {user ? (
             <form action="/auth/signout" method="post">

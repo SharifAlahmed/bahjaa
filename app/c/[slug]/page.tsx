@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { BookCard } from "@/components/bahjaa/book-card";
+import { BookmarkButtons } from "@/components/bahjaa/bookmark-buttons";
 import { type CategorySlug } from "@/components/bahjaa/cover";
 import { countLabel } from "@/components/bahjaa/format";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
-// تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
 export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -39,15 +39,27 @@ export default async function CategoryPage({ params }: Props) {
   if (!category) notFound();
 
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("bh_summaries")
-    .select(LIST_COLUMNS)
-    .eq("status", "published")
-    .eq("category_id", category.id)
-    .order("published_at", { ascending: false });
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const [{ data }, { data: bookmarkRows }] = await Promise.all([
+    supabase
+      .from("bh_summaries")
+      .select(LIST_COLUMNS)
+      .eq("status", "published")
+      .eq("category_id", category.id)
+      .order("published_at", { ascending: false }),
+    user
+      ? supabase.from("bh_bookmarks").select("summary_id, status").eq("user_id", user.id)
+      : Promise.resolve({ data: [] }),
+  ]);
 
   const list = (data || []) as SummaryListItem[];
   const catSlug = category.slug as CategorySlug;
+
+  const bmMap = new Map<string, "want_to_read" | "liked">(
+    ((bookmarkRows || []) as { summary_id: string; status: "want_to_read" | "liked" }[])
+      .map((b) => [b.summary_id, b.status])
+  );
 
   return (
     <div className="wrap section-block">
@@ -77,6 +89,7 @@ export default async function CategoryPage({ params }: Props) {
             {list.map((s, i) => (
               <BookCard
                 key={s.id}
+                id={s.id}
                 coverUrl={s.cover_url}
                 publishedAt={s.published_at}
                 rating={s.rating_value}
@@ -88,6 +101,12 @@ export default async function CategoryPage({ params }: Props) {
                 categoryLabel={category.name_ar}
                 readingMinutes={s.reading_minutes || 8}
                 promise={s.content_free?.s1?.problem}
+                bookmarkSlot={
+                  <BookmarkButtons
+                    summaryId={s.id}
+                    initialStatus={bmMap.get(s.id) ?? null}
+                  />
+                }
               />
             ))}
           </div>

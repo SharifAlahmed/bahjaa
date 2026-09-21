@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { type CategorySlug } from "@/components/bahjaa/cover";
 import { BookCard } from "@/components/bahjaa/book-card";
+import { BookmarkButtons } from "@/components/bahjaa/bookmark-buttons";
 
 import { CategoryStrip } from "@/components/bahjaa/category-strip";
 import { HeroSection } from "@/components/bahjaa/hero-section";
@@ -13,28 +14,39 @@ import { AudienceSection } from "@/components/bahjaa/audience-section";
 import { FinalCTA } from "@/components/bahjaa/final-cta";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
-// تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const supabase = await createClient();
 
-  const [{ data: summaries }, { data: categories }, { data: tallyRows }] = await Promise.all([
-    supabase
-      .from("bh_summaries")
-      .select(LIST_COLUMNS)
-      .eq("status", "published")
-      .order("published_at", { ascending: false })
-      .limit(8),
-    supabase.from("bh_categories").select("*").order("sort_order"),
-    supabase.from("bh_summaries").select("category_id").eq("status", "published"),
-  ]);
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const [{ data: summaries }, { data: categories }, { data: tallyRows }, { data: bookmarkRows }] =
+    await Promise.all([
+      supabase
+        .from("bh_summaries")
+        .select(LIST_COLUMNS)
+        .eq("status", "published")
+        .order("published_at", { ascending: false })
+        .limit(8),
+      supabase.from("bh_categories").select("*").order("sort_order"),
+      supabase.from("bh_summaries").select("category_id").eq("status", "published"),
+      // bookmarks — null لغير المسجّل فلا طلب إضافي
+      user
+        ? supabase.from("bh_bookmarks").select("summary_id, status").eq("user_id", user.id)
+        : Promise.resolve({ data: [] }),
+    ]);
 
   const list = (summaries || []) as SummaryListItem[];
   const cats = (categories || []) as Category[];
   const catById = new Map(cats.map((c) => [c.id, c]));
 
-  // عدّاد كل قسم — من البيانات، لا رقم مكتوب بيد
+  // خريطة سريعة: summaryId → status
+  const bmMap = new Map<string, "want_to_read" | "liked">(
+    ((bookmarkRows || []) as { summary_id: string; status: "want_to_read" | "liked" }[])
+      .map((b) => [b.summary_id, b.status])
+  );
+
   const tally = new Map<string, number>();
   for (const row of (tallyRows || []) as { category_id: string | null }[]) {
     if (row.category_id) tally.set(row.category_id, (tally.get(row.category_id) || 0) + 1);
@@ -48,22 +60,16 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* الهيرو — اللوحة الداكنة الوحيدة في هذه الصفحة.
-          الأغلفة من البيانات — أحدث ثلاثة منشورة، لا مختارة يدوياً. */}
       <HeroSection />
 
-      {/* شريط الاكتشاف — مباشرة بعد الهيرو، الأقسام الحقيقية فقط */}
       <section className="wrap" aria-label="اكتشف حسب القسم">
         <CategoryStrip items={stripItems} total={totalPublished} />
       </section>
 
-      {/* رحلة المعرفة — المكوّن التوقيعي: افهم، استخرج، طبّق، قِس */}
       <KnowledgeJourney />
 
-      {/* البانر الترويجي — بعد رحلة المعرفة مباشرة */}
       <PromoBanner />
 
-      {/* أحدث الملخصات */}
       <section className="wrap section-block bh-anchor" id="latest-summaries" aria-labelledby="latest-title">
         <p className="eyebrow">اكتشف ما يستحق وقتك</p>
         <h2 className="h-sec" id="latest-title" style={{ marginTop: 14 }}>
@@ -80,6 +86,7 @@ export default async function HomePage() {
               return (
                 <BookCard
                   key={s.id}
+                  id={s.id}
                   coverUrl={s.cover_url}
                   publishedAt={s.published_at}
                   priority={i === 0}
@@ -91,6 +98,12 @@ export default async function HomePage() {
                   categoryLabel={cat?.name_ar || "بهجة"}
                   readingMinutes={s.reading_minutes || 8}
                   promise={s.content_free?.s1?.problem}
+                  bookmarkSlot={
+                    <BookmarkButtons
+                      summaryId={s.id}
+                      initialStatus={bmMap.get(s.id) ?? null}
+                    />
+                  }
                 />
               );
             })}
@@ -102,16 +115,9 @@ export default async function HomePage() {
         </p>
       </section>
 
-      {/* بانر بصري — راحة بصرية بعد شبكة البطاقات */}
       <VisualCTA />
-
-      {/* لماذا بهجة */}
       <WhyBahjaa />
-
-      {/* لمن بهجة — إثبات بلا أرقام مختلَقة */}
       <AudienceSection />
-
-      {/* الإغلاق القوي */}
       <FinalCTA />
     </>
   );

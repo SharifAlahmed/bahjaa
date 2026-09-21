@@ -983,3 +983,68 @@ a{color:inherit;}
 @media(max-width:480px){
   .pb-img-wrap{max-width:100%;}
 }
+
+/* ===== مكتبتي — bookmark buttons & card overlay ===== */
+
+/* البطاقة: article بدلاً من a — نفس الشكل + position:relative للغطاء */
+article.book-card{position:relative;display:flex;flex-direction:column;color:inherit;}
+
+/* الرابط الشفاف الذي يغطي البطاقة كلها */
+.book-card-link{position:absolute;inset:0;z-index:1;}
+.book-card-link:focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:var(--radius-sm);}
+
+/* أزرار الحفظ — فوق الغطاء */
+.bookmark-btns{
+  position:relative;
+  z-index:2;
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.bm-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:5px 10px;
+  border:1px solid var(--rule);
+  border-radius:var(--radius-sm);
+  background:var(--paper);
+  color:var(--ink-soft);
+  font-size:12px;
+  font-family:var(--serif);
+  cursor:pointer;
+  transition:color .15s, border-color .15s, background .15s;
+  white-space:nowrap;
+}
+.bm-btn:hover{border-color:var(--green);color:var(--green);}
+.bm-btn.bm-active{border-color:var(--green);background:rgba(29,158,117,.08);color:var(--green);}
+.bm-btn.bm-active.bm-liked{border-color:#e85858;background:rgba(232,88,88,.08);color:#e85858;}
+.bm-btn:disabled{opacity:.6;cursor:wait;}
+
+/* على الموبايل: label مخفي */
+@media(max-width:600px){
+  .bm-label{display:none;}
+  .bm-btn{padding:6px 8px;}
+}
+
+/* header: رابط مكتبتي */
+.nav-library{position:relative;}
+
+/* صفحة مكتبتي */
+.library-section-head{margin-bottom:28px;}
+.library-section-head .h-sub{display:flex;align-items:center;gap:10px;}
+.library-icon{font-size:20px;line-height:1;}
+.library-count{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:22px;
+  height:22px;
+  padding:0 6px;
+  border-radius:999px;
+  background:var(--green);
+  color:#fff;
+  font-size:12px;
+  font-family:var(--sans);
+}
