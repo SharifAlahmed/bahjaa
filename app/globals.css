@@ -337,43 +337,28 @@ button,input{font:inherit;}
 .cover-title.sm{font-size:clamp(20px,2.2vw,29px);}
 .cover-label{margin:16px 0 0;font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:1.6px;line-height:1.6;color:var(--on-dark-soft);}
 
-/* ── رفّ الملخصات ─────────────────────────────────────── */
+/* ── رفّ الملخصات — شبكة 4→3→2 ──────────────────────── */
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 34px;}
-@media (max-width:1000px){ .shelf{grid-template-columns:repeat(2,1fr);gap:36px 24px;} }
+@media (max-width:1000px){ .shelf{grid-template-columns:repeat(3,1fr);gap:36px 24px;} }
+@media (max-width:640px)  { .shelf{grid-template-columns:repeat(2,1fr);gap:24px 16px;} }
 
-/* البطاقة الأولى أكبر بصرياً — «أحدث إضافة» حقيقية من ترتيب البيانات،
-   لا اختيار تحريري وهمي. سطح مكتب فقط: الجوال له رفّه الأفقي أدناه. */
+/* البطاقة الأولى أكبر بصرياً — «أحدث إضافة» حقيقية من ترتيب البيانات */
 @media (min-width:1000px){
   .shelf.shelf-featured{grid-auto-flow:dense;}
   .shelf.shelf-featured > *:first-child{grid-column:span 2;grid-row:span 2;}
-  .shelf.shelf-featured > *:first-child .cover-title.lg{font-size:clamp(32px,3.6vw,52px);}
-  .shelf.shelf-featured > *:first-child .cover-title.md{font-size:clamp(28px,3vw,42px);}
-  .shelf.shelf-featured > *:first-child .cover-title.sm{font-size:clamp(24px,2.6vw,36px);}
+  .shelf.shelf-featured > *:first-child .bk-title.lg{font-size:clamp(32px,3.6vw,52px);}
+  .shelf.shelf-featured > *:first-child .bk-title.md{font-size:clamp(28px,3vw,42px);}
+  .shelf.shelf-featured > *:first-child .bk-title.sm{font-size:clamp(24px,2.6vw,36px);}
   .shelf.shelf-featured > *:first-child .cover-seal{max-width:200px;}
   .shelf.shelf-featured > *:first-child h3.h-sub{font-size:clamp(22px,2.2vw,28px);}
 }
+/* البطاقات القديمة: تعديلات الجوال */
 @media (max-width:600px){
-  /* رفّ أفقي قابل للسحب: كل بطاقة تظهر بحجمها الحقيقي بدل ضغطها في عمود ضيق،
-     وحافة البطاقة التالية تُرى فتُلمّح أن هناك المزيد. */
-  .shelf{
-    display:flex;
-    overflow-x:auto;
-    overflow-y:hidden;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    gap:18px;
-    padding-inline:20px;
-    margin-inline:-20px;
-    scrollbar-width:none;
-  }
-  .shelf::-webkit-scrollbar{display:none;}
-  .shelf > *{flex:0 0 auto;width:min(60vw,230px);scroll-snap-align:start;}
   .book-card h3{margin-top:14px;font-size:17px;line-height:1.5;}
   .book-card .author{margin-top:4px;font-size:13px;}
   .book-card .facts{font-size:12px;}
-  .book-card .promise{display:none;}   /* سطر طويل لا يعمل في نصف عرض الشاشة */
+  .book-card .promise{display:none;}
   .book-card .go{margin-top:10px;font-size:14px;}
-  /* الخَتْم يصغر مع الغلاف، والعنوان يبقى مقروءاً */
   .cover{padding:16px 14px;}
   .cover-seal{width:46%;}
   .cover-rule{width:20px;height:1.5px;}
@@ -381,7 +366,7 @@ button,input{font:inherit;}
   .cover-title.lg{font-size:19px;}
   .cover-title.md{font-size:17px;}
   .cover-title.sm{font-size:15px;}
-  .cover-label{margin-top:8px;font-size:9px;letter-spacing:1px;}
+  .cover-label{margin-top:8px;font-size:9px;}
 }
 
 .book-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;}
@@ -398,6 +383,132 @@ button,input{font:inherit;}
 }
 .book-card:hover .go{border-bottom-color:var(--brass);color:var(--ink);}
 .book-card .go svg{color:var(--brass-ink);}
+
+/* ── غلاف الكتاب ثلاثي الأبعاد (BookCover) ─────────────
+   بنية: .bk > .bk-inner (+ .bk-shine) + .bk-pages
+   الـ flex-direction:row في RTL يضع .bk-inner على اليمين (عمود الكتاب)
+   و .bk-pages على اليسار (أوراق الكتاب) — تخطيط صحيح للغة العربية. */
+
+.bk{
+  display:flex;
+  flex-direction:row;
+  align-self:start;
+  flex:none;
+}
+.bk-card { width:140px; }
+.bk-hero  { width:168px; }
+.bk-lg    { width:220px; }
+
+.bk-inner{
+  flex:1;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  position:relative;
+  border-radius:var(--radius-xs);
+  box-shadow:var(--shadow-book);
+  background:var(--cat, var(--deep));
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+
+/* صورة الغلاف من next/image */
+.bk-img{object-fit:cover;}
+
+/* احتياط خطّي — حين لا توجد صورة */
+.bk-fallback{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  padding:clamp(14px,3vw,24px) clamp(12px,2.5vw,20px);
+}
+.bk-foot{
+  margin-block-start:auto;
+  display:flex;
+  flex-direction:column;
+}
+.bk-rule{
+  width:28px;height:2px;
+  background:var(--cat-accent, var(--on-dark-soft));
+  flex:none;
+}
+.bk-title{
+  font-family:var(--serif);font-weight:700;
+  color:var(--paper);line-height:1.4;
+  margin-block-start:12px;
+  text-wrap:balance;
+}
+.bk-title.lg{font-size:clamp(22px,2.6vw,34px);}
+.bk-title.md{font-size:clamp(18px,2.2vw,28px);}
+.bk-title.sm{font-size:clamp(14px,1.8vw,22px);}
+.bk-label{
+  margin-block-start:10px;
+  font-family:var(--sans);font-weight:400;
+  font-size:10px;line-height:1.6;
+  color:var(--on-dark-soft);
+}
+
+/* بريق قطري — لمسة عمق على السطح اللامع */
+.bk-shine{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.16) 0%,transparent 55%);
+  pointer-events:none;
+}
+
+/* شريط أوراق الكتاب — يظهر على الجانب inline-end (اليسار في RTL) */
+.bk-pages{
+  width:5px;
+  align-self:stretch;
+  flex:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    var(--color-surface) 0px,
+    var(--color-border) 1px,
+    var(--color-surface) 2.5px
+  );
+  border-inline-end:1px solid rgba(0,0,0,.09);
+  border-start-end-radius:2px;
+  border-end-end-radius:2px;
+  opacity:.9;
+}
+
+/* ── بطاقة الملخص (SummaryCard) ──────────────────────── */
+.sc{
+  display:flex;flex-direction:column;color:inherit;position:relative;
+}
+.sc-link{
+  position:absolute;inset:0;z-index:1;
+}
+.sc-link:focus-visible{
+  outline:2px solid var(--green);outline-offset:2px;border-radius:var(--radius-sm);
+}
+.sc-cover-wrap{position:relative;}
+.sc:hover .bk-inner{transform:translateY(-3px);box-shadow:var(--shadow-book-hover);}
+.sc-title{margin-block-start:20px;}
+.sc-author{
+  margin-block-start:6px;font-size:15px;font-weight:400;line-height:1.7;
+  color:var(--ink-soft);
+}
+.sc-facts{margin-block-start:4px;}
+.sc-promise{
+  margin-block-start:12px;font-size:15px;line-height:1.85;
+  font-weight:400;color:var(--ink-soft);
+}
+.sc .go{
+  margin-block-start:14px;display:inline-flex;align-items:center;gap:8px;
+  font-size:15px;font-weight:600;color:var(--deep);
+  border-block-end:1px solid transparent;padding-block-end:2px;align-self:flex-start;
+}
+.sc:hover .go{border-block-end-color:var(--brass);color:var(--ink);}
+.sc .go svg{color:var(--brass-ink);}
+/* أزرار الحفظ فوق رابط البطاقة */
+.sc .bookmark-btns{z-index:2;}
+/* الجوال: اختصار */
+@media (max-width:640px){
+  .sc-promise{display:none;}
+  .sc-title{margin-block-start:14px;font-size:17px;}
+  .sc-author{margin-block-start:4px;font-size:13px;}
+  .sc-facts{font-size:12px;}
+  .sc .go{margin-block-start:10px;font-size:14px;}
+}
 
 /* ── صفوف الأقسام ─────────────────────────────────────── */
 .cat-row{
@@ -422,19 +533,22 @@ button,input{font:inherit;}
 /* ── صفحة الملخص ──────────────────────────────────────── */
 .book-head{display:grid;grid-template-columns:168px 1fr;gap:30px;align-items:start;}
 @media (max-width:760px){
-  /* الغلاف رآه القارئ في الرفّ للتوّ. هنا يقف بجانب العنوان لا فوقه —
-     يوفّر شاشة كاملة قبل أن يبدأ القارئ فعلاً. */
   .book-head{grid-template-columns:118px 1fr;gap:18px;align-items:start;}
   .book-head .cover{max-width:118px;padding:12px 10px;}
+  .book-head .bk-hero{width:118px;}
   .book-head .cover-seal{width:52%;}
   .book-head .cover-rule{width:16px;height:1.5px;}
-  .book-head .cover-title{margin-top:8px;font-size:14px;line-height:1.35;}
-  .book-head .cover-label{margin-top:6px;font-size:8px;letter-spacing:.8px;}
+  .book-head .cover-title{margin-block-start:8px;font-size:14px;line-height:1.35;}
+  .book-head .cover-label{margin-block-start:6px;font-size:8px;}
+  .book-head .bk-title{margin-block-start:8px;font-size:14px;}
+  .book-head .bk-label{margin-block-start:6px;font-size:8px;}
 }
 @media (max-width:420px){
   .book-head{grid-template-columns:92px 1fr;gap:14px;}
   .book-head .cover{max-width:92px;}
+  .book-head .bk-hero{width:92px;}
   .book-head .cover-title{font-size:12px;}
+  .book-head .bk-title{font-size:12px;}
 }
 
 /* شريط بيانات الكتاب */

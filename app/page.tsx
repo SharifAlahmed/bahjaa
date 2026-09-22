@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { type CategorySlug } from "@/components/bahjaa/cover";
-import { BookCard } from "@/components/bahjaa/book-card";
+import { SummaryCard } from "@/components/SummaryCard";
 import { BookmarkButtons } from "@/components/bahjaa/bookmark-buttons";
 
 import { CategoryStrip } from "@/components/bahjaa/category-strip";
@@ -31,7 +31,6 @@ export default async function HomePage() {
     supabase.from("bh_summaries").select("category_id").eq("status", "published"),
   ]);
 
-  // جلب bookmarks للمستخدم المسجّل فقط — منفصل عن Promise.all لتجنّب تعارض الأنواع
   const bmMap = new Map<string, "want_to_read" | "liked">();
   if (user) {
     const { data: bms } = await supabase
@@ -83,7 +82,7 @@ export default async function HomePage() {
             {list.map((s, i) => {
               const cat = s.category_id ? catById.get(s.category_id) : undefined;
               return (
-                <BookCard
+                <SummaryCard
                   key={s.id}
                   id={s.id}
                   coverUrl={s.cover_url}
