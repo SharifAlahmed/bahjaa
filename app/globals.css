@@ -5,16 +5,14 @@
    ⚠️ ممنوع next/font/google: شبكة جهاز التطوير محجوبة بـ proxy
    (fonts.googleapis.com → 403) فيعلّق البناء بلا رسالة خطأ.
    أي خط جديد يُنزَّل ويوضع في public/fonts أولاً.
-
-   المرحلة القادمة: استبدال العائلتين بـ Tajawal (عربي) و Inter
-   (لاتيني) حسب لوحة الهوية — مؤجّلة بقرار شريف.
    ══════════════════════════════════════════════════════════ */
-@font-face{font-family:"Amiri";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/amiri-400.woff2") format("woff2");}
-@font-face{font-family:"Amiri";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/amiri-700.woff2") format("woff2");}
-@font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:300;font-display:swap;src:url("/fonts/plex-ar-300.woff2") format("woff2");}
-@font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/plex-ar-400.woff2") format("woff2");}
-@font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:500;font-display:swap;src:url("/fonts/plex-ar-500.woff2") format("woff2");}
-@font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/plex-ar-600.woff2") format("woff2");}
+@font-face{font-family:"Tajawal";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/tajawal-400.woff2") format("woff2");}
+@font-face{font-family:"Tajawal";font-style:normal;font-weight:500;font-display:swap;src:url("/fonts/tajawal-500.woff2") format("woff2");}
+@font-face{font-family:"Tajawal";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/tajawal-700.woff2") format("woff2");}
+@font-face{font-family:"Tajawal";font-style:normal;font-weight:800;font-display:swap;src:url("/fonts/tajawal-800.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/inter-400.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("/fonts/inter-500.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/inter-600.woff2") format("woff2");}
 
 /* ══════════════════════════════════════════════════════════
    بهجة — ملف الرموز · المصدر الوحيد للحقيقة
@@ -42,6 +40,7 @@
   /* ⚠️ ليس على لوحة الهوية — اللوحة لا تعرّف لون خطأ.
      مستعار حتى يُعتمد لون رسمي. لرسائل الخطأ وحدها. */
   --color-danger: #A8432B;
+  --color-like:   #E85858;  /* إعجاب / حفظ */
   --mask-solid:   #000;
 
   /* ── مشتقات الشفافية ───────────────────────────────── */
@@ -70,12 +69,24 @@
   --space-9: 96px;
 
   /* ── الخطوط ────────────────────────────────────────── */
-  --font-ar: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
-  --font-display: "Amiri", "Times New Roman", serif;
+  --font-ar: "Tajawal", "Segoe UI", Tahoma, sans-serif;
+  --font-display: "Tajawal", "Segoe UI", Tahoma, sans-serif;
+  --font-latin: "Inter", system-ui, sans-serif;
 
-  /* ── توافق: خط وزاوية الهوية السابقة (رموز الألوان القديمة حُذفت) ── */
-  --font-bh: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  /* ── توافق ────────────────────────────────────────────── */
+  --font-bh: "Tajawal", "Segoe UI", Tahoma, sans-serif;
   --radius-bh: 8px;
+
+  /* ── المرحلة ٠: رموز مضافة ──────────────────────────── */
+  --radius-btn:6px;
+  --radius-card:10px;
+  --radius-panel:14px;
+
+  --shadow-soft:0 1px 2px rgba(11,20,18,.04),0 8px 24px rgba(11,20,18,.06);
+  --shadow-book:0 2px 4px rgba(11,20,18,.18),0 18px 32px -8px rgba(11,20,18,.28);
+  --shadow-book-hover:0 3px 6px rgba(11,20,18,.2),0 26px 40px -10px rgba(11,20,18,.34);
+
+  --space-section:clamp(56px,8vw,96px);
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -121,6 +132,7 @@
 
   --serif: var(--font-display);
   --sans:  var(--font-ar);
+  --latin: var(--font-latin);
   --logo:  var(--font-ar);
 
   /* ── مقياس الطباعة من اللوحة ───────────────────────── */
@@ -149,6 +161,7 @@ body{
 }
 img{max-width:100%;}
 a{color:inherit;}
+button,input{font:inherit;}
 :focus-visible{outline:2px solid var(--brass-ink);outline-offset:3px;}
 
 @media (prefers-reduced-motion: reduce){
@@ -176,12 +189,19 @@ a{color:inherit;}
 /* ── الأزرار ──────────────────────────────────────────── */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  min-height:56px;padding-inline:34px;border-radius:var(--radius-sm);border:0;
+  min-height:56px;padding-inline:34px;border-radius:var(--radius-btn);border:0;
   font-family:var(--sans);font-size:16px;font-weight:600;
   cursor:pointer;text-decoration:none;
 }
-.btn-primary{background:var(--green);color:var(--deep-2);}
-.btn-secondary{background:transparent;border:1px solid var(--deep);color:var(--deep);}
+/* المرحلة ٠: أصناف الأزرار */
+.btn-primary{background:var(--color-brand-dark);color:var(--color-surface);}
+.btn-primary:hover{background:var(--color-deep);}
+.btn-ghost{background:transparent;border:1.5px solid var(--color-brand-dark);color:var(--color-brand-dark);}
+.btn-ghost:hover{background:rgba(21,51,42,.06);}
+.btn-accent{background:var(--color-brand-primary);color:var(--color-deep);}  /* داخل اللوحة الداكنة فقط */
+.btn-accent:hover{background:var(--color-brand-mint);}
+/* توافق عكسي */
+.btn-secondary{background:transparent;border:1.5px solid var(--color-brand-dark);color:var(--color-brand-dark);}
 .btn-brand{background:var(--green-ink);color:var(--color-surface);}
 .btn-brand:hover{background:var(--deep);}
 .btn-deep{background:var(--deep);color:var(--paper);}
@@ -205,25 +225,87 @@ a{color:inherit;}
 
 .wrap{max-width:1120px;margin:0 auto;padding-inline:20px;}
 
+/* ── شريط الإعلان ────────────────────────────────────── */
+.announce-bar{
+  background:var(--color-brand-dark);color:var(--color-background);
+  text-align:center;padding-block:10px;font-size:13px;font-weight:500;
+  line-height:1.7;
+}
+
 /* ── الترويسة ─────────────────────────────────────────── */
-.site-header{background:var(--deep);color:var(--paper);}
-.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:76px;}
-.logo-mark{height:76px;width:76px;display:block;flex:none;}
-@media (max-width:600px){ .logo-mark{height:60px;width:60px;} }
-.site-footer .logo-mark{height:40px;width:40px;}
-.logo-lockup{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.site-nav{display:flex;align-items:center;gap:6px;margin-inline-start:auto;}
+.site-header{
+  background:var(--color-surface);color:var(--color-brand-dark);
+  position:sticky;top:0;z-index:40;
+  border-block-end:1px solid var(--color-border);
+  transition:box-shadow .2s ease;
+}
+.site-header.scrolled{box-shadow:var(--shadow-soft);}
+.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:64px;}
+.logo-mark{height:44px;width:44px;display:block;flex:none;}
+@media (max-width:600px){ .logo-mark{height:40px;width:40px;} }
+.site-footer .logo-mark{height:36px;width:36px;}
+.logo-lockup{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.site-nav{display:flex;align-items:center;gap:4px;margin-inline-start:auto;}
 .site-nav a{
-  font-size:15px;font-weight:400;color:var(--on-dark);
+  font-size:15px;font-weight:500;color:var(--color-brand-dark);
   text-decoration:none;line-height:1.6;
   display:inline-flex;align-items:center;min-height:44px;padding-inline:10px;
+  position:relative;
 }
-.site-nav a:hover{color:var(--paper);}
-.nav-cta{border:1px solid var(--on-dark-line);border-radius:var(--radius-sm);color:var(--on-dark) !important;font-size:14px;padding-inline:18px !important;}
-.nav-cta:hover{border-color:var(--on-dark-edge);color:var(--paper) !important;}
-@media (max-width:600px){
-  .site-nav .hide-sm{display:none;}
-  .site-header .wrap{gap:10px;}
+.site-nav a:hover{color:var(--color-brand-ink);}
+.site-nav a.active::after{
+  content:"";position:absolute;inset-inline:0;bottom:0;
+  height:2px;background:var(--color-brand-ink);border-radius:1px;
+}
+.nav-cta{
+  background:transparent;border:1.5px solid var(--color-brand-dark);
+  border-radius:var(--radius-btn);color:var(--color-brand-dark) !important;
+  font-size:14px;font-weight:600;padding-inline:18px !important;
+}
+.nav-cta:hover{background:var(--color-brand-dark);color:var(--color-surface) !important;}
+.nav-icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;min-width:44px;padding:0;background:transparent;
+  border:0;cursor:pointer;color:var(--color-brand-dark);
+  border-radius:var(--radius-btn);
+}
+.nav-icon-btn:hover{background:rgba(21,51,42,.06);}
+@media (max-width:767px){
+  .site-nav .hide-mobile{display:none;}
+  .site-header .wrap{gap:8px;}
+}
+@media (min-width:768px){
+  .mobile-only{display:none;}
+}
+
+/* ── قائمة الجوال المنزلقة ─────────────────────────────── */
+.mobile-nav-overlay{
+  position:fixed;inset:0;z-index:50;
+  background:rgba(11,20,18,.6);
+  opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.mobile-nav-overlay.open{opacity:1;pointer-events:auto;}
+.mobile-nav-panel{
+  position:fixed;inset-block:0;inset-inline-start:0;z-index:51;
+  width:min(300px,85vw);
+  background:var(--color-surface);padding:24px 20px;
+  display:flex;flex-direction:column;gap:4px;
+  transform:translateX(calc(-1 * min(300px,85vw)));
+  transition:transform .25s ease;
+}
+:dir(ltr) .mobile-nav-panel{inset-inline-start:auto;inset-inline-end:0;transform:translateX(min(300px,85vw));}
+.mobile-nav-panel.open{transform:translateX(0);}
+.mobile-nav-panel a{
+  display:flex;align-items:center;min-height:52px;padding-inline:12px;
+  font-size:17px;font-weight:500;color:var(--color-brand-dark);
+  text-decoration:none;border-bottom:1px solid var(--color-border);
+}
+.mobile-nav-panel a:hover{color:var(--color-brand-ink);}
+.mobile-nav-close{
+  display:flex;align-items:center;justify-content:center;
+  min-height:44px;min-width:44px;margin-inline-start:auto;
+  background:transparent;border:0;cursor:pointer;color:var(--color-brand-dark);
+  margin-bottom:8px;
 }
 
 /* ── اللوحة الداكنة ───────────────────────────────────── */
@@ -465,33 +547,41 @@ a{color:inherit;}
 .rel-card .go svg{color:var(--brass-ink);}
 
 /* ── التذييل — أربعة أعمدة ────────────────────────────── */
-.site-footer{background:var(--deep-2);color:var(--on-dark-soft);}
-.site-footer .meta{color:var(--on-dark-soft);}
-.site-footer a{color:var(--on-dark-soft);text-decoration:none;}
-.site-footer a:hover{color:var(--paper);}
+.site-footer{background:var(--color-background);color:var(--color-brand-dark);}
+.site-footer .meta{color:var(--color-ink-muted);}
+.site-footer a{color:var(--color-ink-muted);text-decoration:none;}
+.site-footer a:hover{color:var(--color-brand-ink);}
 
 .footer-grid{
-  padding-block:52px 40px;
+  padding-block:56px 40px;
   display:grid;
   grid-template-columns:1.3fr 1fr 1fr 1fr;
   gap:40px 28px;
 }
-.footer-col{display:flex;flex-direction:column;gap:11px;}
-.footer-col a{font-size:14px;line-height:1.7;}
+.footer-col{display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-size:14px;font-weight:400;line-height:1.7;}
 .footer-col-title{
-  font-size:12px;font-weight:700;letter-spacing:.4px;
-  color:var(--on-dark-soft);margin-bottom:2px;
+  font-size:15px;font-weight:800;
+  color:var(--color-brand-dark);margin-bottom:4px;
 }
-.footer-fact{font-size:13px;line-height:1.7;margin:0;color:var(--on-dark-soft);}
+.footer-tagline{font-size:14px;font-weight:400;line-height:1.8;color:var(--color-ink-muted);margin:0;}
+.footer-brand-name{
+  font-size:16px;font-weight:800;color:var(--color-accent-ink);
+  letter-spacing:0;margin:4px 0 0;
+}
+.footer-fact{font-size:13px;line-height:1.7;margin:0;color:var(--color-ink-muted);}
 
 .footer-bottom{
   padding-block:20px;
-  border-block-start:1px solid var(--on-dark-line);
+  border-block-start:1px solid var(--color-border);
 }
 
 @media (max-width:760px){
   .footer-grid{grid-template-columns:1fr 1fr;padding-block:44px 30px;}
   .footer-brand{grid-column:1 / -1;}
+}
+@media (max-width:500px){
+  .footer-grid{grid-template-columns:1fr;}
 }
 
 /* ── إشعار تجريبي ─────────────────────────────────────── */
@@ -596,7 +686,7 @@ a{color:inherit;}
    مخفي بصرياً حتى يستقبل التركيز. */
 .skip-link{
   position:absolute;inset-inline-start:-9999px;top:0;z-index:100;
-  background:var(--brand-primary);color:var(--deep-2);font-family:var(--sans);
+  background:var(--color-brand-dark);color:var(--color-surface);font-family:var(--sans);
   font-size:15px;font-weight:600;line-height:1.6;
   padding:14px 22px;border-end-end-radius:var(--radius-sm);
   text-decoration:none;
@@ -604,7 +694,7 @@ a{color:inherit;}
 .skip-link:focus{inset-inline-start:0;}
 
 /* ── النحاسي على اللوحات الداكنة ──────────────────────────
-   #C99A45 يسقط على الورق (٢٫٣٥:١) ويمرّ على الداكن (٥٫٣٢–٧٫٢٩:١).
+   var(--color-accent-gold) يسقط على الورق (٢٫٣٥:١) ويمرّ على الداكن (٥٫٣٢–٧٫٢٩:١).
    فالافتراضي صار نسخة الورق، وهذه القاعدة تعيد الأصل حيث يصحّ. */
 .dark-panel .eyebrow,
 .site-header .eyebrow,
@@ -1019,7 +1109,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 }
 .bm-btn:hover{border-color:var(--green);color:var(--green);}
 .bm-btn.bm-active{border-color:var(--green);background:rgba(29,158,117,.08);color:var(--green);}
-.bm-btn.bm-active.bm-liked{border-color:#e85858;background:rgba(232,88,88,.08);color:#e85858;}
+.bm-btn.bm-active.bm-liked{border-color:var(--color-like);background:rgba(232,88,88,.08);color:var(--color-like);}
 .bm-btn:disabled{opacity:.6;cursor:wait;}
 
 /* على الموبايل: label مخفي */
@@ -1044,7 +1134,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
   padding:0 6px;
   border-radius:999px;
   background:var(--green);
-  color:#fff;
+  color:var(--color-surface);
   font-size:12px;
   font-family:var(--sans);
 }

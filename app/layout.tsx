@@ -1,41 +1,24 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SiteHeader from "@/components/site-header";
-import { TopStrip } from "@/components/bahjaa/top-strip";
-import SiteFooter from "@/components/site-footer";
-
-const SITE_NAME = "بهجة";
-const SITE_DESC =
-  "ليست ملخصات — محرك يحوّل المعرفة إلى خطوة تطبّقها اليوم. للقادة ورواد الأعمال العرب.";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import SiteHeader from "@/components/layout/SiteHeader";
+import SiteFooter from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://bahjaa.com"),
   title: {
-    default: `${SITE_NAME} — من المعرفة إلى الأثر`,
-    template: `%s · ${SITE_NAME}`,
+    template: "%s · بهجة",
+    default: "بهجة — ملخصات الكتب بالعربية",
   },
-  description: SITE_DESC,
-  openGraph: {
-    type: "website",
-    locale: "ar_AR",
-    siteName: SITE_NAME,
-    title: `${SITE_NAME} — من المعرفة إلى الأثر`,
-    description: SITE_DESC,
-  },
-  alternates: { canonical: "/" },
-  robots: { index: true, follow: true },
+  description:
+    "منصة عربية تحوّل كتب القيادة وريادة الأعمال إلى خطوات عملية. اقرأ أول ٤ أقسام مجاناً.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl">
       <body className="min-h-screen flex flex-col">
         <a href="#main" className="skip-link">تخطَّ إلى المحتوى</a>
-        <TopStrip />
+        <AnnouncementBar />
         <SiteHeader />
         <main id="main" className="flex-1">{children}</main>
         <SiteFooter />
