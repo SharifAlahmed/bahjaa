@@ -439,7 +439,7 @@ button,input{font:inherit;}
   color:var(--paper);line-height:1.35;
   margin-block-start:12px;
   font-size:clamp(11px,1.3vw,19px);
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
 }
 .bk-author{
   margin-block-start:6px;
