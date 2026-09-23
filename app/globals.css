@@ -172,7 +172,7 @@ button,input{font:inherit;}
 /* ── مقياس الطباعة ────────────────────────────────────── */
 .eyebrow{
   font-family:var(--sans);font-weight:400;font-size:11px;
-  letter-spacing:2.2px;line-height:1.8;color:var(--brass-ink);margin:0;
+  line-height:1.8;color:var(--brass-ink);margin:0;
 }
 .h-hero{font-family:var(--serif);font-weight:700;font-size:clamp(34px,7.2vw,64px);line-height:1.32;margin:0;text-wrap:balance;}
 .h-sec{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,32px);line-height:1.5;margin:0;color:var(--ink);text-wrap:balance;}
@@ -336,7 +336,7 @@ button,input{font:inherit;}
 .cover-title.lg{font-size:clamp(28px,3.2vw,40px);}
 .cover-title.md{font-size:clamp(24px,2.7vw,34px);}
 .cover-title.sm{font-size:clamp(20px,2.2vw,29px);}
-.cover-label{margin:16px 0 0;font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:1.6px;line-height:1.6;color:var(--on-dark-soft);}
+.cover-label{margin:16px 0 0;font-family:var(--sans);font-weight:400;font-size:11px;line-height:1.6;color:var(--on-dark-soft);}
 
 /* ── رفّ الملخصات — شبكة 4→3→2 ──────────────────────── */
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 34px;}
@@ -555,7 +555,7 @@ button,input{font:inherit;}
 }
 .book-meta .bm{padding:16px 0;padding-inline-end:30px;margin-inline-end:30px;border-inline-end:1px solid var(--rule);}
 .book-meta .bm:last-child{border-inline-end:0;margin-inline-end:0;padding-inline-end:0;}
-.book-meta .bm-label{font-size:11px;letter-spacing:1.6px;color:var(--brass-ink);line-height:1.8;}
+.book-meta .bm-label{font-size:11px;color:var(--brass-ink);line-height:1.8;}
 .book-meta .bm-value{font-size:15px;font-weight:500;line-height:1.7;color:var(--ink);}
 @media (max-width:600px){
   .book-meta{display:grid;grid-template-columns:1fr 1fr;}
@@ -649,7 +649,7 @@ button,input{font:inherit;}
 .rel-card .cover-seal{display:none;}
 .rel-card .cover-rule{width:16px;height:1px;}
 .rel-card .cover-title{font-size:14px;line-height:1.3;margin-top:8px;}
-.rel-card .cover-label{font-size:6px;letter-spacing:.6px;}
+.rel-card .cover-label{font-size:6px;}
 .rel-card h3{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.4;margin:0;color:var(--ink);}
 .rel-card .author{margin:4px 0 0;font-size:14px;font-weight:400;color:var(--ink-soft);line-height:1.7;}
 .rel-card .facts{margin:2px 0 0;}
@@ -721,7 +721,7 @@ button,input{font:inherit;}
 .bh-card-label  {font-family:var(--sans);font-size:15px;font-weight:600;color:var(--deep);}
 .bh-body        {font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:var(--lh-body);color:var(--ink);}
 .bh-sub         {font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.8;color:var(--muted);}
-.bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:2.2px;color:var(--brass-ink);}
+.bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;color:var(--brass-ink);}
 
 /* البطاقة صارت خطوطاً: حد رفيع على الورق، بلا تعبئة بيضاء وبلا ظل */
 .bh-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--radius-sm);box-shadow:var(--shadow-1);}
