@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
-import { BookCard } from "@/components/bahjaa/book-card";
+import { SummaryCard } from "@/components/SummaryCard";
 import { BookmarkButtons } from "@/components/bahjaa/bookmark-buttons";
 import { type CategorySlug } from "@/components/bahjaa/cover";
 
@@ -54,7 +54,7 @@ export default async function MyLibraryPage() {
         {items.map(({ status, bh_summaries: s }) => {
           const cat = s.bh_categories;
           return (
-            <BookCard
+            <SummaryCard
               key={s.id}
               id={s.id}
               slug={s.slug}
@@ -84,7 +84,6 @@ export default async function MyLibraryPage() {
           : `${rows.length} كتاب محفوظ`}
       </p>
 
-      {/* قائمة القراءة */}
       <section aria-labelledby="to-read-title">
         <div className="library-section-head">
           <h2 className="h-sub" id="to-read-title">
@@ -100,7 +99,6 @@ export default async function MyLibraryPage() {
 
       <hr className="rule" style={{ margin: "52px 0" }} />
 
-      {/* أعجبني */}
       <section aria-labelledby="liked-title">
         <div className="library-section-head">
           <h2 className="h-sub" id="liked-title">

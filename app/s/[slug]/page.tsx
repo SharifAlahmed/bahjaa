@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Cover, type CategorySlug } from "@/components/bahjaa/cover";
+import { type CategorySlug } from "@/components/bahjaa/cover";
+import { BookCover } from "@/components/BookCover";
 import { SummaryToc } from "@/components/bahjaa/summary-toc";
 import { readingLabel, toArabicDigits } from "@/components/bahjaa/format";
 import SummaryFree from "@/components/summary-free";
@@ -83,26 +84,27 @@ export default async function SummaryPage({ params }: Props) {
     <article className="wrap summary-page">
       {/* الترويسة */}
       <header className="book-head">
-        <Cover
+        <BookCover
           title={summary.book_title_ar}
-          slug={summary.slug}
           coverUrl={summary.cover_url}
+          size="hero"
           priority
+          slug={summary.slug}
           category={(category?.slug || "leadership") as CategorySlug}
           categoryLabel={category?.name_ar || "بهجة"}
         />
 
-        <div className="min-w-0">
+        <div className="book-head-title">
           {category && <p className="eyebrow">{category.name_ar}</p>}
           <h1 className="h-sec book-title">{summary.book_title_ar}</h1>
           {summary.book_title_en && (
-            <p className="meta" dir="ltr" style={{ textAlign: "right", marginTop: 8 }}>
+            <p className="meta" dir="ltr" style={{ textAlign: "end", marginTop: 8 }}>
               {summary.book_title_en}
             </p>
           )}
+        </div>
+        <div className="book-head-meta">
 
-          {/* المؤلف قبل زمن القراءة: في صفحة كتاب هو الأهم.
-              حُذف «الإعداد · فريق بهجة» — يظهر على كل ملخص وفي التذييل. */}
           <dl className="book-meta">
             {summary.author && (
               <div className="bm">
@@ -118,7 +120,7 @@ export default async function SummaryPage({ params }: Props) {
               <div className="bm">
                 <dt className="bm-label">تقييم بهجة</dt>
                 <dd className="bm-value">
-                  {toArabicDigits(summary.rating_value)} من ١٠ · القيمة{"\u00A0"}للقائد
+                  {toArabicDigits(summary.rating_value)} من ١٠ · القيمة{" "}للقائد
                 </dd>
               </div>
             )}

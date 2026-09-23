@@ -3,7 +3,6 @@
 // الأقسام العشرة كما هي في ملخص بهجة العشاري — لا تُضاف ولا تُدمج ولا يُعاد ترتيبها.
 // المراسي تطابق id={`sec-${num}`} في components/section.tsx.
 // ١–٤ مفتوحة للجميع · ٥–١٠ خلف البريد.
-import { LockIcon } from './icons'
 
 export type TocItem = { num: string; label: string; href: string; locked?: boolean }
 
@@ -34,7 +33,7 @@ export function SummaryToc({ items = DEFAULT_ITEMS, locked = true }: { items?: T
                 <span className="toc-shut">
                   <span className="n" aria-hidden="true">{item.num}</span>
                   {item.label}
-                  <span className="lockmark"><LockIcon width={14} height={14} /><span className="sr-only">مقفول — يُفتح بالبريد</span></span>
+                  <span className="lockmark"><svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10.5" /><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" /><path d="M12 14.5v2.5" /></svg><span className="sr-only">مقفول — يُفتح بالبريد</span></span>
                 </span>
               ) : (
                 <a href={item.href}>

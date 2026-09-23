@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { BookCard } from "@/components/bahjaa/book-card";
+import { SummaryCard } from "@/components/SummaryCard";
 import { BookmarkButtons } from "@/components/bahjaa/bookmark-buttons";
 import { type CategorySlug } from "@/components/bahjaa/cover";
 import { countLabel } from "@/components/bahjaa/format";
@@ -88,7 +88,7 @@ export default async function CategoryPage({ params }: Props) {
         <>
           <div className="shelf">
             {list.map((s, i) => (
-              <BookCard
+              <SummaryCard
                 key={s.id}
                 id={s.id}
                 coverUrl={s.cover_url}

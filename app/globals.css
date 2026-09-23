@@ -5,16 +5,14 @@
    ⚠️ ممنوع next/font/google: شبكة جهاز التطوير محجوبة بـ proxy
    (fonts.googleapis.com → 403) فيعلّق البناء بلا رسالة خطأ.
    أي خط جديد يُنزَّل ويوضع في public/fonts أولاً.
-
-   المرحلة القادمة: استبدال العائلتين بـ Tajawal (عربي) و Inter
-   (لاتيني) حسب لوحة الهوية — مؤجّلة بقرار شريف.
    ══════════════════════════════════════════════════════════ */
-@font-face{font-family:"Amiri";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/amiri-400.woff2") format("woff2");}
-@font-face{font-family:"Amiri";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/amiri-700.woff2") format("woff2");}
-@font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:300;font-display:swap;src:url("/fonts/plex-ar-300.woff2") format("woff2");}
-@font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/plex-ar-400.woff2") format("woff2");}
-@font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:500;font-display:swap;src:url("/fonts/plex-ar-500.woff2") format("woff2");}
-@font-face{font-family:"IBM Plex Sans Arabic";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/plex-ar-600.woff2") format("woff2");}
+@font-face{font-family:"Tajawal";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/tajawal-400.woff2") format("woff2");}
+@font-face{font-family:"Tajawal";font-style:normal;font-weight:500;font-display:swap;src:url("/fonts/tajawal-500.woff2") format("woff2");}
+@font-face{font-family:"Tajawal";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/tajawal-700.woff2") format("woff2");}
+@font-face{font-family:"Tajawal";font-style:normal;font-weight:800;font-display:swap;src:url("/fonts/tajawal-800.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/inter-400.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("/fonts/inter-500.woff2") format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/inter-600.woff2") format("woff2");}
 
 /* ══════════════════════════════════════════════════════════
    بهجة — ملف الرموز · المصدر الوحيد للحقيقة
@@ -42,6 +40,7 @@
   /* ⚠️ ليس على لوحة الهوية — اللوحة لا تعرّف لون خطأ.
      مستعار حتى يُعتمد لون رسمي. لرسائل الخطأ وحدها. */
   --color-danger: #A8432B;
+  --color-like:   #E85858;  /* إعجاب / حفظ */
   --mask-solid:   #000;
 
   /* ── مشتقات الشفافية ───────────────────────────────── */
@@ -70,12 +69,24 @@
   --space-9: 96px;
 
   /* ── الخطوط ────────────────────────────────────────── */
-  --font-ar: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
-  --font-display: "Amiri", "Times New Roman", serif;
+  --font-ar: "Tajawal", "Segoe UI", Tahoma, sans-serif;
+  --font-display: "Tajawal", "Segoe UI", Tahoma, sans-serif;
+  --font-latin: "Inter", system-ui, sans-serif;
 
-  /* ── توافق: خط وزاوية الهوية السابقة (رموز الألوان القديمة حُذفت) ── */
-  --font-bh: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  /* ── توافق ────────────────────────────────────────────── */
+  --font-bh: "Tajawal", "Segoe UI", Tahoma, sans-serif;
   --radius-bh: 8px;
+
+  /* ── المرحلة ٠: رموز مضافة ──────────────────────────── */
+  --radius-btn:6px;
+  --radius-card:10px;
+  --radius-panel:14px;
+
+  --shadow-soft:0 1px 2px rgba(11,20,18,.04),0 8px 24px rgba(11,20,18,.06);
+  --shadow-book:0 2px 4px rgba(11,20,18,.18),0 18px 32px -8px rgba(11,20,18,.28);
+  --shadow-book-hover:0 3px 6px rgba(11,20,18,.2),0 26px 40px -10px rgba(11,20,18,.34);
+
+  --space-section:clamp(56px,8vw,96px);
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -121,6 +132,7 @@
 
   --serif: var(--font-display);
   --sans:  var(--font-ar);
+  --latin: var(--font-latin);
   --logo:  var(--font-ar);
 
   /* ── مقياس الطباعة من اللوحة ───────────────────────── */
@@ -136,9 +148,10 @@
 }
 
 *{box-sizing:border-box;}
-html{direction:rtl;-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+html{direction:rtl;-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip;}
 body{
   margin:0;
+  overflow-x:clip;
   background:var(--paper);
   color:var(--ink);
   font-family:var(--sans);
@@ -149,6 +162,7 @@ body{
 }
 img{max-width:100%;}
 a{color:inherit;}
+button,input{font:inherit;}
 :focus-visible{outline:2px solid var(--brass-ink);outline-offset:3px;}
 
 @media (prefers-reduced-motion: reduce){
@@ -159,7 +173,7 @@ a{color:inherit;}
 /* ── مقياس الطباعة ────────────────────────────────────── */
 .eyebrow{
   font-family:var(--sans);font-weight:400;font-size:11px;
-  letter-spacing:2.2px;line-height:1.8;color:var(--brass-ink);margin:0;
+  line-height:1.8;color:var(--brass-ink);margin:0;
 }
 .h-hero{font-family:var(--serif);font-weight:700;font-size:clamp(34px,7.2vw,64px);line-height:1.32;margin:0;text-wrap:balance;}
 .h-sec{font-family:var(--serif);font-weight:700;font-size:clamp(25px,4.4vw,32px);line-height:1.5;margin:0;color:var(--ink);text-wrap:balance;}
@@ -176,12 +190,19 @@ a{color:inherit;}
 /* ── الأزرار ──────────────────────────────────────────── */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  min-height:56px;padding-inline:34px;border-radius:var(--radius-sm);border:0;
+  min-height:56px;padding-inline:34px;border-radius:var(--radius-btn);border:0;
   font-family:var(--sans);font-size:16px;font-weight:600;
   cursor:pointer;text-decoration:none;
 }
-.btn-primary{background:var(--green);color:var(--deep-2);}
-.btn-secondary{background:transparent;border:1px solid var(--deep);color:var(--deep);}
+/* المرحلة ٠: أصناف الأزرار */
+.btn-primary{background:var(--color-brand-dark);color:var(--color-surface);}
+.btn-primary:hover{background:var(--color-deep);}
+.btn-ghost{background:transparent;border:1.5px solid var(--color-brand-dark);color:var(--color-brand-dark);}
+.btn-ghost:hover{background:rgba(21,51,42,.06);}
+.btn-accent{background:var(--color-brand-primary);color:var(--color-deep);}  /* داخل اللوحة الداكنة فقط */
+.btn-accent:hover{background:var(--color-brand-mint);}
+/* توافق عكسي */
+.btn-secondary{background:transparent;border:1.5px solid var(--color-brand-dark);color:var(--color-brand-dark);}
 .btn-brand{background:var(--green-ink);color:var(--color-surface);}
 .btn-brand:hover{background:var(--deep);}
 .btn-deep{background:var(--deep);color:var(--paper);}
@@ -205,26 +226,94 @@ a{color:inherit;}
 
 .wrap{max-width:1120px;margin:0 auto;padding-inline:20px;}
 
+/* ── شريط الإعلان ────────────────────────────────────── */
+.announce-bar{
+  background:var(--color-brand-dark);color:var(--color-background);
+  text-align:center;padding-block:10px;font-size:13px;font-weight:500;
+  line-height:1.7;
+}
+
 /* ── الترويسة ─────────────────────────────────────────── */
-.site-header{background:var(--deep);color:var(--paper);}
-.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:76px;}
-.logo-mark{height:76px;width:76px;display:block;flex:none;}
-@media (max-width:600px){ .logo-mark{height:60px;width:60px;} }
-.site-footer .logo-mark{height:40px;width:40px;}
-.logo-lockup{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.site-nav{display:flex;align-items:center;gap:6px;margin-inline-start:auto;}
+.site-header{
+  background:var(--color-surface);color:var(--color-brand-dark);
+  position:sticky;top:0;z-index:40;
+  border-block-end:1px solid var(--color-border);
+  transition:box-shadow .2s ease;
+}
+.site-header.scrolled{box-shadow:var(--shadow-soft);}
+.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:64px;}
+.logo-mark{height:48px;width:48px;display:block;flex:none;}
+@media (max-width:600px){ .logo-mark{height:40px;width:40px;} }
+.site-footer .logo-mark{height:36px;width:36px;}
+.logo-lockup{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-lockup:focus:not(:focus-visible){outline:none;}
+.site-nav{display:flex;align-items:center;gap:4px;margin-inline:auto;}
 .site-nav a{
-  font-size:15px;font-weight:400;color:var(--on-dark);
+  font-size:15px;font-weight:500;color:var(--color-brand-dark);
   text-decoration:none;line-height:1.6;
   display:inline-flex;align-items:center;min-height:44px;padding-inline:10px;
+  position:relative;
 }
-.site-nav a:hover{color:var(--paper);}
-.nav-cta{border:1px solid var(--on-dark-line);border-radius:var(--radius-sm);color:var(--on-dark) !important;font-size:14px;padding-inline:18px !important;}
-.nav-cta:hover{border-color:var(--on-dark-edge);color:var(--paper) !important;}
-@media (max-width:600px){
-  .site-nav .hide-sm{display:none;}
-  .site-header .wrap{gap:10px;}
+.site-nav a:hover{color:var(--color-brand-ink);}
+.site-nav a.active::after{
+  content:"";position:absolute;inset-inline:0;bottom:0;
+  height:2px;background:var(--color-brand-ink);border-radius:1px;
 }
+.nav-cta{
+  background:transparent;border:1.5px solid var(--color-brand-dark);
+  border-radius:var(--radius-btn);color:var(--color-brand-dark) !important;
+  font-size:14px;font-weight:600;padding-inline:18px !important;
+}
+.nav-cta:hover{background:var(--color-brand-dark);color:var(--color-surface) !important;}
+.nav-icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;min-width:44px;padding:0;background:transparent;
+  border:0;cursor:pointer;color:var(--color-brand-dark);
+  border-radius:var(--radius-btn);
+}
+.nav-icon-btn:hover{background:rgba(21,51,42,.06);}
+@media (max-width:767px){
+  .site-nav .hide-mobile{display:none;}
+  .site-header .wrap{gap:8px;}
+}
+/* ── قائمة الجوال المنزلقة ───────────────────────────────────────
+   الافتراضي: إخفاء دائم. الإظهار فقط هنا داخل max-width:767px
+   لا تُضف قاعدة display لهذه الأصناف خارج هذه الكتلة           */
+.mobile-only{display:none;}
+.mobile-nav-overlay{
+  display:none;
+  position:fixed;inset:0;z-index:50;
+  background:rgba(11,20,18,.6);
+  opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.mobile-nav-overlay.open{display:block;opacity:1;pointer-events:auto;}
+.mobile-nav-panel{
+  display:none;
+  position:fixed;inset-block:0;inset-inline-start:0;z-index:51;
+  width:min(300px,85vw);
+  background:var(--color-surface);padding:24px 20px;
+  flex-direction:column;gap:4px;
+  /* لا translate ولا transition — القائمة إما مخفية تماماً أو ظاهرة */
+}
+.mobile-nav-panel.open{display:flex;}
+.mobile-nav-panel a{
+  display:flex;align-items:center;min-height:52px;padding-inline:12px;
+  font-size:17px;font-weight:500;color:var(--color-brand-dark);
+  text-decoration:none;border-bottom:1px solid var(--color-border);
+}
+.mobile-nav-panel a:hover{color:var(--color-brand-ink);}
+.mobile-nav-close{
+  display:flex;align-items:center;justify-content:center;
+  min-height:44px;min-width:44px;margin-inline-start:auto;
+  background:transparent;border:0;cursor:pointer;color:var(--color-brand-dark);
+  margin-bottom:8px;
+}
+@media (max-width:767px){
+  .mobile-only{display:block;}
+  .mobile-nav-overlay{display:block;} /* opacity:0 — جاهز لـ transition */
+  /* .mobile-nav-panel: يبقى display:none حتى تُضاف .open */
+}
+/* ─── نهاية كتلة قائمة الجوال ─────────────────────────────────── */
 
 /* ── اللوحة الداكنة ───────────────────────────────────── */
 .dark-panel{background:var(--deep);color:var(--paper);padding:54px 46px;text-align:center;}
@@ -253,45 +342,27 @@ a{color:inherit;}
 .cover-title.lg{font-size:clamp(28px,3.2vw,40px);}
 .cover-title.md{font-size:clamp(24px,2.7vw,34px);}
 .cover-title.sm{font-size:clamp(20px,2.2vw,29px);}
-.cover-label{margin:16px 0 0;font-family:var(--sans);font-weight:400;font-size:11px;letter-spacing:1.6px;line-height:1.6;color:var(--on-dark-soft);}
+.cover-label{margin:16px 0 0;font-family:var(--sans);font-weight:400;font-size:11px;line-height:1.6;color:var(--on-dark-soft);}
 
-/* ── رفّ الملخصات ─────────────────────────────────────── */
+/* ── رفّ الملخصات — شبكة 4→3→2 ──────────────────────── */
 .shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 34px;}
-@media (max-width:1000px){ .shelf{grid-template-columns:repeat(2,1fr);gap:36px 24px;} }
+@media (max-width:1000px){ .shelf{grid-template-columns:repeat(3,1fr);gap:36px 24px;} }
+@media (max-width:640px)  { .shelf{grid-template-columns:repeat(2,1fr);gap:24px 16px;} }
 
-/* البطاقة الأولى أكبر بصرياً — «أحدث إضافة» حقيقية من ترتيب البيانات،
-   لا اختيار تحريري وهمي. سطح مكتب فقط: الجوال له رفّه الأفقي أدناه. */
+/* البطاقة الأولى أكبر بصرياً — «أحدث إضافة» حقيقية من ترتيب البيانات */
 @media (min-width:1000px){
   .shelf.shelf-featured{grid-auto-flow:dense;}
   .shelf.shelf-featured > *:first-child{grid-column:span 2;grid-row:span 2;}
-  .shelf.shelf-featured > *:first-child .cover-title.lg{font-size:clamp(32px,3.6vw,52px);}
-  .shelf.shelf-featured > *:first-child .cover-title.md{font-size:clamp(28px,3vw,42px);}
-  .shelf.shelf-featured > *:first-child .cover-title.sm{font-size:clamp(24px,2.6vw,36px);}
   .shelf.shelf-featured > *:first-child .cover-seal{max-width:200px;}
   .shelf.shelf-featured > *:first-child h3.h-sub{font-size:clamp(22px,2.2vw,28px);}
 }
+/* البطاقات القديمة: تعديلات الجوال */
 @media (max-width:600px){
-  /* رفّ أفقي قابل للسحب: كل بطاقة تظهر بحجمها الحقيقي بدل ضغطها في عمود ضيق،
-     وحافة البطاقة التالية تُرى فتُلمّح أن هناك المزيد. */
-  .shelf{
-    display:flex;
-    overflow-x:auto;
-    overflow-y:hidden;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    gap:18px;
-    padding-inline:20px;
-    margin-inline:-20px;
-    scrollbar-width:none;
-  }
-  .shelf::-webkit-scrollbar{display:none;}
-  .shelf > *{flex:0 0 auto;width:min(60vw,230px);scroll-snap-align:start;}
   .book-card h3{margin-top:14px;font-size:17px;line-height:1.5;}
   .book-card .author{margin-top:4px;font-size:13px;}
   .book-card .facts{font-size:12px;}
-  .book-card .promise{display:none;}   /* سطر طويل لا يعمل في نصف عرض الشاشة */
+  .book-card .promise{display:none;}
   .book-card .go{margin-top:10px;font-size:14px;}
-  /* الخَتْم يصغر مع الغلاف، والعنوان يبقى مقروءاً */
   .cover{padding:16px 14px;}
   .cover-seal{width:46%;}
   .cover-rule{width:20px;height:1.5px;}
@@ -299,7 +370,7 @@ a{color:inherit;}
   .cover-title.lg{font-size:19px;}
   .cover-title.md{font-size:17px;}
   .cover-title.sm{font-size:15px;}
-  .cover-label{margin-top:8px;font-size:9px;letter-spacing:1px;}
+  .cover-label{margin-top:8px;font-size:9px;}
 }
 
 .book-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;}
@@ -316,6 +387,185 @@ a{color:inherit;}
 }
 .book-card:hover .go{border-bottom-color:var(--brass);color:var(--ink);}
 .book-card .go svg{color:var(--brass-ink);}
+
+/* ── غلاف الكتاب ثلاثي الأبعاد (BookCover) ─────────────
+   بنية: .bk > .bk-inner (+ .bk-shine) + .bk-pages
+   الـ flex-direction:row في RTL يضع .bk-inner على اليمين (عمود الكتاب)
+   و .bk-pages على اليسار (أوراق الكتاب) — تخطيط صحيح للغة العربية. */
+
+.bk{
+  display:flex;
+  flex-direction:row;
+  align-self:start;
+  flex:none;
+}
+.bk-card { width:140px; }
+.bk-hero  { width:168px; }
+.bk-lg    { width:220px; }
+
+.bk-inner{
+  flex:1;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  position:relative;
+  border-radius:var(--radius-xs);
+  box-shadow:var(--shadow-book);
+  background:var(--cat, var(--deep));
+  transition:transform .22s ease, box-shadow .22s ease;
+  container-type:inline-size; /* يُتيح cqw للغلاف المولَّد */
+}
+
+/* صورة الغلاف من next/image */
+.bk-img{object-fit:cover;}
+
+/* احتياط خطّي — حين لا توجد صورة */
+.bk-fallback{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  padding:clamp(14px,3vw,24px) clamp(12px,2.5vw,20px);
+}
+.bk-foot{
+  margin-block-start:auto;
+  display:flex;
+  flex-direction:column;
+}
+.bk-rule{
+  width:28px;height:2px;
+  background:var(--cat-accent, var(--on-dark-soft));
+  flex:none;
+}
+.bk-title{
+  font-family:var(--serif);font-weight:700;
+  color:var(--paper);line-height:1.35;
+  margin-block-start:12px;
+  font-size:clamp(11px,1.3vw,19px);
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+}
+.bk-author{
+  margin-block-start:6px;
+  font-family:var(--sans);font-weight:400;
+  font-size:10px;line-height:1.5;
+  color:var(--on-dark-soft);
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+
+/* ── الغلاف المولَّد (بدون صورة) ───────────────────────────────────
+   تخطيط: النص في الأعلى، الرمز يملأ الباقي ويرتكز في الأسفل.
+   الأحجام بـcqw نسبةً إلى عرض .bk-inner (container-type:inline-size).
+   ─────────────────────────────────────────────────────────────────── */
+.bk-generated{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  padding:8cqw 7cqw 5cqw;
+}
+.bk-gen-title{
+  font-family:var(--font-ar);font-weight:800;
+  color:var(--color-background);
+  font-size:clamp(9px,8.5cqw,17px);
+  line-height:1.35;
+  text-align:start; /* يمين في RTL */
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.bk-gen-rule{
+  width:22cqw;height:2px;
+  background:var(--color-accent-gold);
+  margin-block:4cqw;
+  flex:none;
+  /* يدفع الخط إلى inline-start (اليمين في RTL) */
+  margin-inline-end:auto;
+}
+.bk-gen-author{
+  font-family:var(--font-ar);font-weight:400;
+  font-size:clamp(7px,7cqw,13px);line-height:1.4;
+  color:var(--color-on-dark-soft);
+  text-align:start;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.bk-gen-icon{
+  flex:1;
+  display:flex;align-items:flex-end;
+  overflow:hidden;
+  min-block-size:0;
+  color:var(--color-accent-gold); /* يُورَّث إلى SVG عبر currentColor */
+}
+.bk-gen-icon svg{
+  width:100%;height:100%;
+}
+/* vector-effect مرة واحدة — لا تكرار على كل عنصر SVG */
+.bk-gen-icon path,
+.bk-gen-icon line,
+.bk-gen-icon circle{
+  vector-effect:non-scaling-stroke;
+}
+
+/* بريق قطري — لمسة عمق على السطح اللامع */
+.bk-shine{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.16) 0%,transparent 55%);
+  pointer-events:none;
+}
+
+/* شريط أوراق الكتاب — يظهر على الجانب inline-end (اليسار في RTL) */
+.bk-pages{
+  width:5px;
+  align-self:stretch;
+  flex:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    var(--color-surface) 0px,
+    var(--color-border) 1px,
+    var(--color-surface) 2.5px
+  );
+  border-inline-end:1px solid rgba(0,0,0,.09);
+  border-start-end-radius:2px;
+  border-end-end-radius:2px;
+  opacity:.9;
+}
+
+/* ── بطاقة الملخص (SummaryCard) ──────────────────────── */
+.sc{
+  display:flex;flex-direction:column;color:inherit;position:relative;
+}
+.sc-link{
+  position:absolute;inset:0;z-index:1;
+}
+.sc-link:focus-visible{
+  outline:2px solid var(--green);outline-offset:2px;border-radius:var(--radius-sm);
+}
+.sc-cover-wrap{position:relative;}
+.sc:hover .bk-inner{transform:translateY(-3px);box-shadow:var(--shadow-book-hover);}
+.sc-title{margin-block-start:20px;}
+.sc-author{
+  margin-block-start:6px;font-size:15px;font-weight:400;line-height:1.7;
+  color:var(--ink-soft);
+}
+.sc-facts{margin-block-start:4px;}
+.sc-promise{
+  margin-block-start:12px;font-size:15px;line-height:1.85;
+  font-weight:400;color:var(--ink-soft);
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+}
+.sc-actions{margin-block-start:auto;padding-block-start:14px;}
+.sc .go{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:15px;font-weight:600;color:var(--deep);
+  border-block-end:1px solid transparent;padding-block-end:2px;align-self:flex-start;
+}
+.sc:hover .go{border-block-end-color:var(--brass);color:var(--ink);}
+.sc .go svg{color:var(--brass-ink);}
+/* أزرار الحفظ فوق رابط البطاقة */
+.sc .bookmark-btns{z-index:2;}
+/* الجوال: اختصار */
+@media (max-width:640px){
+  .sc-promise{display:none;}
+  .sc-title{margin-block-start:14px;font-size:17px;}
+  .sc-author{margin-block-start:4px;font-size:13px;}
+  .sc-facts{font-size:12px;}
+  .sc-actions{padding-block-start:10px;}
+  .sc .go{font-size:14px;}
+}
 
 /* ── صفوف الأقسام ─────────────────────────────────────── */
 .cat-row{
@@ -338,21 +588,29 @@ a{color:inherit;}
 }
 
 /* ── صفحة الملخص ──────────────────────────────────────── */
-.book-head{display:grid;grid-template-columns:168px 1fr;gap:30px;align-items:start;}
+.book-head{display:grid;grid-template-columns:168px 1fr;grid-template-rows:auto auto;gap:30px;align-items:start;}
+.book-head>:first-child{grid-column:1;grid-row:1/3;}
+.book-head-title{grid-column:2;grid-row:1;min-width:0;}
+.book-head-meta{grid-column:2;grid-row:2;min-width:0;}
 @media (max-width:760px){
-  /* الغلاف رآه القارئ في الرفّ للتوّ. هنا يقف بجانب العنوان لا فوقه —
-     يوفّر شاشة كاملة قبل أن يبدأ القارئ فعلاً. */
   .book-head{grid-template-columns:118px 1fr;gap:18px;align-items:start;}
   .book-head .cover{max-width:118px;padding:12px 10px;}
+  .book-head .bk-hero{width:118px;}
   .book-head .cover-seal{width:52%;}
   .book-head .cover-rule{width:16px;height:1.5px;}
-  .book-head .cover-title{margin-top:8px;font-size:14px;line-height:1.35;}
-  .book-head .cover-label{margin-top:6px;font-size:8px;letter-spacing:.8px;}
+  .book-head .cover-title{margin-block-start:8px;font-size:14px;line-height:1.35;}
+  .book-head .cover-label{margin-block-start:6px;font-size:8px;}
+  .book-head .bk-title{margin-block-start:8px;font-size:14px;}
+  .book-head .bk-label{margin-block-start:6px;font-size:8px;}
+  .book-head>:first-child{grid-row:1;}
+  .book-head-meta{grid-column:1/-1;grid-row:2;margin-block-start:18px;}
 }
 @media (max-width:420px){
   .book-head{grid-template-columns:92px 1fr;gap:14px;}
   .book-head .cover{max-width:92px;}
+  .book-head .bk-hero{width:92px;}
   .book-head .cover-title{font-size:12px;}
+  .book-head .bk-title{font-size:12px;}
 }
 
 /* شريط بيانات الكتاب */
@@ -362,7 +620,7 @@ a{color:inherit;}
 }
 .book-meta .bm{padding:16px 0;padding-inline-end:30px;margin-inline-end:30px;border-inline-end:1px solid var(--rule);}
 .book-meta .bm:last-child{border-inline-end:0;margin-inline-end:0;padding-inline-end:0;}
-.book-meta .bm-label{font-size:11px;letter-spacing:1.6px;color:var(--brass-ink);line-height:1.8;}
+.book-meta .bm-label{font-size:11px;color:var(--brass-ink);line-height:1.8;}
 .book-meta .bm-value{font-size:15px;font-weight:500;line-height:1.7;color:var(--ink);}
 @media (max-width:600px){
   .book-meta{display:grid;grid-template-columns:1fr 1fr;}
@@ -456,7 +714,7 @@ a{color:inherit;}
 .rel-card .cover-seal{display:none;}
 .rel-card .cover-rule{width:16px;height:1px;}
 .rel-card .cover-title{font-size:14px;line-height:1.3;margin-top:8px;}
-.rel-card .cover-label{font-size:6px;letter-spacing:.6px;}
+.rel-card .cover-label{font-size:6px;}
 .rel-card h3{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.4;margin:0;color:var(--ink);}
 .rel-card .author{margin:4px 0 0;font-size:14px;font-weight:400;color:var(--ink-soft);line-height:1.7;}
 .rel-card .facts{margin:2px 0 0;}
@@ -465,33 +723,41 @@ a{color:inherit;}
 .rel-card .go svg{color:var(--brass-ink);}
 
 /* ── التذييل — أربعة أعمدة ────────────────────────────── */
-.site-footer{background:var(--deep-2);color:var(--on-dark-soft);}
-.site-footer .meta{color:var(--on-dark-soft);}
-.site-footer a{color:var(--on-dark-soft);text-decoration:none;}
-.site-footer a:hover{color:var(--paper);}
+.site-footer{background:var(--color-background);color:var(--color-brand-dark);}
+.site-footer .meta{color:var(--color-ink-muted);}
+.site-footer a{color:var(--color-ink-muted);text-decoration:none;}
+.site-footer a:hover{color:var(--color-brand-ink);}
 
 .footer-grid{
-  padding-block:52px 40px;
+  padding-block:56px 40px;
   display:grid;
   grid-template-columns:1.3fr 1fr 1fr 1fr;
   gap:40px 28px;
 }
-.footer-col{display:flex;flex-direction:column;gap:11px;}
-.footer-col a{font-size:14px;line-height:1.7;}
+.footer-col{display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-size:14px;font-weight:400;line-height:1.7;}
 .footer-col-title{
-  font-size:12px;font-weight:700;letter-spacing:.4px;
-  color:var(--on-dark-soft);margin-bottom:2px;
+  font-size:15px;font-weight:800;
+  color:var(--color-brand-dark);margin-bottom:4px;
 }
-.footer-fact{font-size:13px;line-height:1.7;margin:0;color:var(--on-dark-soft);}
+.footer-tagline{font-size:14px;font-weight:400;line-height:1.8;color:var(--color-ink-muted);margin:0;}
+.footer-brand-name{
+  font-size:16px;font-weight:800;color:var(--color-accent-ink);
+  letter-spacing:0;margin:4px 0 0;
+}
+.footer-fact{font-size:13px;line-height:1.7;margin:0;color:var(--color-ink-muted);}
 
 .footer-bottom{
   padding-block:20px;
-  border-block-start:1px solid var(--on-dark-line);
+  border-block-start:1px solid var(--color-border);
 }
 
 @media (max-width:760px){
   .footer-grid{grid-template-columns:1fr 1fr;padding-block:44px 30px;}
   .footer-brand{grid-column:1 / -1;}
+}
+@media (max-width:500px){
+  .footer-grid{grid-template-columns:1fr;}
 }
 
 /* ── إشعار تجريبي ─────────────────────────────────────── */
@@ -517,10 +783,10 @@ a{color:inherit;}
    ══════════════════════════════════════════════════════════ */
 .bh-sec-title   {font-family:var(--serif);font-size:clamp(25px,4.4vw,32px);font-weight:700;line-height:1.5;}
 .bh-pillar-title{font-family:var(--serif);font-size:clamp(19px,2.6vw,22px);font-weight:700;line-height:1.4;}
-.bh-card-label  {font-family:var(--sans);font-size:15px;font-weight:600;color:var(--deep);}
+.bh-card-label  {font-family:var(--sans);font-size:18px;font-weight:700;color:var(--deep);}
 .bh-body        {font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:var(--lh-body);color:var(--ink);}
 .bh-sub         {font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.8;color:var(--muted);}
-.bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:2.2px;color:var(--brass-ink);}
+.bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;color:var(--brass-ink);}
 
 /* البطاقة صارت خطوطاً: حد رفيع على الورق، بلا تعبئة بيضاء وبلا ظل */
 .bh-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--radius-sm);box-shadow:var(--shadow-1);}
@@ -596,7 +862,7 @@ a{color:inherit;}
    مخفي بصرياً حتى يستقبل التركيز. */
 .skip-link{
   position:absolute;inset-inline-start:-9999px;top:0;z-index:100;
-  background:var(--brand-primary);color:var(--deep-2);font-family:var(--sans);
+  background:var(--color-brand-dark);color:var(--color-surface);font-family:var(--sans);
   font-size:15px;font-weight:600;line-height:1.6;
   padding:14px 22px;border-end-end-radius:var(--radius-sm);
   text-decoration:none;
@@ -604,7 +870,7 @@ a{color:inherit;}
 .skip-link:focus{inset-inline-start:0;}
 
 /* ── النحاسي على اللوحات الداكنة ──────────────────────────
-   #C99A45 يسقط على الورق (٢٫٣٥:١) ويمرّ على الداكن (٥٫٣٢–٧٫٢٩:١).
+   var(--color-accent-gold) يسقط على الورق (٢٫٣٥:١) ويمرّ على الداكن (٥٫٣٢–٧٫٢٩:١).
    فالافتراضي صار نسخة الورق، وهذه القاعدة تعيد الأصل حيث يصحّ. */
 .dark-panel .eyebrow,
 .site-header .eyebrow,
@@ -676,13 +942,6 @@ a{color:inherit;}
 /* ── شارة الغلاف ─────────────────────────────────────────
    deep على الذهبي = ٧٫٢٩:١ — محسوبة لا مقدّرة. */
 .cover-wrap{position:relative;}
-.cover-badge{
-  position:absolute;inset-block-start:10px;inset-inline-end:10px;z-index:2;
-  background:var(--brass);color:var(--deep-2);
-  font-family:var(--sans);font-size:11px;font-weight:700;line-height:1;
-  padding:5px 10px;border-radius:var(--radius-xs);
-  box-shadow:var(--shadow-1);
-}
 
 /* ── الشريط العلوي الرفيع — شريط أسود بلا نص ─────────────── */
 .top-strip{background:var(--deep-2);height:10px;}
@@ -1019,7 +1278,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 }
 .bm-btn:hover{border-color:var(--green);color:var(--green);}
 .bm-btn.bm-active{border-color:var(--green);background:rgba(29,158,117,.08);color:var(--green);}
-.bm-btn.bm-active.bm-liked{border-color:#e85858;background:rgba(232,88,88,.08);color:#e85858;}
+.bm-btn.bm-active.bm-liked{border-color:var(--color-like);background:rgba(232,88,88,.08);color:var(--color-like);}
 .bm-btn:disabled{opacity:.6;cursor:wait;}
 
 /* على الموبايل: label مخفي */
@@ -1044,7 +1303,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
   padding:0 6px;
   border-radius:999px;
   background:var(--green);
-  color:#fff;
+  color:var(--color-surface);
   font-size:12px;
   font-family:var(--sans);
 }
