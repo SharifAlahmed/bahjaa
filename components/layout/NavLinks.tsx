@@ -57,6 +57,13 @@ export function NavLinks({ user, isAdmin }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [menuOpen, closeMenu]);
 
+  // إغلاق القائمة عند توسيع النافذة فوق ٧٦٨
+  useEffect(() => {
+    const onResize = () => { if (window.innerWidth >= 768) closeMenu(); };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [closeMenu]);
+
   // تأمين التمرير عند فتح القائمة
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -123,12 +130,12 @@ export function NavLinks({ user, isAdmin }: Props) {
         {isAdmin && navLink("/admin", "اللوحة")}
         {user ? (
           <form action="/auth/signout" method="post">
-            <button type="submit" className="btn btn-ghost" style={{ width: "100%", marginTop: 16 }}>
+            <button type="submit" className="btn btn-ghost" style={{ width: "100%", marginBlockStart: 16 }}>
               خروج
             </button>
           </form>
         ) : (
-          <Link href="/login" className="btn btn-primary" style={{ marginTop: 16 }} onClick={closeMenu}>
+          <Link href="/login" className="btn btn-primary" style={{ marginBlockStart: 16 }} onClick={closeMenu}>
             دخول
           </Link>
         )}
