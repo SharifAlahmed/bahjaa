@@ -25,11 +25,6 @@ type Props = {
   bookmarkSlot?: ReactNode;
 };
 
-function isNew(publishedAt?: string | null): boolean {
-  if (!publishedAt) return false;
-  const days = (Date.now() - new Date(publishedAt).getTime()) / 86_400_000;
-  return days >= 0 && days <= 21;
-}
 
 export function SummaryCard({
   id: _id,
@@ -41,13 +36,12 @@ export function SummaryCard({
   readingMinutes = 8,
   coverUrl,
   priority,
-  publishedAt,
+  publishedAt: _publishedAt,
   rating,
   promise,
   featured,
   bookmarkSlot,
 }: Props) {
-  const fresh = isNew(publishedAt);
 
   return (
     <article className="sc">
@@ -68,7 +62,6 @@ export function SummaryCard({
           slug={slug}
           category={category}
         />
-        {fresh && <span className="cover-badge">جديد</span>}
       </div>
 
       {featured && (

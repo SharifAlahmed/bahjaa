@@ -877,13 +877,6 @@ button,input{font:inherit;}
 /* ── شارة الغلاف ─────────────────────────────────────────
    deep على الذهبي = ٧٫٢٩:١ — محسوبة لا مقدّرة. */
 .cover-wrap{position:relative;}
-.cover-badge{
-  position:absolute;inset-block-start:10px;inset-inline-end:10px;z-index:2;
-  background:var(--brass);color:var(--deep-2);
-  font-family:var(--sans);font-size:11px;font-weight:700;line-height:1;
-  padding:5px 10px;border-radius:var(--radius-xs);
-  box-shadow:var(--shadow-1);
-}
 
 /* ── الشريط العلوي الرفيع — شريط أسود بلا نص ─────────────── */
 .top-strip{background:var(--deep-2);height:10px;}
