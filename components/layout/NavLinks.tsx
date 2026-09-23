@@ -80,6 +80,7 @@ export function NavLinks({ user, isAdmin }: Props) {
     <>
       {/* روابط سطح المكتب */}
       <nav className="site-nav" aria-label="التنقل الرئيسي">
+        {navLink("/", "الرئيسية", "hide-mobile")}
         {navLink("/categories", "الأقسام", "hide-mobile")}
         {user && navLink("/my-library", "مكتبتي", "hide-mobile")}
         {isAdmin && navLink("/admin", "اللوحة", "hide-mobile")}

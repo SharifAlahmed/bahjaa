@@ -24,12 +24,11 @@ export default async function SiteHeader() {
           <Image
             className="logo-mark"
             src="/logo/bahjaa-logo.png"
-            width={44}
-            height={44}
+            width={48}
+            height={48}
             alt=""
             priority
           />
-          <span className="footer-brand-name" aria-hidden="true">بهجة</span>
         </Link>
 
         <NavLinks user={!!user} isAdmin={isAdmin} />
