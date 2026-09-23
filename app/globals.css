@@ -547,8 +547,9 @@ button,input{font:inherit;}
   font-weight:400;color:var(--ink-soft);
   display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
 }
+.sc-actions{margin-block-start:auto;padding-block-start:14px;}
 .sc .go{
-  margin-block-start:14px;display:inline-flex;align-items:center;gap:8px;
+  display:inline-flex;align-items:center;gap:8px;
   font-size:15px;font-weight:600;color:var(--deep);
   border-block-end:1px solid transparent;padding-block-end:2px;align-self:flex-start;
 }
@@ -562,7 +563,8 @@ button,input{font:inherit;}
   .sc-title{margin-block-start:14px;font-size:17px;}
   .sc-author{margin-block-start:4px;font-size:13px;}
   .sc-facts{font-size:12px;}
-  .sc .go{margin-block-start:10px;font-size:14px;}
+  .sc-actions{padding-block-start:10px;}
+  .sc .go{font-size:14px;}
 }
 
 /* ── صفوف الأقسام ─────────────────────────────────────── */

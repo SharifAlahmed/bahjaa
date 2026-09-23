@@ -80,7 +80,6 @@ export function NavLinks({ user, isAdmin }: Props) {
     <>
       {/* روابط سطح المكتب */}
       <nav className="site-nav" aria-label="التنقل الرئيسي">
-        {navLink("/", "الرئيسية", "hide-mobile")}
         {navLink("/categories", "الأقسام", "hide-mobile")}
         {user && navLink("/my-library", "مكتبتي", "hide-mobile")}
         {isAdmin && navLink("/admin", "اللوحة", "hide-mobile")}
@@ -118,7 +117,6 @@ export function NavLinks({ user, isAdmin }: Props) {
         <button className="mobile-nav-close" onClick={closeMenu} aria-label="إغلاق القائمة">
           <IconClose />
         </button>
-        {navLink("/", "الرئيسية")}
         {navLink("/categories", "الأقسام")}
         {user && navLink("/my-library", "مكتبتي")}
         {isAdmin && navLink("/admin", "اللوحة")}
