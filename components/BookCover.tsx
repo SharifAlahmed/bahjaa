@@ -3,7 +3,7 @@
 // كل ألوان الغلاف الاحتياطي مشتقة من رموز @theme — لا hex هنا.
 import Image from "next/image";
 
-import { CoverSeal, categoryVars } from "./bahjaa/cover";
+import { CategoryIcon, categoryVars } from "./bahjaa/cover";
 import type { CategorySlug } from "./bahjaa/cover";
 
 export type BookCoverSize = "card" | "hero" | "lg";
@@ -32,7 +32,8 @@ export function BookCover({
   coverUrl,
   size = "card",
   priority = false,
-  slug = "x",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  slug: _slug = "x",
   category = "leadership",
 }: Props) {
   const { field, accent } = categoryVars(category);
@@ -55,12 +56,12 @@ export function BookCover({
             priority={priority}
           />
         ) : (
-          <div className="bk-fallback">
-            <CoverSeal slug={slug} />
-            <div className="bk-foot">
-              <div className="bk-rule" />
-              <span className="bk-title">{title}</span>
-              {author && <span className="bk-author">{author}</span>}
+          <div className="bk-generated">
+            <span className="bk-gen-title">{title}</span>
+            <div className="bk-gen-rule" aria-hidden="true" />
+            {author && <span className="bk-gen-author">{author}</span>}
+            <div className="bk-gen-icon" aria-hidden="true">
+              <CategoryIcon category={category} />
             </div>
           </div>
         )}

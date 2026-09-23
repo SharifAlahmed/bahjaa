@@ -412,6 +412,7 @@ button,input{font:inherit;}
   box-shadow:var(--shadow-book);
   background:var(--cat, var(--deep));
   transition:transform .22s ease, box-shadow .22s ease;
+  container-type:inline-size; /* يُتيح cqw للغلاف المولَّد */
 }
 
 /* صورة الغلاف من next/image */
@@ -447,6 +448,56 @@ button,input{font:inherit;}
   font-size:10px;line-height:1.5;
   color:var(--on-dark-soft);
   overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+
+/* ── الغلاف المولَّد (بدون صورة) ───────────────────────────────────
+   تخطيط: النص في الأعلى، الرمز يملأ الباقي ويرتكز في الأسفل.
+   الأحجام بـcqw نسبةً إلى عرض .bk-inner (container-type:inline-size).
+   ─────────────────────────────────────────────────────────────────── */
+.bk-generated{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  padding:8cqw 7cqw 5cqw;
+}
+.bk-gen-title{
+  font-family:var(--font-ar);font-weight:800;
+  color:var(--color-background);
+  font-size:clamp(10px,9.5cqw,20px);
+  line-height:1.35;
+  text-align:start; /* يمين في RTL */
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.bk-gen-rule{
+  width:22cqw;height:2px;
+  background:var(--color-accent-gold);
+  margin-block:4cqw;
+  flex:none;
+  /* يدفع الخط إلى inline-start (اليمين في RTL) */
+  margin-inline-end:auto;
+}
+.bk-gen-author{
+  font-family:var(--font-ar);font-weight:400;
+  font-size:clamp(7px,7cqw,13px);line-height:1.4;
+  color:var(--color-on-dark-soft);
+  text-align:start;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.bk-gen-icon{
+  flex:1;
+  display:flex;align-items:flex-end;
+  overflow:hidden;
+  min-block-size:0;
+  color:var(--color-accent-gold); /* يُورَّث إلى SVG عبر currentColor */
+}
+.bk-gen-icon svg{
+  width:100%;height:100%;
+}
+/* vector-effect مرة واحدة — لا تكرار على كل عنصر SVG */
+.bk-gen-icon path,
+.bk-gen-icon line,
+.bk-gen-icon circle{
+  vector-effect:non-scaling-stroke;
 }
 
 /* بريق قطري — لمسة عمق على السطح اللامع */
