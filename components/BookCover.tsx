@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import { CategoryIcon, categoryVars } from "./bahjaa/cover";
 import type { CategorySlug } from "./bahjaa/cover";
+import type { CSSProperties } from "react";
 
 export type BookCoverSize = "card" | "hero" | "lg";
 
@@ -32,7 +33,6 @@ export function BookCover({
   coverUrl,
   size = "card",
   priority = false,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   slug: _slug = "x",
   category = "leadership",
 }: Props) {
@@ -40,7 +40,7 @@ export function BookCover({
   const catStyle = {
     ["--cat" as string]: field,
     ["--cat-accent" as string]: accent,
-  } as React.CSSProperties;
+  } as CSSProperties;
 
   return (
     <div className={SIZE_CLASS[size]} style={catStyle}>
