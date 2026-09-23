@@ -1,9 +1,11 @@
 // components/SummaryCard.tsx — بطاقة ملخص بغلاف ثلاثي الأبعاد
 // يحلّ محلّ components/bahjaa/book-card.tsx في الشبكة الجديدة.
+// يقبل نفس props الـ BookCard لتسهيل الاستبدال.
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { BookCover } from "./BookCover";
+import { ArrowIcon } from "./bahjaa/icons";
 import { readingLabel, toArabicDigits } from "./bahjaa/format";
 import type { CategorySlug } from "./bahjaa/cover";
 
@@ -24,6 +26,12 @@ type Props = {
   bookmarkSlot?: ReactNode;
 };
 
+function isNew(publishedAt?: string | null): boolean {
+  if (!publishedAt) return false;
+  const days = (Date.now() - new Date(publishedAt).getTime()) / 86_400_000;
+  return days >= 0 && days <= 21;
+}
+
 export function SummaryCard({
   id: _id,
   slug,
@@ -34,12 +42,14 @@ export function SummaryCard({
   readingMinutes = 8,
   coverUrl,
   priority,
-  publishedAt: _publishedAt,
+  publishedAt,
   rating,
   promise,
-  featured: _featured,
+  featured,
   bookmarkSlot,
 }: Props) {
+  const fresh = isNew(publishedAt);
+
   return (
     <article className="sc">
       {/* رابط شفاف يغطي البطاقة — تحت أزرار الحفظ */}
@@ -52,15 +62,21 @@ export function SummaryCard({
       <div className="sc-cover-wrap" aria-hidden="true">
         <BookCover
           title={title}
+          author={author}
           coverUrl={coverUrl}
           size="card"
           priority={priority}
           slug={slug}
           category={category}
-          categoryLabel={categoryLabel}
         />
+        {fresh && <span className="cover-badge">جديد</span>}
       </div>
 
+      {featured && (
+        <p className="eyebrow" style={{ marginBlockStart: 20 }} aria-hidden="true">
+          أحدث إضافة
+        </p>
+      )}
       <h3 className="h-sub sc-title" aria-hidden="true">{title}</h3>
       {author && <p className="author sc-author" aria-hidden="true">{author}</p>}
       <p className="meta sc-facts" aria-hidden="true">
@@ -76,6 +92,9 @@ export function SummaryCard({
       {promise && (
         <p className="promise sc-promise" aria-hidden="true">{promise}</p>
       )}
+      <span className="go" aria-hidden="true">
+        ابدأ القراءة <ArrowIcon width={18} height={18} />
+      </span>
 
       {bookmarkSlot}
     </article>

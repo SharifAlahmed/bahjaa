@@ -3,7 +3,7 @@
 // كل ألوان الغلاف الاحتياطي مشتقة من رموز @theme — لا hex هنا.
 import Image from "next/image";
 
-import { CoverSeal, coverTitleClass, categoryVars } from "./bahjaa/cover";
+import { CoverSeal, categoryVars } from "./bahjaa/cover";
 import type { CategorySlug } from "./bahjaa/cover";
 
 export type BookCoverSize = "card" | "hero" | "lg";
@@ -28,12 +28,12 @@ const SIZE_CLASS: Record<BookCoverSize, string> = {
 
 export function BookCover({
   title,
+  author,
   coverUrl,
   size = "card",
   priority = false,
   slug = "x",
   category = "leadership",
-  categoryLabel = "بهجة",
 }: Props) {
   const { field, accent } = categoryVars(category);
   const catStyle = {
@@ -59,8 +59,8 @@ export function BookCover({
             <CoverSeal slug={slug} />
             <div className="bk-foot">
               <div className="bk-rule" />
-              <span className={`bk-title ${coverTitleClass(title)}`}>{title}</span>
-              <span className="bk-label">بهجة · {categoryLabel}</span>
+              <span className="bk-title">{title}</span>
+              {author && <span className="bk-author">{author}</span>}
             </div>
           </div>
         )}

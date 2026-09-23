@@ -57,13 +57,6 @@ export function NavLinks({ user, isAdmin }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [menuOpen, closeMenu]);
 
-  // إغلاق القائمة عند توسيع النافذة فوق ٧٦٨
-  useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 768) closeMenu(); };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [closeMenu]);
-
   // تأمين التمرير عند فتح القائمة
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
