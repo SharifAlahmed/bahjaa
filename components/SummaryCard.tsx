@@ -5,7 +5,6 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { BookCover } from "./BookCover";
-import { ArrowIcon } from "./bahjaa/icons";
 import { readingLabel, toArabicDigits } from "./bahjaa/format";
 import type { CategorySlug } from "./bahjaa/cover";
 
@@ -93,7 +92,7 @@ export function SummaryCard({
         <p className="promise sc-promise" aria-hidden="true">{promise}</p>
       )}
       <span className="go" aria-hidden="true">
-        ابدأ القراءة <ArrowIcon width={18} height={18} />
+        ابدأ القراءة <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 6 8 12l6 6" /></svg>
       </span>
 
       {bookmarkSlot}
