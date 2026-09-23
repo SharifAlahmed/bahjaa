@@ -33,7 +33,7 @@ export function LabelCard({
 }) {
   return (
     <div className="bh-card p-5">
-      {/* العنوان 15px bold — أكبر من النص 14px. قاعدة ملزمة. */}
+      {/* العنوان 18px bold — أكبر من النص 17px. قاعدة ملزمة. */}
       <p className="bh-card-label mb-2">{label}</p>
       <p className="bh-body">{children}</p>
     </div>

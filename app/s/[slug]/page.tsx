@@ -94,7 +94,7 @@ export default async function SummaryPage({ params }: Props) {
           categoryLabel={category?.name_ar || "بهجة"}
         />
 
-        <div className="min-w-0">
+        <div className="book-head-title">
           {category && <p className="eyebrow">{category.name_ar}</p>}
           <h1 className="h-sec book-title">{summary.book_title_ar}</h1>
           {summary.book_title_en && (
@@ -102,6 +102,8 @@ export default async function SummaryPage({ params }: Props) {
               {summary.book_title_en}
             </p>
           )}
+        </div>
+        <div className="book-head-meta">
 
           <dl className="book-meta">
             {summary.author && (

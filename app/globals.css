@@ -588,7 +588,10 @@ button,input{font:inherit;}
 }
 
 /* ── صفحة الملخص ──────────────────────────────────────── */
-.book-head{display:grid;grid-template-columns:168px 1fr;gap:30px;align-items:start;}
+.book-head{display:grid;grid-template-columns:168px 1fr;grid-template-rows:auto auto;gap:30px;align-items:start;}
+.book-head>:first-child{grid-column:1;grid-row:1/3;}
+.book-head-title{grid-column:2;grid-row:1;min-width:0;}
+.book-head-meta{grid-column:2;grid-row:2;min-width:0;}
 @media (max-width:760px){
   .book-head{grid-template-columns:118px 1fr;gap:18px;align-items:start;}
   .book-head .cover{max-width:118px;padding:12px 10px;}
@@ -599,6 +602,8 @@ button,input{font:inherit;}
   .book-head .cover-label{margin-block-start:6px;font-size:8px;}
   .book-head .bk-title{margin-block-start:8px;font-size:14px;}
   .book-head .bk-label{margin-block-start:6px;font-size:8px;}
+  .book-head>:first-child{grid-row:1;}
+  .book-head-meta{grid-column:1/-1;grid-row:2;margin-block-start:18px;}
 }
 @media (max-width:420px){
   .book-head{grid-template-columns:92px 1fr;gap:14px;}
@@ -778,7 +783,7 @@ button,input{font:inherit;}
    ══════════════════════════════════════════════════════════ */
 .bh-sec-title   {font-family:var(--serif);font-size:clamp(25px,4.4vw,32px);font-weight:700;line-height:1.5;}
 .bh-pillar-title{font-family:var(--serif);font-size:clamp(19px,2.6vw,22px);font-weight:700;line-height:1.4;}
-.bh-card-label  {font-family:var(--sans);font-size:15px;font-weight:600;color:var(--deep);}
+.bh-card-label  {font-family:var(--sans);font-size:18px;font-weight:700;color:var(--deep);}
 .bh-body        {font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:var(--lh-body);color:var(--ink);}
 .bh-sub         {font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.8;color:var(--muted);}
 .bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;color:var(--brass-ink);}
