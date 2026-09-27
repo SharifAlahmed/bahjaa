@@ -1341,14 +1341,9 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .home-point-title{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.5;margin:0;color:var(--ink);}
 .home-point-body{font-size:16px;line-height:1.8;color:var(--ink-soft);margin:6px 0 0;}
 .home-why .btn{margin-top:32px;}
-/* الصورة في البداية (يمين) والنص في النهاية (يسار)؛ على الجوال الصورة فوق النص */
-.home-why-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;}
-.home-why-media img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);}
-@media (min-width:861px){
-  .home-why-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;align-items:start;}
-  .home-why-media{position:sticky;inset-block-start:calc(var(--header-h) + 24px);}
-  .home-why-media img{box-shadow:var(--shadow-soft);}
-}
+/* الإنفوغرافيك تحت النص بعرض المحتوى كاملاً */
+.home-why-media{margin-top:clamp(28px,4vw,40px);}
+.home-why-media img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
 
 /* ── رؤيتنا: البانر أعلى القسم، ثم النص والبندان في عمود قراءة ── */
 .home-vision{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
