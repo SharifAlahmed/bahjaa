@@ -15,7 +15,7 @@ export function FounderNote() {
         </div>
 
         <div className="home-founder-text">
-          <h2 className="h-sec" id="founder-title">رؤيتنا في بهجة</h2>
+          <h2 className="h-sec" id="founder-title">كلمة المؤسس</h2>
 
           <div className="home-prose">
             <p>
