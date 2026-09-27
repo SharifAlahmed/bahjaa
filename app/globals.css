@@ -1377,7 +1377,13 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 /* الإنفوغرافيك تحت النص بعرض المحتوى كاملاً */
 .home-why-media{margin-top:clamp(28px,4vw,40px);}
 /* البانرات ٨٨٠ بكسل على حافة البداية، على محور النصوص نفسه */
-.home-why-media,.home-vision-banner{max-width:880px;margin-inline:0;}
+.home-vision-banner{max-width:880px;margin-inline:0;}
+/* إنفوغرافيك «كيف تعمل»: في الوسط، وكاملاً داخل الشاشة تحت الترويسة بهامش ٥٠ فوق وتحت
+   العرض = الأصغر من: المتاح، و١٠٨٠، وعرضٍ يجعل ارتفاعه = الشاشة − الترويسة − ١٠٠ (نسبة ١٦٧٢:٩٤١) */
+.home-how .home-why-media{
+  margin-inline:auto;
+  width:min(100%, 1080px, calc((100svh - var(--header-h) - 100px) * 1672 / 941));
+}
 .home-why-media img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
 
 /* ── رؤيتنا: البانر أعلى القسم، ثم النص والبندان في عمود قراءة ── */
