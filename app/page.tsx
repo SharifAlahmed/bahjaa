@@ -42,7 +42,7 @@ export default async function HomePage() {
   return (
     <>
     <Hero />
-    <FounderNote variant="short" />
+    <FounderNote />
     <WhyBahjaa variant="short" />
     {/* latest لأزرار الرئيسية، وlatest-summaries باقٍ لروابط التذييل ومكتبتي */}
     <div id="latest" className="home-anchor">
