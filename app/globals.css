@@ -1318,11 +1318,9 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 
 /* ── الهيرو: صورة واحدة بعرض الصفحة كاملاً تحت الترويسة ── */
 .home-hero{background:var(--color-surface);}
-/* الصورة كاملة داخل الشاشة الأولى تقريباً: الارتفاع الأقصى = الشاشة − الترويسة − ٩٦، وأرضيته ٤٨٠ */
-.home-hero img{
-  display:block;margin-inline:auto;width:auto;height:auto;max-width:100%;
-  max-height:max(480px,calc(100svh - var(--header-h) - 96px));
-}
+/* الحجم بالعرض لا بارتفاع الشاشة: بعرض المحتوى (١١٢٠، على خط الشعار والقائمة)،
+   فلا تصغر الصورة على الشاشات العريضة القصيرة */
+.home-hero img{display:block;margin-inline:auto;width:min(100%,1120px);height:auto;}
 .home-hero-cta{display:flex;justify-content:center;padding-block:20px clamp(32px,4vw,48px);padding-inline:20px;}
 
 /* ── لماذا بهجة: عمود قراءة واحد ── */
