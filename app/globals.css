@@ -241,13 +241,16 @@ button,input{font:inherit;}
   transition:box-shadow .2s ease;
 }
 .site-header.scrolled{box-shadow:var(--shadow-soft);}
-.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:64px;}
-.logo-mark{height:48px;width:48px;display:block;flex:none;}
-@media (max-width:600px){ .logo-mark{height:40px;width:40px;} }
+/* ارتفاع الترويسة اللاصقة = الشعار + حشو ٨×٢ + حد ١ — تعتمد عليه مراسي التمرير */
+:root{--header-h:113px;}
+@media (max-width:600px){ :root{--header-h:89px;} }
+.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:64px;padding-block:8px;}
+.logo-mark{height:96px;width:96px;display:block;flex:none;}
+@media (max-width:600px){ .logo-mark{height:72px;width:72px;} }
 .site-footer .logo-mark{height:36px;width:36px;}
 .logo-lockup{display:flex;align-items:center;gap:10px;text-decoration:none;}
 .logo-lockup:focus:not(:focus-visible){outline:none;}
-.site-nav{display:flex;align-items:center;gap:4px;margin-inline:auto;}
+.site-nav{display:flex;align-items:center;gap:4px;margin-inline-start:auto;}
 .site-nav a{
   font-size:15px;font-weight:500;color:var(--color-brand-dark);
   text-decoration:none;line-height:1.6;
@@ -680,7 +683,7 @@ button,input{font:inherit;}
 .gate{
   background:var(--paper-2);border:1px solid var(--rule);
   padding:clamp(32px,5vw,56px) clamp(20px,4vw,52px);
-  margin-top:34px;scroll-margin-block-start:96px;
+  margin-top:34px;scroll-margin-block-start:calc(var(--header-h) + 32px);
   text-align:center;
 }
 .gate .gate-sub{
@@ -843,7 +846,7 @@ button,input{font:inherit;}
 .skeleton-line{height:10px;background:var(--color-border);opacity:.9;}
 
 /* ── مراسي الأقسام ────────────────────────────────────── */
-.bh-anchor{scroll-margin-block-start:96px;}
+.bh-anchor{scroll-margin-block-start:calc(var(--header-h) + 32px);}
 
 /* بند فهرس مقفول: ليس رابطاً، لا يستقبل تركيزاً، ولا يوهم بوجهة */
 .toc-shut{
@@ -1311,8 +1314,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 /* ══════════════════════════════════════════════════════════
    الرئيسية: الهيرو · لماذا بهجة · كلمة المؤسس
    ══════════════════════════════════════════════════════════ */
-/* ارتفاع الترويسة اللاصقة: min-height 64 + حد سفلي 1 */
-.home-anchor{scroll-margin-block-start:65px;}
+.home-anchor{scroll-margin-block-start:var(--header-h);}
 
 /* ── الهيرو: النص في البداية، والصورة في النهاية ── */
 .home-hero{padding-block:clamp(32px,5vw,56px) clamp(40px,5vw,64px);}

@@ -24,8 +24,8 @@ export default async function SiteHeader() {
           <Image
             className="logo-mark"
             src="/logo/bahjaa-logo.png"
-            width={48}
-            height={48}
+            width={96}
+            height={96}
             alt=""
             priority
           />
