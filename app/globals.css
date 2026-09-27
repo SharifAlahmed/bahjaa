@@ -1318,10 +1318,10 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 
 /* ── الهيرو: صورة واحدة بعرض الصفحة كاملاً تحت الترويسة ── */
 .home-hero{background:var(--color-surface);}
-/* الصورة كاملة داخل الشاشة الأولى: الارتفاع الأقصى = الشاشة − الترويسة − شريط الإعلان وزر الهيرو (١٥٠) */
+/* الصورة كاملة داخل الشاشة الأولى تقريباً: الارتفاع الأقصى = الشاشة − الترويسة − ٩٦، وأرضيته ٤٨٠ */
 .home-hero img{
   display:block;margin-inline:auto;width:auto;height:auto;max-width:100%;
-  max-height:max(320px,calc(100svh - var(--header-h) - 150px));
+  max-height:max(480px,calc(100svh - var(--header-h) - 96px));
 }
 .home-hero-cta{display:flex;justify-content:center;padding-block:20px clamp(32px,4vw,48px);padding-inline:20px;}
 
@@ -1343,6 +1343,8 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .home-why .btn{margin-top:32px;}
 /* الإنفوغرافيك تحت النص بعرض المحتوى كاملاً */
 .home-why-media{margin-top:clamp(28px,4vw,40px);}
+/* البانرات على سطح المكتب: ٨٨٠ بكسل في الوسط بدل عرض المحتوى كاملاً */
+.home-why-media,.home-vision-banner{max-width:880px;margin-inline:auto;}
 .home-why-media img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
 
 /* ── رؤيتنا: البانر أعلى القسم، ثم النص والبندان في عمود قراءة ── */
