@@ -3,7 +3,7 @@ import { getImageProps } from "next/image";
 /* الهيرو صورة واحدة بعرض الصفحة تحت الترويسة، بنسخة عمودية للجوال (أقل من ٦٠٠ بكسل).
    العنوان داخل الصورة، فيُكرَّر لقارئ الشاشة في h1 مخفي */
 export function Hero() {
-  const common = { alt: "", sizes: "(max-width: 1120px) 100vw, 1120px", priority: true };
+  const common = { alt: "", sizes: "(max-width: 1300px) 100vw, 1200px", priority: true };
   const {
     props: { srcSet: desktopSrcSet },
   } = getImageProps({ ...common, src: "/home/hero-banner.webp", width: 1672, height: 941 });
