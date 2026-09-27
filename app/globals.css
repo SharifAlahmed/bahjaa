@@ -250,8 +250,6 @@ button,input{font:inherit;}
 .site-footer .logo-mark{height:36px;width:36px;}
 .logo-lockup{display:flex;align-items:center;gap:10px;text-decoration:none;}
 .logo-lockup:focus:not(:focus-visible){outline:none;}
-/* حلقة التركيز تتبع دائرة الشعار بدل مربع حوله */
-.logo-lockup:focus-visible{outline-offset:4px;border-radius:var(--radius-full);}
 .site-nav{display:flex;align-items:center;gap:4px;margin-inline-start:auto;}
 .site-nav a{
   font-size:15px;font-weight:500;color:var(--color-brand-dark);
@@ -1343,46 +1341,6 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
    فلا تصغر الصورة على الشاشات العريضة القصيرة */
 .home-hero img{display:block;margin-inline:auto;width:min(100%,1120px);height:auto;}
 .home-hero-cta{display:flex;justify-content:center;padding-block:20px clamp(32px,4vw,48px);padding-inline:20px;}
-
-/* ── نسخة الجوال بلا نص داخل الصورة: العنوان والنقاط والخطوات تُكتب في الصفحة ──
-   لا تُضف قاعدة display لهذه الأصناف خارج هذه الكتلة.
-   الافتراضي (٦٠٠ فأكثر): العنوان مخفي بصرياً لأنه داخل الصورة، والقوائم مخفية.
-   الإظهار فقط داخل max-width:599px في نهاية الكتلة. */
-.home-hero-h1,.home-how-h2{
-  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
-  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
-}
-.home-m-list{display:none;}
-.home-accent{color:var(--brass-ink);}
-@media (max-width:599px){
-  .home-hero-h1,.home-how-h2{
-    position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;
-    font-family:var(--serif);font-weight:800;color:var(--ink);text-wrap:balance;
-  }
-  .home-hero-h1{font-size:26px;line-height:1.4;margin:0;padding:24px 20px 4px;}
-  .home-how-h2{font-size:clamp(25px,4.4vw,32px);line-height:1.5;margin:0;}
-  .home-m-list{
-    display:grid;gap:18px;list-style:none;margin:0;padding:8px 0 0;
-    counter-reset:m-step;
-  }
-  .home-hero .home-m-list{padding-inline:20px;}
-  .home-m-list li{padding-block-start:18px;border-block-start:1px solid var(--rule);}
-  .home-m-list li:first-child{padding-block-start:0;border-block-start:0;}
-  .home-m-list-title{font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.5;margin:0;color:var(--ink);}
-  .home-m-list-body{font-size:15px;line-height:1.8;margin:4px 0 0;color:var(--ink-soft);}
-  /* الخطوات مرقّمة بالأرقام العربية الهندية */
-  .home-m-steps li{counter-increment:m-step;}
-  .home-m-steps .home-m-list-title::before{
-    content:counter(m-step, arabic-indic);
-    display:inline-flex;align-items:center;justify-content:center;
-    inline-size:28px;block-size:28px;margin-inline-end:10px;border-radius:var(--radius-full);
-    background:var(--brass-ink);color:var(--color-surface);font-size:15px;font-weight:800;
-  }
-  .home-how .home-why-media{margin-top:20px;}
-  /* صورة المنصّات فيها فراغ أبيض بنحو الربع في أعلاها: يُقصّ ويبقى المحتوى */
-  .home-how .home-why-media img{aspect-ratio:1122/1060;object-fit:cover;object-position:50% 100%;}
-  .home-how .home-m-list{padding-block-start:24px;}
-}
 
 /* ── لماذا بهجة: عمود قراءة واحد ── */
 .home-why{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
