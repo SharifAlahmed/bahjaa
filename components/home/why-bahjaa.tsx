@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /* أيقونات SVG مدمجة بمسارات lucide (Eye · BookOpen · ListChecks) — لا حاجة لـ lucide-react */
 const iconProps = {
   width: 28,
@@ -62,7 +64,17 @@ const points = [
 export function WhyBahjaa() {
   return (
     <section className="home-why home-anchor" id="why" aria-labelledby="why-title">
-      <div className="wrap">
+      <div className="wrap home-why-grid">
+        <div className="home-why-media">
+          <Image
+            src="/home/why-summary.webp"
+            alt=""
+            width={1536}
+            height={1024}
+            sizes="(max-width: 860px) 100vw, 560px"
+          />
+        </div>
+
         <div className="home-col">
           <h2 className="h-sec" id="why-title">لماذا بهجة؟</h2>
 
