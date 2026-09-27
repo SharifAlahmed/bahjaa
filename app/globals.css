@@ -1315,7 +1315,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .home-anchor{scroll-margin-block-start:65px;}
 
 /* ── الهيرو: النص في البداية، والصورة في النهاية ── */
-.home-hero{padding-block:clamp(40px,6vw,72px) var(--space-section);}
+.home-hero{padding-block:clamp(32px,5vw,56px) clamp(40px,5vw,64px);}
 .home-hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;align-items:center;}
 .home-kicker{font-size:14px;font-weight:700;line-height:1.7;color:var(--green-ink);margin:0;}
 .home-hero-title{
@@ -1335,31 +1335,31 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 }
 
 /* ── لماذا بهجة: عمود قراءة واحد ── */
-.home-why{padding-block:var(--space-section);border-block-start:1px solid var(--rule);}
+.home-why{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
 .home-col{max-width:720px;}
 .home-prose{margin-top:24px;}
 .home-prose p{margin:0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--ink);}
 .home-prose p + p{margin-top:18px;}
 .home-prose .home-prose-strong{font-weight:700;color:var(--green-ink);}
 .home-points{
-  list-style:none;margin:40px 0 0;padding:36px 0 0;
-  border-block-start:1px solid var(--rule);display:grid;gap:28px;
+  list-style:none;margin:32px 0 0;padding:28px 0 0;
+  border-block-start:1px solid var(--rule);display:grid;gap:24px;
 }
 .home-point{display:flex;gap:16px;align-items:flex-start;}
 .home-point-icon{flex:none;display:inline-flex;margin-top:2px;color:var(--green-ink);}
 .home-point-title{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.5;margin:0;color:var(--ink);}
 .home-point-body{font-size:16px;line-height:1.8;color:var(--ink-soft);margin:6px 0 0;}
-.home-why .btn{margin-top:40px;}
+.home-why .btn{margin-top:32px;}
 
-/* ── كلمة المؤسس: النص في البداية، والصورة بجانبه؛ على الجوال الصورة فوق ── */
-.home-founder{padding-block:var(--space-section);background:var(--color-surface);border-block-start:1px solid var(--rule);}
+/* ── رؤيتنا في بهجة (كلمة المؤسس): النص في البداية، والصورة بجانبه؛ على الجوال الصورة فوق ── */
+.home-founder{padding-block:clamp(40px,5vw,64px);background:var(--color-surface);border-block-start:1px solid var(--rule);}
 .home-founder-grid{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"photo" "text";gap:32px;}
 .home-founder-photo{grid-area:photo;}
 .home-founder-photo img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);}
 .home-founder-text{grid-area:text;text-align:start;}
-.home-founder-name{font-size:18px;font-weight:800;line-height:1.5;margin:32px 0 0;color:var(--ink);}
+.home-founder-name{font-size:18px;font-weight:800;line-height:1.5;margin:24px 0 0;color:var(--ink);}
 .home-founder-role{font-size:14px;line-height:1.7;margin:2px 0 0;color:var(--muted);}
 .home-founder-signature{display:block;width:200px;height:auto;margin-top:16px;}
 @media (min-width:861px){
-  .home-founder-grid{grid-template-columns:minmax(0,1fr) 380px;grid-template-areas:"text photo";gap:64px;align-items:start;}
+  .home-founder-grid{grid-template-columns:minmax(0,1fr) 360px;grid-template-areas:"text photo";gap:56px;align-items:center;}
 }

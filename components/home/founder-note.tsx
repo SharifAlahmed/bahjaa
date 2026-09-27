@@ -10,12 +10,12 @@ export function FounderNote() {
             alt="شريف الأحمد"
             width={1350}
             height={1318}
-            sizes="(max-width: 860px) 100vw, 380px"
+            sizes="(max-width: 860px) 100vw, 360px"
           />
         </div>
 
         <div className="home-founder-text">
-          <h2 className="h-sec" id="founder-title">كلمة المؤسس: رؤية بهجة</h2>
+          <h2 className="h-sec" id="founder-title">رؤيتنا في بهجة</h2>
 
           <div className="home-prose">
             <p>

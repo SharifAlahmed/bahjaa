@@ -42,6 +42,7 @@ export default async function HomePage() {
   return (
     <>
     <Hero />
+    <FounderNote />
     <WhyBahjaa />
     {/* latest لأزرار الرئيسية، وlatest-summaries باقٍ لروابط التذييل ومكتبتي */}
     <div id="latest" className="home-anchor">
@@ -93,7 +94,6 @@ export default async function HomePage() {
       </p>
     </section>
     </div>
-    <FounderNote />
     </>
   );
 }
