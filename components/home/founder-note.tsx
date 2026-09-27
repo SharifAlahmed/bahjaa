@@ -1,8 +1,16 @@
 import Image from "next/image";
+import Link from "next/link";
 
-export function FounderNote() {
+/* short: الرئيسية — أول مقطعين ورابط للكلمة كاملة في /about
+   full: صفحة «عن بهجة» — الكلمة كاملة */
+export function FounderNote({ variant = "full" }: { variant?: "full" | "short" }) {
+  const isShort = variant === "short";
   return (
-    <section className="home-founder" aria-labelledby="founder-title">
+    <section
+      className="home-founder home-anchor"
+      id={isShort ? undefined : "founder"}
+      aria-labelledby="founder-title"
+    >
       <div className="wrap home-founder-grid">
         <div className="home-founder-photo">
           <Image
@@ -30,17 +38,27 @@ export function FounderNote() {
               <br />
               وتمنح القادة وروّاد الأعمال وضوحًا وسط ضجيج المعلومات.
             </p>
-            <p>
-              نختصر المعرفة دون أن نفقد عمقها،
-              <br />
-              ونربط الفكرة بالسياق، والفهم بالفعل،
-              <br />
-              والقرار بخطة قابلة للتنفيذ والقياس.
-            </p>
-            <p className="home-prose-strong">
-              بهجة: محرّكٌ يحوّل المعرفة إلى خُطّة، والخُطّة إلى أثر.
-            </p>
+            {!isShort && (
+              <>
+                <p>
+                  نختصر المعرفة دون أن نفقد عمقها،
+                  <br />
+                  ونربط الفكرة بالسياق، والفهم بالفعل،
+                  <br />
+                  والقرار بخطة قابلة للتنفيذ والقياس.
+                </p>
+                <p className="home-prose-strong">
+                  بهجة: محرّكٌ يحوّل المعرفة إلى خُطّة، والخُطّة إلى أثر.
+                </p>
+              </>
+            )}
           </div>
+
+          {isShort && (
+            <p className="home-more">
+              <Link href="/about#founder" className="textlink">اقرأ الكلمة كاملة</Link>
+            </p>
+          )}
 
           <p className="home-founder-name">شريف الأحمد</p>
           <p className="home-founder-role">مؤسس بهجة</p>

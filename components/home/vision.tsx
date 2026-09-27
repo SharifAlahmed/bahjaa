@@ -69,6 +69,15 @@ export function Vision() {
             العرب من اتخاذ قراراتٍ أفضل، وبناء أعمالٍ أكثر أثرًا ونتائج.
           </p>
 
+          <h2 className="h-sec" id="method-title">منهج بهجة</h2>
+          <div className="home-prose">
+            <p>
+              في بهجة، لا نتعامل مع المعرفة بوصفها محتوى يُستهلك وينتهي، بل بوصفها
+              أداة تُستخدم لصناعة قرار وتحقيق نتيجة.
+            </p>
+            <p>لذلك يقوم منهجنا على مسارين متكاملين:</p>
+          </div>
+
           <ul className="home-points">
             {points.map((point) => (
               <li key={point.title} className="home-point">
@@ -80,6 +89,10 @@ export function Vision() {
               </li>
             ))}
           </ul>
+
+          <p className="home-method-close">
+            نربط الفكرة بالسياق، والفهم بالفعل، والقرار بخطة قابلة للتنفيذ.
+          </p>
         </div>
       </div>
     </section>

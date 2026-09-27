@@ -43,6 +43,7 @@ export default async function SiteFooter() {
           <p className="footer-col-title">استكشف</p>
           <Link href="/">الرئيسية</Link>
           <Link href="/categories">كل الأقسام</Link>
+          <Link href="/about">عن بهجة</Link>
           <Link href="/login">الدخول</Link>
         </nav>
 

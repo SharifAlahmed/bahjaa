@@ -6,7 +6,6 @@ import { BookmarkButtons } from "@/components/bahjaa/bookmark-buttons";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 import { Hero } from "@/components/home/hero";
 import { WhyBahjaa } from "@/components/home/why-bahjaa";
-import { Vision } from "@/components/home/vision";
 import { FounderNote } from "@/components/home/founder-note";
 
 export const dynamic = "force-dynamic";
@@ -43,9 +42,8 @@ export default async function HomePage() {
   return (
     <>
     <Hero />
-    <FounderNote />
-    <WhyBahjaa />
-    <Vision />
+    <FounderNote variant="short" />
+    <WhyBahjaa variant="short" />
     {/* latest لأزرار الرئيسية، وlatest-summaries باقٍ لروابط التذييل ومكتبتي */}
     <div id="latest" className="home-anchor">
     <section

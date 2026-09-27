@@ -543,12 +543,13 @@ button,input{font:inherit;}
 .sc-cover-wrap{
   position:relative;display:flex;justify-content:center;
   background:var(--paper);border-radius:var(--radius-sm);
-  padding:24px 16px 22px;
+  padding:46px 16px 22px;
 }
 .sc-cover-wrap .bk{max-width:62%;}
 .sc:hover .bk-inner{transform:translateY(-3px);box-shadow:var(--shadow-book-hover);}
 .sc-badge{
-  position:absolute;inset-block-start:10px;inset-inline-end:10px;
+  position:absolute;inset-block-start:10px;inset-inline-end:10px;z-index:2;
+  max-width:calc(100% - 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   font-size:11px;font-weight:700;line-height:1;padding:6px 9px;
   border-radius:var(--radius-full);background:var(--color-surface);
   color:var(--green-ink);border:1px solid var(--rule);
@@ -578,7 +579,8 @@ button,input{font:inherit;}
 /* الجوال: عمودان ضيّقان */
 @media (max-width:640px){
   .sc{padding:8px 8px 10px;}
-  .sc-cover-wrap{padding:18px 10px 16px;}
+  .sc-cover-wrap{padding:40px 10px 16px;}
+  .sc-badge{font-size:10px;padding:5px 8px;inset-block-start:8px;inset-inline-end:8px;}
   .sc-cover-wrap .bk{max-width:72%;}
   .sc-promise{display:none;}
   .sc-title{margin-block-start:10px;font-size:14px;}
@@ -1365,7 +1367,21 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 /* ── رؤيتنا: البانر أعلى القسم، ثم النص والبندان في عمود قراءة ── */
 .home-vision{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
 .home-vision-banner img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
-.home-vision-text{max-width:none;}
+.home-vision-text{max-width:none;margin-top:clamp(28px,4vw,40px);}
+.home-vision .home-prose{max-width:720px;}
+.home-method-close{margin:28px 0 0;font-size:var(--t-body);font-weight:700;line-height:1.8;color:var(--green-ink);}
+/* إنفوغرافيك «كيف تعمل» في صفحة «عن بهجة» */
+.home-how{padding-block-end:clamp(40px,5vw,64px);}
+.home-more{margin:20px 0 0;}
+
+/* ── صفحة «عن بهجة» ── */
+.about-intro{padding-block:clamp(40px,6vw,72px);}
+.about-title{
+  font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.6vw,52px);
+  line-height:1.28;margin:0;color:var(--ink);
+}
+.about-lead{margin:12px 0 0;font-size:20px;font-weight:700;line-height:1.6;color:var(--green-ink);}
+.about-cta{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
 .home-vision .home-points{margin-top:clamp(28px,4vw,40px);padding-top:0;border:0;}
 @media (min-width:861px){ .home-vision .home-points{grid-template-columns:1fr 1fr;gap:48px;} }
 

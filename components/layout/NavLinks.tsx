@@ -81,6 +81,7 @@ export function NavLinks({ user, isAdmin }: Props) {
       {/* روابط سطح المكتب */}
       <nav className="site-nav" aria-label="التنقل الرئيسي">
         {navLink("/categories", "الأقسام", "hide-mobile")}
+        {navLink("/about", "عن بهجة", "hide-mobile")}
         {user && navLink("/my-library", "مكتبتي", "hide-mobile")}
         {isAdmin && navLink("/admin", "اللوحة", "hide-mobile")}
 
@@ -118,6 +119,7 @@ export function NavLinks({ user, isAdmin }: Props) {
           <IconClose />
         </button>
         {navLink("/categories", "الأقسام")}
+        {navLink("/about", "عن بهجة")}
         {user && navLink("/my-library", "مكتبتي")}
         {isAdmin && navLink("/admin", "اللوحة")}
         {user ? (
