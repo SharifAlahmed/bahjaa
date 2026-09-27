@@ -250,6 +250,8 @@ button,input{font:inherit;}
 .site-footer .logo-mark{height:36px;width:36px;}
 .logo-lockup{display:flex;align-items:center;gap:10px;text-decoration:none;}
 .logo-lockup:focus:not(:focus-visible){outline:none;}
+/* حلقة التركيز تتبع دائرة الشعار بدل مربع حوله */
+.logo-lockup:focus-visible{outline-offset:4px;border-radius:var(--radius-full);}
 .site-nav{display:flex;align-items:center;gap:4px;margin-inline-start:auto;}
 .site-nav a{
   font-size:15px;font-weight:500;color:var(--color-brand-dark);
@@ -1377,6 +1379,9 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
     background:var(--brass-ink);color:var(--color-surface);font-size:15px;font-weight:800;
   }
   .home-how .home-why-media{margin-top:20px;}
+  /* صورة المنصّات فيها فراغ أبيض بنحو الربع في أعلاها: يُقصّ ويبقى المحتوى */
+  .home-how .home-why-media img{aspect-ratio:1122/1060;object-fit:cover;object-position:50% 100%;}
+  .home-how .home-m-list{padding-block-start:24px;}
 }
 
 /* ── لماذا بهجة: عمود قراءة واحد ── */
