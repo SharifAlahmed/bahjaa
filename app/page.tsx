@@ -53,9 +53,8 @@ export default async function HomePage() {
       id="latest-summaries"
       aria-labelledby="latest-title"
     >
-      <p className="eyebrow">أحدث الملخصات</p>
-      <h2 className="h-sec" id="latest-title" style={{ marginTop: 14 }}>
-        ملخصات بهجة
+      <h2 className="h-sec" id="latest-title">
+        أحدث الملخصات
       </h2>
       <hr className="rule" style={{ margin: "26px 0 36px" }} />
 
@@ -92,7 +91,7 @@ export default async function HomePage() {
       )}
 
       <p style={{ marginTop: 40 }}>
-        <Link href="/categories" className="textlink">تصفّح كل الأقسام</Link>
+        <Link href="/categories" className="btn btn-ghost">تصفّح كل الأقسام</Link>
       </p>
     </section>
     </div>

@@ -1318,7 +1318,12 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 
 /* ── الهيرو: صورة واحدة بعرض الصفحة كاملاً تحت الترويسة ── */
 .home-hero{background:var(--color-surface);}
-.home-hero img{display:block;width:100%;height:auto;}
+/* الصورة كاملة داخل الشاشة الأولى: الارتفاع الأقصى = الشاشة − الترويسة − شريط الإعلان وزر الهيرو (١٥٠) */
+.home-hero img{
+  display:block;margin-inline:auto;width:auto;height:auto;max-width:100%;
+  max-height:max(320px,calc(100svh - var(--header-h) - 150px));
+}
+.home-hero-cta{display:flex;justify-content:center;padding-block:20px clamp(32px,4vw,48px);padding-inline:20px;}
 
 /* ── لماذا بهجة: عمود قراءة واحد ── */
 .home-why{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
@@ -1348,7 +1353,9 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 /* ── رؤيتنا: البانر أعلى القسم، ثم النص والبندان في عمود قراءة ── */
 .home-vision{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
 .home-vision-banner img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
-.home-vision-text{margin-top:clamp(28px,4vw,40px);}
+.home-vision-text{max-width:none;}
+.home-vision .home-points{margin-top:clamp(28px,4vw,40px);padding-top:0;border:0;}
+@media (min-width:861px){ .home-vision .home-points{grid-template-columns:1fr 1fr;gap:48px;} }
 
 /* ── كلمة المؤسس: النص في البداية، والصورة بجانبه؛ على الجوال الصورة فوق ── */
 .home-founder{padding-block:clamp(40px,5vw,64px);background:var(--color-surface);border-block-start:1px solid var(--rule);}
@@ -1360,5 +1367,5 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .home-founder-role{font-size:14px;line-height:1.7;margin:2px 0 0;color:var(--muted);}
 .home-founder-signature{display:block;width:200px;height:auto;margin-top:16px;}
 @media (min-width:861px){
-  .home-founder-grid{grid-template-columns:minmax(0,1fr) 360px;grid-template-areas:"text photo";gap:56px;align-items:center;}
+  .home-founder-grid{grid-template-columns:minmax(0,560px) 360px;grid-template-areas:"text photo";gap:56px;align-items:center;justify-content:center;}
 }

@@ -15,6 +15,9 @@ export function Hero() {
         priority
         sizes="100vw"
       />
+      <div className="home-hero-cta">
+        <a href="#latest" className="btn btn-brand">استكشف الملخصات</a>
+      </div>
     </section>
   );
 }

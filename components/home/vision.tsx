@@ -62,13 +62,12 @@ export function Vision() {
         </div>
 
         <div className="home-col home-vision-text">
-          <h2 className="h-sec" id="vision-title">رؤيتنا</h2>
-          <div className="home-prose">
-            <p>
-              أن نجعل المعرفة الموثوقة قوةً عملية تمكّن القادة وروّاد الأعمال
-              العرب من اتخاذ قراراتٍ أفضل، وبناء أعمالٍ أكثر أثرًا ونتائج.
-            </p>
-          </div>
+          {/* البانر يحمل العنوان ونص الرؤية؛ يُكرَّران هنا لقارئ الشاشة فقط */}
+          <h2 className="sr-only" id="vision-title">رؤيتنا</h2>
+          <p className="sr-only">
+            أن نجعل المعرفة الموثوقة قوةً عملية تمكّن القادة وروّاد الأعمال
+            العرب من اتخاذ قراراتٍ أفضل، وبناء أعمالٍ أكثر أثرًا ونتائج.
+          </p>
 
           <ul className="home-points">
             {points.map((point) => (
