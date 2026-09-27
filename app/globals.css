@@ -1316,25 +1316,9 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
    ══════════════════════════════════════════════════════════ */
 .home-anchor{scroll-margin-block-start:var(--header-h);}
 
-/* ── الهيرو: النص في البداية، والصورة في النهاية ── */
-.home-hero{padding-block:clamp(32px,5vw,56px) clamp(40px,5vw,64px);}
-.home-hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;align-items:center;}
-.home-kicker{font-size:14px;font-weight:700;line-height:1.7;color:var(--green-ink);margin:0;}
-.home-hero-title{
-  font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.6vw,52px);
-  line-height:1.28;margin:14px 0 0;color:var(--ink);text-wrap:balance;
-}
-.home-hero-lede{font-size:18px;line-height:1.8;color:var(--ink-soft);max-width:480px;margin:18px 0 0;}
-.home-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;}
-.home-hero-media img{display:block;width:100%;height:auto;}
-@media (max-width:860px){
-  /* الجوال: الصورة تحت النص بعرض الشاشة كاملاً */
-  .home-hero-media{margin-inline:-20px;}
-}
-@media (min-width:861px){
-  .home-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:56px;}
-  .home-hero-media img{border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
-}
+/* ── الهيرو: صورة واحدة بعرض الصفحة كاملاً تحت الترويسة ── */
+.home-hero{background:var(--color-surface);}
+.home-hero img{display:block;width:100%;height:auto;}
 
 /* ── لماذا بهجة: عمود قراءة واحد ── */
 .home-why{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
