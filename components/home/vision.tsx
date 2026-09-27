@@ -57,7 +57,7 @@ export function Vision() {
             alt=""
             width={1774}
             height={887}
-            sizes="(max-width: 920px) 100vw, 880px"
+            sizes="(max-width: 1120px) 100vw, 1080px"
           />
         </div>
 
