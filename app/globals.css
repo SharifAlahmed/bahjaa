@@ -1342,12 +1342,12 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .home-hero img{display:block;margin-inline:auto;width:min(100%,1120px);height:auto;}
 .home-hero-cta{display:flex;justify-content:center;padding-block:20px clamp(32px,4vw,48px);padding-inline:20px;}
 /* سطح المكتب: الصورة داخل إطار بحشو ٥٠ من الجهات الأربع، بعرض المساحة المتاحة
-   (حتى ١٢٠٠)، بزوايا وظل يُظهران حدودها. لا حدّ بارتفاع الشاشة: كان يصغّرها على
+   (حتى ١٣٣٨×٧٥٣)، بزوايا وظل يُظهران حدودها. لا حدّ بارتفاع الشاشة: كان يصغّرها على
    الشاشات العريضة القصيرة */
 @media (min-width:600px){
   .home-hero{background:var(--paper);padding:50px;}
   .home-hero img{
-    width:min(100%,1200px);
+    width:min(100%,1338px);
     border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);
   }
   .home-hero-cta{padding:32px 0 0;}
