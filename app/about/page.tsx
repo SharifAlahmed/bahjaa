@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FounderNote } from "@/components/home/founder-note";
 import { WhyBahjaa } from "@/components/home/why-bahjaa";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { Vision } from "@/components/home/vision";
@@ -11,8 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  /* القصة: من نحن ← المشكلة ← كيف نحلّها ← إلى أين ← ابدأ. كلمة المؤسس في الرئيسية فقط */
   return (
-    <>
+    <div className="about-page">
       <section className="about-intro" aria-labelledby="about-title">
         <div className="wrap">
           <div className="home-col">
@@ -32,7 +32,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <FounderNote />
       <WhyBahjaa />
       <HowItWorks />
       <Vision />
@@ -42,6 +41,6 @@ export default function AboutPage() {
           <Link href="/#latest" className="btn btn-brand">استكشف الملخصات</Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }
