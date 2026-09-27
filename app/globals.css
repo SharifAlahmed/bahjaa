@@ -1372,6 +1372,8 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .home-point-title{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.5;margin:0;color:var(--ink);}
 .home-point-body{font-size:16px;line-height:1.8;color:var(--ink-soft);margin:6px 0 0;}
 .home-why .btn{margin-top:32px;}
+/* النسخة المختصرة في الرئيسية: العنوان والجملة والزر في منتصف الشاشة */
+.home-why-short .home-col{margin-inline:auto;text-align:center;}
 /* الإنفوغرافيك تحت النص بعرض المحتوى كاملاً */
 .home-why-media{margin-top:clamp(28px,4vw,40px);}
 /* البانرات ٨٨٠ بكسل على حافة البداية، على محور النصوص نفسه */

@@ -5,7 +5,11 @@ import Link from "next/link";
 export function WhyBahjaa({ variant = "full" }: { variant?: "full" | "short" }) {
   const isShort = variant === "short";
   return (
-    <section className="home-why home-anchor" id="why" aria-labelledby="why-title">
+    <section
+      className={`home-why home-anchor${isShort ? " home-why-short" : ""}`}
+      id="why"
+      aria-labelledby="why-title"
+    >
       <div className="wrap">
         <div className="home-col">
           <h2 className="h-sec" id="why-title">لماذا بهجة؟</h2>
