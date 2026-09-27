@@ -4,6 +4,9 @@ import { type CategorySlug } from "@/components/bahjaa/cover";
 import { SummaryCard } from "@/components/SummaryCard";
 import { BookmarkButtons } from "@/components/bahjaa/bookmark-buttons";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
+import { Hero } from "@/components/home/hero";
+import { WhyBahjaa } from "@/components/home/why-bahjaa";
+import { FounderNote } from "@/components/home/founder-note";
 
 export const dynamic = "force-dynamic";
 
@@ -37,15 +40,20 @@ export default async function HomePage() {
   const catById = new Map(cats.map((c) => [c.id, c]));
 
   return (
+    <>
+    <Hero />
+    <WhyBahjaa />
+    {/* latest لأزرار الرئيسية، وlatest-summaries باقٍ لروابط التذييل ومكتبتي */}
+    <div id="latest" className="home-anchor">
     <section
       className="wrap section-block bh-anchor"
       id="latest-summaries"
       aria-labelledby="latest-title"
     >
       <p className="eyebrow">أحدث الملخصات</p>
-      <h1 className="h-sec" id="latest-title" style={{ marginTop: 14 }}>
+      <h2 className="h-sec" id="latest-title" style={{ marginTop: 14 }}>
         ملخصات بهجة
-      </h1>
+      </h2>
       <hr className="rule" style={{ margin: "26px 0 36px" }} />
 
       {list.length === 0 ? (
@@ -84,5 +92,8 @@ export default async function HomePage() {
         <Link href="/categories" className="textlink">تصفّح كل الأقسام</Link>
       </p>
     </section>
+    </div>
+    <FounderNote />
+    </>
   );
 }
