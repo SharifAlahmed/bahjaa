@@ -348,9 +348,9 @@ button,input{font:inherit;}
 .cover-label{margin:16px 0 0;font-family:var(--sans);font-weight:400;font-size:11px;line-height:1.6;color:var(--on-dark-soft);}
 
 /* ── رفّ الملخصات — شبكة 4→3→2 ──────────────────────── */
-.shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 34px;}
-@media (max-width:1000px){ .shelf{grid-template-columns:repeat(3,1fr);gap:36px 24px;} }
-@media (max-width:640px)  { .shelf{grid-template-columns:repeat(2,1fr);gap:24px 16px;} }
+.shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:24px 20px;}
+@media (max-width:1000px){ .shelf{grid-template-columns:repeat(3,1fr);gap:20px 16px;} }
+@media (max-width:640px)  { .shelf{grid-template-columns:repeat(2,1fr);gap:12px 10px;} }
 
 /* البطاقة الأولى أكبر بصرياً — «أحدث إضافة» حقيقية من ترتيب البيانات */
 @media (min-width:1000px){
@@ -527,47 +527,64 @@ button,input{font:inherit;}
   opacity:.9;
 }
 
-/* ── بطاقة الملخص (SummaryCard) ──────────────────────── */
+/* ── بطاقة الملخص (SummaryCard) ──────────────────────────
+   إطار أبيض بحد وزوايا card؛ الغلاف داخل صندوق ورقي والتصنيف شارة في زاويته؛
+   ثم العنوان والمؤلف والوصف، ومدة القراءة، وزر «اقرأ الملخص» مع أزرار الحفظ.
+   البطاقة كلها رابط واحد (.sc-link)، وأزرار الحفظ فوقه. */
 .sc{
   display:flex;flex-direction:column;color:inherit;position:relative;
+  background:var(--color-surface);border:1px solid var(--rule);
+  border-radius:var(--radius-card);padding:12px 12px 14px;
+  transition:box-shadow .2s ease, border-color .2s ease;
 }
-.sc-link{
-  position:absolute;inset:0;z-index:1;
+.sc:hover{box-shadow:var(--shadow-soft);border-color:rgba(21,51,42,.16);}
+.sc-link{position:absolute;inset:0;z-index:1;border-radius:var(--radius-card);}
+.sc-link:focus-visible{outline:2px solid var(--green-ink);outline-offset:2px;}
+.sc-cover-wrap{
+  position:relative;display:flex;justify-content:center;
+  background:var(--paper);border-radius:var(--radius-sm);
+  padding:24px 16px 22px;
 }
-.sc-link:focus-visible{
-  outline:2px solid var(--green);outline-offset:2px;border-radius:var(--radius-sm);
-}
-.sc-cover-wrap{position:relative;}
+.sc-cover-wrap .bk{max-width:62%;}
 .sc:hover .bk-inner{transform:translateY(-3px);box-shadow:var(--shadow-book-hover);}
-.sc-title{margin-block-start:20px;}
-.sc-author{
-  margin-block-start:6px;font-size:15px;font-weight:400;line-height:1.7;
-  color:var(--ink-soft);
+.sc-badge{
+  position:absolute;inset-block-start:10px;inset-inline-end:10px;
+  font-size:11px;font-weight:700;line-height:1;padding:6px 9px;
+  border-radius:var(--radius-full);background:var(--color-surface);
+  color:var(--green-ink);border:1px solid var(--rule);
 }
-.sc-facts{margin-block-start:4px;}
+.sc-title{margin-block-start:14px;font-size:16px;line-height:1.5;}
+.sc-author{margin:4px 0 0;font-size:13px;font-weight:400;line-height:1.6;color:var(--muted);}
 .sc-promise{
-  margin-block-start:12px;font-size:15px;line-height:1.85;
-  font-weight:400;color:var(--ink-soft);
-  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+  margin:8px 0 0;font-size:13px;line-height:1.7;font-weight:400;color:var(--ink-soft);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
-.sc-actions{margin-block-start:auto;padding-block-start:14px;}
-.sc .go{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:15px;font-weight:600;color:var(--deep);
-  border-block-end:1px solid transparent;padding-block-end:2px;align-self:flex-start;
+.sc-time{margin:10px 0 0;font-size:13px;font-weight:700;color:var(--ink);}
+.sc-actions{
+  margin-block-start:auto;padding-block-start:12px;
+  display:flex;align-items:center;gap:8px;
 }
-.sc:hover .go{border-block-end-color:var(--brass);color:var(--ink);}
-.sc .go svg{color:var(--brass-ink);}
-/* أزرار الحفظ فوق رابط البطاقة */
-.sc .bookmark-btns{z-index:2;}
-/* الجوال: اختصار */
+.sc-cta{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;
+  min-height:40px;padding-inline:12px;border-radius:var(--radius-btn);
+  background:var(--green-ink);color:var(--color-surface);
+  font-size:14px;font-weight:700;white-space:nowrap;
+}
+.sc:hover .sc-cta{background:var(--deep);}
+/* أزرار الحفظ فوق رابط البطاقة، وأيقونات بلا تسمية داخل البطاقة */
+.sc .bookmark-btns{z-index:2;margin-top:0;gap:6px;}
+.sc .bm-label{display:none;}
+.sc .bm-btn{min-height:40px;min-width:40px;justify-content:center;padding:0 8px;}
+/* الجوال: عمودان ضيّقان */
 @media (max-width:640px){
+  .sc{padding:8px 8px 10px;}
+  .sc-cover-wrap{padding:18px 10px 16px;}
+  .sc-cover-wrap .bk{max-width:72%;}
   .sc-promise{display:none;}
-  .sc-title{margin-block-start:14px;font-size:17px;}
-  .sc-author{margin-block-start:4px;font-size:13px;}
-  .sc-facts{font-size:12px;}
-  .sc-actions{padding-block-start:10px;}
-  .sc .go{font-size:14px;}
+  .sc-title{margin-block-start:10px;font-size:14px;}
+  .sc-author,.sc-time{font-size:12px;}
+  .sc-actions{flex-wrap:wrap;}
+  .sc-cta{font-size:13px;min-height:38px;flex-basis:100%;}
 }
 
 /* ── صفوف الأقسام ─────────────────────────────────────── */
@@ -1341,8 +1358,8 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .home-why .btn{margin-top:32px;}
 /* الإنفوغرافيك تحت النص بعرض المحتوى كاملاً */
 .home-why-media{margin-top:clamp(28px,4vw,40px);}
-/* البانرات على سطح المكتب: ٨٨٠ بكسل في الوسط بدل عرض المحتوى كاملاً */
-.home-why-media,.home-vision-banner{max-width:880px;margin-inline:auto;}
+/* البانرات ٨٨٠ بكسل على حافة البداية، على محور النصوص نفسه */
+.home-why-media,.home-vision-banner{max-width:880px;margin-inline:0;}
 .home-why-media img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
 
 /* ── رؤيتنا: البانر أعلى القسم، ثم النص والبندان في عمود قراءة ── */
@@ -1362,5 +1379,5 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .home-founder-role{font-size:14px;line-height:1.7;margin:2px 0 0;color:var(--muted);}
 .home-founder-signature{display:block;width:200px;height:auto;margin-top:16px;}
 @media (min-width:861px){
-  .home-founder-grid{grid-template-columns:minmax(0,560px) 360px;grid-template-areas:"text photo";gap:56px;align-items:center;justify-content:center;}
+  .home-founder-grid{grid-template-columns:minmax(0,560px) 360px;grid-template-areas:"text photo";gap:56px;align-items:center;justify-content:start;}
 }
