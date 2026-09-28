@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { CategoryRow, CATEGORY_OUTCOMES } from "@/components/bahjaa/category-row";
-import { DarkPanel } from "@/components/bahjaa/dark-panel";
 import type { Category } from "@/lib/types";
 
 // تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
@@ -30,18 +29,19 @@ export default async function CategoriesPage() {
 
   return (
     <>
-      <section className="wrap" style={{ paddingBlock: "clamp(48px,7vw,72px) 20px" }}>
+      <section className="wrap cats-intro">
         <p className="eyebrow">ستة أقسام</p>
-        <h1 className="h-sec" style={{ marginTop: 14, maxWidth: "16ch" }}>
+        <h1 className="h-sec cats-title">
           اختر القسم الذي يشبه سؤالك هذا الأسبوع
         </h1>
-        <p className="read col" style={{ marginTop: 20 }}>
+        <p className="read col cats-lede">
           كل قسم يجمع الكتب التي تعالج نوعاً واحداً من الأسئلة. الأقسام الأربعة الأولى من كل
           ملخص مفتوحة بلا تسجيل.
         </p>
+        <p className="cats-note">ابدأ بالسؤال الذي يشغلك، لا باسم الكتاب الذي تبحث عنه.</p>
       </section>
 
-      <nav className="wrap" style={{ paddingBottom: "clamp(40px,6vw,64px)" }} aria-label="أقسام المكتبة">
+      <nav className="wrap cats-list bh-anchor" id="categories" aria-label="أقسام المكتبة">
         {cats.map((c) => (
           <CategoryRow
             key={c.id}
@@ -53,12 +53,16 @@ export default async function CategoriesPage() {
         ))}
       </nav>
 
-      {/* اللوحة الداكنة الوحيدة في هذه الصفحة */}
-      <section className="wrap" style={{ paddingBottom: "clamp(48px,7vw,72px)" }}>
-        <DarkPanel
-          eyebrow="وعد بهجة"
-          statement="لا نختصر الكتاب — نعيد بناءه، ثم نسلّمك خطوة تطبّقها اليوم"
-        />
+      {/* اللوحة الداكنة الوحيدة في هذه الصفحة: خاتمة تحريرية موجزة */}
+      <section className="wrap cats-close" aria-labelledby="cats-close-title">
+        <div className="dark-panel">
+          <h2 className="statement" id="cats-close-title">
+            لا تعرف من أين تبدأ؟
+            <br />
+            ابدأ بالسؤال الأقرب إليك.
+          </h2>
+          <p className="cats-close-sub">كل قسم هو نقطة بداية لمسار معرفة يمكنك استخدامه.</p>
+        </div>
       </section>
     </>
   );
