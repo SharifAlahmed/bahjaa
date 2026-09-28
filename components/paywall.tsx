@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import LoginForm from "@/app/login/login-form";
+import { SECTION_NAMES } from "@/components/summary-reader/reading-navigator";
+import { toArabicDigits } from "@/components/bahjaa/format";
 
 /**
  * الجدار — يظهر بعد القسم الرابع لغير المسجّل.
@@ -28,26 +30,32 @@ export default function Paywall({ slug }: { slug: string }) {
       </div>
 
       <section className="gate" id="email-gate" aria-labelledby="gate-title">
-        <h2 id="gate-title" className="gate-title">
-          لإكمال قراءة بقية الأقسام، اشترك بإيميلك
-        </h2>
+        <h2 id="gate-title" className="gate-title">أكمل من الفهم إلى التطبيق</h2>
 
         <p className="gate-sub">
-          الاشتراك مجاني بالكامل: لا بطاقة ولا كلمة مرور. يصلك رمز من ٨ أرقام،
-          وتُكمل من حيث توقّفت.
+          الأقسام التالية تأخذك من فهم أفكار الكتاب إلى استخدامها في حياتك وعملك وقراراتك.
+        </p>
+        <p className="gate-how">
+          مجاني بالكامل: لا بطاقة ولا كلمة مرور. أدخل بريدك، يصلك رمز من ٨ أرقام،
+          وتعود إلى هذا الملخص من حيث توقّفت.
         </p>
 
         <div className="gate-form">
           <Suspense fallback={<div style={{ minHeight: 188 }} />}>
-            <LoginForm nextOverride={`/s/${slug}`} submitLabel="اشترك وأكمل القراءة" />
+            <LoginForm nextOverride={`/s/${slug}`} submitLabel="أرسل لي رمز الدخول" />
           </Suspense>
         </div>
 
-        {/* ما يبقى: أسماء الأقسام الستة وحدها — أعدادها الداخلية تتغيّر من كتاب لآخر */}
-        <p className="gate-rest">
-          يبقى ستة أقسام: المحاور الكاملة للكتاب · الاقتباسات الذهبية بتفسير فريق بهجة ·
-          مثال واقعي من بيئة الأعمال · مسار التحويل · رؤية فريق بهجة النقدية · التقييم.
-        </p>
+        {/* ما يبقى: أسماء الأقسام الستة وحدها — لا شيء من محتواها */}
+        <p className="gate-rest-title">ما ينتظرك بعد الدخول</p>
+        <ol className="gate-rest-list" start={5}>
+          {SECTION_NAMES.slice(4).map((name, i) => (
+            <li key={name}>
+              <span className="gate-rest-n" aria-hidden="true">{toArabicDigits(i + 5)}</span>
+              {name}
+            </li>
+          ))}
+        </ol>
       </section>
     </div>
   );

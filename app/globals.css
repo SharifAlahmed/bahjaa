@@ -1653,3 +1653,241 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .ab-cta-title{font-family:var(--serif);font-weight:800;font-size:clamp(24px,3vw,34px);line-height:1.45;color:var(--ink);margin:0;}
 .ab-cta-body{font-size:18px;line-height:1.8;color:var(--ink-soft);max-width:560px;margin:14px auto 0;}
 .ab-cta-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px 24px;margin-top:28px;}
+
+/* ══════════════════════════════════════════════════════════
+   قارئ الملخص (sr-*) — /s/[slug] و/admin/preview/[slug] بعارض واحد
+   الإيقاع من نوع المعرفة لا من الزخرفة: شبكة رؤى ← نثر ← أسئلة ← ذروة داكنة
+   ← فصول ← اقتباسات ← خط حالة ← مسار فعل ← صوت المحرّر ← تقييم ← خاتمة.
+   اللوحة الداكنة الوحيدة: الفكرة المحورية (القاعدة ٨). عمود النثر ≤ ٧٦٠.
+   ══════════════════════════════════════════════════════════ */
+.sr{background:var(--paper);}
+.sr-wrap{max-width:1180px;margin-inline:auto;padding-inline:20px;}
+
+/* ── الترويسة: العنوان أولاً، والغلاف أكبر بنحو الربع ── */
+.sr-hero{
+  display:grid;grid-template-columns:minmax(0,1fr) 104px;gap:18px;align-items:start;
+  padding-block:clamp(24px,4vw,52px) clamp(20px,3vw,32px);border-block-end:1px solid var(--rule);
+}
+.sr-hero-cat{margin:0;font-size:14px;font-weight:700;line-height:1.7;}
+.sr-hero-cat a{color:var(--green-ink);text-decoration:none;border-block-end:1px solid transparent;}
+.sr-hero-cat a:hover{border-block-end-color:var(--brass);}
+.sr-hero-title{
+  font-family:var(--serif);font-weight:800;font-size:clamp(27px,4.2vw,46px);line-height:1.3;
+  color:var(--ink);margin:8px 0 0;text-wrap:balance;
+}
+.sr-hero-en{margin:6px 0 0;font-size:15px;line-height:1.6;color:var(--muted);text-align:end;font-family:var(--latin);}
+.sr-hero-author{margin:10px 0 0;font-size:17px;font-weight:500;line-height:1.6;color:var(--ink-soft);}
+.sr-hero-meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;margin:14px 0 0;font-size:15px;font-weight:600;line-height:1.7;color:var(--ink);}
+.sr-hero-meta span + span::before{content:"·";margin-inline:10px;color:var(--muted);font-weight:400;}
+.sr-hero-access{display:inline-flex;align-items:center;gap:6px;margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--muted);}
+.sr-hero-access svg{color:var(--green-ink);flex:none;}
+.sr-hero-cover{justify-self:end;}
+.sr-hero .bk-hero{width:104px;}
+@media (min-width:760px){
+  .sr-hero{grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:center;}
+  .sr-hero .bk-hero{width:210px;}
+}
+
+/* ── التخطيط: عمود القراءة (يمين) + مستكشف ثانوي لاصق (يسار) على سطح المكتب ── */
+.sr-body{display:grid;grid-template-columns:minmax(0,1fr);}
+.sr-main{min-width:0;max-width:760px;margin-inline:auto;width:100%;}
+@media (min-width:1100px){
+  .sr-body{grid-template-columns:minmax(0,760px) 220px;gap:64px;justify-content:space-between;}
+  .sr-main{margin-inline:0;}
+}
+
+/* لا تُضف قاعدة display لـ .sr-aside و.sr-nav-m خارج هذه الكتلة (القاعدة ١٥):
+   الافتراضي إخفاء، والإظهار داخل الاستعلام المناسب فقط */
+.sr-aside,.sr-nav-m{display:none;}
+@media (min-width:1100px){ .sr-aside{display:block;} }
+@media (max-width:1099px){ .sr-nav-m{display:block;} }
+
+/* المستكشف — سطح المكتب */
+.sr-rail{position:sticky;top:calc(var(--header-h) + 28px);padding-block:32px;}
+.sr-rail-title{margin:0 0 12px;font-size:13px;font-weight:800;color:var(--muted);}
+.sr-nav-list{list-style:none;margin:0;padding:0;border-inline-start:1px solid var(--rule);}
+.sr-nav-item > a,.sr-nav-item > span{
+  display:flex;align-items:center;gap:10px;min-height:38px;padding-block:6px;padding-inline:14px 4px;
+  margin-inline-start:-1px;border-inline-start:2px solid transparent;
+  font-size:14px;line-height:1.5;color:var(--ink-soft);text-decoration:none;
+}
+.sr-nav-item > a:hover{color:var(--ink);border-inline-start-color:var(--brass);}
+.sr-nav-item > a[aria-current]{color:var(--green-ink);font-weight:700;border-inline-start-color:var(--green-ink);}
+.sr-nav-n{flex:none;min-inline-size:18px;font-size:13px;font-weight:800;color:var(--brass-ink);}
+.sr-nav-label{flex:1;}
+.sr-nav-item--locked > span,.sr-nav-item--absent > span{color:var(--muted);}
+.sr-nav-item--absent > span{opacity:.6;}
+.sr-nav-lock{display:inline-flex;color:var(--muted);}
+.sr-rail-note{margin:14px 0 0;font-size:13px;line-height:1.7;color:var(--muted);}
+.sr-rail-note a{color:var(--green-ink);font-weight:700;}
+
+/* المستكشف — الجوال والتابلت: قائمة مطوية لاصقة تحت الترويسة */
+.sr-nav-m{
+  position:sticky;top:var(--header-h);z-index:20;background:var(--paper);
+  margin-inline:-20px;padding-inline:20px;border-block-end:1px solid var(--rule);
+}
+.sr-nav-m > summary{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;
+  font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;list-style:none;
+}
+.sr-nav-m > summary::-webkit-details-marker{display:none;}
+.sr-nav-m > summary::after{
+  content:"";inline-size:9px;block-size:9px;flex:none;margin-inline-end:4px;
+  border-inline-start:2px solid var(--brass-ink);border-block-end:2px solid var(--brass-ink);
+  transform:translateY(-3px) rotate(45deg);transition:transform .15s ease;
+}
+.sr-nav-m[open] > summary::after{transform:translateY(2px) rotate(-135deg);}
+.sr-nav-m[open] > nav{padding-block:4px 14px;max-height:60vh;overflow:auto;}
+
+/* ── إطار القسم ── */
+.sr-sec{padding-block:clamp(36px,5vw,56px);border-block-start:1px solid var(--rule);scroll-margin-block-start:calc(var(--header-h) + 64px);}
+.sr-nav-m + .sr-sec{border-block-start:0;}
+@media (min-width:1100px){ .sr-sec{scroll-margin-block-start:calc(var(--header-h) + 20px);} .sr-main > .sr-sec:first-of-type{border-block-start:0;} }
+.sr-sec-head{margin-bottom:24px;}
+.sr-sec-num{display:block;font-size:13px;font-weight:800;line-height:1.6;color:var(--brass-ink);}
+.sr-sec-title{
+  display:flex;align-items:center;gap:10px;margin:4px 0 0;
+  font-family:var(--serif);font-weight:800;font-size:clamp(23px,2.6vw,30px);line-height:1.35;color:var(--ink);
+}
+.sr-sec-icon{display:inline-flex;color:var(--green-ink);flex:none;}
+.sr-mini-label{display:flex;align-items:center;gap:6px;margin:0 0 6px;font-size:13px;font-weight:800;line-height:1.6;color:var(--green-ink);}
+
+/* ١ — شبكة رؤى خفيفة + حكم فريق بهجة */
+.sr-insights{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin:0;}
+@media (min-width:700px){ .sr-insights{grid-template-columns:repeat(2,minmax(0,1fr));} }
+.sr-insight{padding:18px 20px;background:var(--color-surface);border:1px solid var(--rule);border-radius:var(--radius-card);}
+.sr-insight dt{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;line-height:1.5;color:var(--ink);}
+.sr-insight-icon{display:inline-flex;color:var(--green-ink);flex:none;}
+.sr-insight dd{margin:8px 0 0;font-size:16.5px;line-height:1.85;color:var(--ink-soft);}
+.sr-verdict{margin-top:16px;padding:20px 24px;background:var(--color-surface);border-inline-start:3px solid var(--green-ink);border-radius:var(--radius-sm);}
+.sr-verdict-label{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;font-weight:800;color:var(--green-ink);}
+.sr-verdict-text{margin:8px 0 0;font-size:18px;font-weight:600;line-height:1.85;color:var(--ink);}
+
+/* ٢ — لحظة التعرّف: نثر مفتوح وعلامة نحاسية واحدة */
+.sr-recognition{position:relative;max-width:680px;padding-inline-start:26px;}
+.sr-recognition-mark{position:absolute;inset-inline-start:0;top:8px;bottom:8px;inline-size:3px;border-radius:2px;background:var(--brass);}
+.sr-recognition p{margin:0;font-size:clamp(18px,1.9vw,20px);font-weight:500;line-height:2.05;color:var(--ink);white-space:pre-line;}
+
+/* ٣ — لماذا الآن: أسئلة بارزة ← جسر ← ما ستخرج به ← ملاحظة هادئة */
+.sr-questions{list-style:none;margin:0;padding:0;}
+.sr-questions li{display:flex;align-items:flex-start;gap:12px;font-size:clamp(17px,1.8vw,19px);font-weight:700;line-height:1.75;color:var(--ink);}
+.sr-questions li + li{margin-top:14px;}
+.sr-q-mark{display:grid;place-items:center;flex:none;inline-size:32px;block-size:32px;border-radius:var(--radius-full);border:1.5px solid var(--brass);color:var(--brass-ink);}
+.sr-bridge{margin:28px 0 0;padding-block-start:22px;border-block-start:1px solid var(--rule);font-size:18px;font-weight:600;line-height:1.85;color:var(--green-ink);}
+.sr-gains{margin-top:22px;}
+.sr-gains .sr-mini-label{color:var(--brass-ink);}
+.sr-gains p:last-child{margin:0;font-size:17px;line-height:1.9;color:var(--ink-soft);}
+.sr-author-note{margin:24px 0 0;padding:14px 18px;border:1px dashed var(--rule);border-radius:var(--radius-sm);font-size:15px;line-height:1.85;color:var(--muted);}
+
+/* ٤ — الفكرة المحورية: الذروة الأولى، اللوحة الداكنة الوحيدة، بلا أيقونة */
+.sr-core{padding:clamp(36px,6vw,64px) clamp(22px,5vw,56px);background:var(--color-brand-dark);border-radius:var(--radius-panel);text-align:center;}
+.sr-core-lead{margin:0;font-size:14px;font-weight:600;line-height:1.7;color:var(--on-dark-soft);}
+.sr-core-text{
+  margin:16px auto 0;max-width:24em;font-family:var(--serif);font-weight:800;
+  font-size:clamp(23px,3.2vw,34px);line-height:1.6;color:var(--color-background);text-wrap:balance;
+}
+
+/* الجدار: السطر الواقعي عن الدخول وقائمة أسماء ٥–١٠ فقط */
+.gate .gate-how{margin:10px auto 0;max-width:520px;font-size:14.5px;line-height:1.8;color:var(--muted);}
+.gate .gate-rest-title{margin:28px 0 10px;font-size:14px;font-weight:800;color:var(--ink);}
+.gate .gate-rest-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.gate .gate-rest-list li{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--rule);border-radius:var(--radius-full);font-size:14px;line-height:1.5;color:var(--ink-soft);background:var(--color-surface);}
+.gate .gate-rest-n{font-weight:800;color:var(--brass-ink);}
+
+/* ٥ — المحاور: فصول تحريرية بفواصل، لا بطاقات متطابقة */
+.sr-pillars{list-style:none;margin:0;padding:0;}
+.sr-pillar{display:grid;grid-template-columns:36px minmax(0,1fr);gap:0 14px;padding-block:30px;border-block-start:1px solid var(--rule);}
+.sr-pillar:first-child{padding-block-start:0;border-block-start:0;}
+.sr-pillar-n{font-family:var(--serif);font-weight:800;font-size:30px;line-height:1.1;color:var(--brass-ink);}
+.sr-pillar-title{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(20px,2.2vw,23px);line-height:1.45;color:var(--ink);}
+.sr-pillar-essence{margin:12px 0 0;font-size:17.5px;line-height:1.95;color:var(--ink-soft);white-space:pre-line;}
+.sr-why-you{margin-top:20px;padding-inline-start:16px;border-inline-start:2px solid var(--green-ink);}
+.sr-why-you p:last-child{margin:0;font-size:16.5px;line-height:1.85;color:var(--ink);}
+.sr-trap{margin-top:16px;padding:14px 18px;background:rgba(168,67,43,.06);border-inline-start:3px solid var(--color-danger);border-radius:var(--radius-sm);}
+.sr-trap-label{display:flex;align-items:center;gap:6px;margin:0 0 6px;font-size:13px;font-weight:800;color:var(--color-danger);}
+.sr-trap p:last-child{margin:0;font-size:16px;line-height:1.85;color:var(--ink);}
+@media (min-width:700px){
+  .sr-pillar{grid-template-columns:56px minmax(0,1fr);gap:0 20px;padding-block:36px;}
+  .sr-pillar-n{font-size:44px;}
+}
+
+/* ٦ — الاقتباسات: صوت الكتاب مقابل تفسير فريق بهجة */
+.sr-quotes{display:grid;gap:0;}
+.sr-quote{margin:0;padding-block:28px;border-block-start:1px solid var(--rule);}
+.sr-quote:first-child{padding-block-start:0;border-block-start:0;}
+.sr-quote-text{margin:0;}
+.sr-quote-text p{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(19px,2vw,22px);line-height:1.85;color:var(--ink);}
+.sr-quote-note{margin-top:16px;padding-inline-start:16px;border-inline-start:2px solid var(--green-ink);}
+.sr-quote-note p:last-child{margin:0;font-size:15.5px;line-height:1.9;color:var(--ink-soft);}
+@media (min-width:900px){
+  .sr-quote{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:start;}
+  .sr-quote-note{margin-top:4px;}
+}
+
+/* ٧ — دراسة حالة على خط زمني رأسي؛ الدرس أبرز */
+.sr-case{list-style:none;margin:0;padding:0;padding-inline-start:30px;position:relative;}
+.sr-case::before{content:"";position:absolute;inset-inline-start:7px;top:10px;bottom:24px;inline-size:2px;background:rgba(21,51,42,.18);}
+.sr-case-step{position:relative;padding-block-end:22px;}
+.sr-case-step::before{
+  content:"";position:absolute;inset-inline-start:-29px;top:6px;inline-size:14px;block-size:14px;
+  border-radius:var(--radius-full);background:var(--paper);border:2px solid var(--green-ink);
+}
+.sr-case-label{margin:0;font-size:13px;font-weight:800;line-height:1.6;color:var(--green-ink);}
+.sr-case-step p:last-child{margin:4px 0 0;font-size:16.5px;line-height:1.9;color:var(--ink-soft);}
+.sr-case-lesson{padding:16px 20px;background:var(--color-surface);border:1px solid var(--rule);border-radius:var(--radius-sm);}
+.sr-case-lesson::before{background:var(--green-ink);inset-inline-start:-29px;top:22px;}
+.sr-case-lesson p:last-child{font-size:17px;font-weight:600;color:var(--ink);}
+
+/* ٨ — مسار التحويل: الذروة الثانية — لوحة فعل بإطار أخضر، مراحل بزمن، وخاتمة بمؤشر النجاح */
+.sr-path{background:var(--color-surface);border:1.5px solid var(--green-ink);border-radius:var(--radius-panel);overflow:hidden;}
+.sr-path-lead{margin:0;padding:14px 22px;background:var(--green-ink);color:var(--color-surface);font-size:15px;font-weight:700;line-height:1.7;}
+.sr-path-stages{list-style:none;margin:0;padding:6px 22px;}
+.sr-stage{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding-block:20px;border-block-start:1px solid var(--rule);}
+.sr-stage:first-child{border-block-start:0;}
+.sr-stage-when{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:800;line-height:1.5;color:var(--green-ink);}
+.sr-stage-icon{display:grid;place-items:center;flex:none;inline-size:36px;block-size:36px;border-radius:var(--radius-full);background:rgba(23,127,94,.1);}
+.sr-stage-label{margin:0;font-size:17px;font-weight:800;line-height:1.5;color:var(--ink);}
+.sr-stage-body p{margin:6px 0 0;font-size:16.5px;line-height:1.85;color:var(--ink-soft);}
+.sr-stage-body .sr-team-q{font-size:17px;font-weight:600;color:var(--ink);}
+.sr-week{list-style:none;margin:8px 0 0;padding:0;}
+.sr-week li{display:flex;align-items:flex-start;gap:10px;font-size:16px;line-height:1.8;color:var(--ink-soft);}
+.sr-week li + li{margin-top:8px;}
+.sr-week-n{display:grid;place-items:center;flex:none;inline-size:24px;block-size:24px;margin-top:3px;border-radius:var(--radius-full);border:1.5px solid var(--green-ink);color:var(--green-ink);font-size:12px;font-weight:800;}
+.sr-success{padding:18px 22px;background:rgba(23,127,94,.08);border-block-start:1.5px solid var(--green-ink);}
+.sr-success-label{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;font-weight:800;color:var(--green-ink);}
+.sr-success-text{margin:6px 0 0;font-size:18px;font-weight:700;line-height:1.8;color:var(--ink);}
+@media (min-width:700px){
+  .sr-stage{grid-template-columns:150px minmax(0,1fr);gap:24px;align-items:start;}
+  .sr-stage-when{padding-top:2px;}
+}
+
+/* ٩ — رؤية فريق بهجة: صوت المحرّر — مناطق بخطوط وعلامات لا بطاقة جامعة */
+.sr-critical-over{margin:-8px 0 16px;font-size:13px;font-weight:800;color:var(--brass-ink);}
+.sr-zone{padding-block:22px;border-block-start:1px solid var(--rule);}
+.sr-zone:first-child{border-block-start:0;padding-block-start:4px;}
+.sr-zone-label{display:flex;align-items:center;gap:10px;margin:0;font-size:17px;font-weight:800;line-height:1.5;color:var(--ink);}
+.sr-zone-icon{display:inline-flex;color:var(--brass-ink);flex:none;}
+.sr-zone p{margin:8px 0 0;max-width:680px;font-size:17px;line-height:1.95;color:var(--ink-soft);}
+
+/* ١٠ — التقييم: مقياس مقسّم هادئ + المبرّر */
+.sr-rating{margin:0;}
+.sr-rate{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:0 16px;padding-block:22px;border-block-start:1px solid var(--rule);}
+.sr-rate:first-child{border-block-start:0;padding-block-start:0;}
+.sr-rate-label{font-size:17px;font-weight:800;line-height:1.5;color:var(--ink);}
+.sr-rate-score{margin:0;font-size:22px;font-weight:800;color:var(--green-ink);white-space:nowrap;}
+.sr-rate-score span{font-size:14px;font-weight:700;color:var(--muted);}
+.sr-rate-bar{grid-column:1 / -1;display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:12px 0 0;}
+.sr-rate-bar span{block-size:8px;border-radius:2px;background:var(--rule);}
+.sr-rate-bar span.on{background:var(--green-ink);}
+.sr-rate-why{grid-column:1 / -1;margin:10px 0 0;font-size:15.5px;line-height:1.85;color:var(--ink-soft);}
+
+/* ── خاتمة الملخص ── */
+.sr-end{padding-block:clamp(40px,6vw,64px);border-block-start:1px solid var(--rule);text-align:center;}
+.sr-end-q{margin:0 auto;max-width:560px;font-family:var(--serif);font-weight:800;font-size:clamp(20px,2.4vw,26px);line-height:1.55;color:var(--ink);text-wrap:balance;}
+.sr-end-btn{margin-top:24px;}
+.sr-end-q + .sr-end-btn{margin-top:28px;}
+
+/* ── شريط معاينة الأدمن ── */
+.sr-admin-bar{background:var(--color-surface);border-block-end:2px solid var(--brass);}
+.sr-admin-bar-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-block:12px;}
+.sr-admin-bar p{margin:0;font-size:14px;font-weight:800;color:var(--ink);}

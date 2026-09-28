@@ -1,13 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { type CategorySlug } from "@/components/bahjaa/cover";
-import { BookCover } from "@/components/BookCover";
-import { SummaryToc } from "@/components/bahjaa/summary-toc";
-import { readingLabel, toArabicDigits } from "@/components/bahjaa/format";
-import SummaryFree from "@/components/summary-free";
-import SummaryFull from "@/components/summary-full";
+import { SummaryReader } from "@/components/summary-reader/summary-reader";
 import Paywall from "@/components/paywall";
 import type { Summary } from "@/lib/types";
 
@@ -80,75 +74,26 @@ export default async function SummaryPage({ params }: Props) {
   const { summary, category, isLoggedIn } = await getSummary(slug);
   if (!summary) notFound();
 
+  // أمان: content_full لا يُطلب أصلاً للزائر (getSummary)، ولا يُمرَّر للعارض إلا بجلسة
+  const full = isLoggedIn ? summary.content_full ?? null : null;
+
   return (
-    <article className="wrap summary-page">
-      {/* الترويسة */}
-      <header className="book-head">
-        <BookCover
-          title={summary.book_title_ar}
-          coverUrl={summary.cover_url}
-          size="hero"
-          priority
-          slug={summary.slug}
-          category={(category?.slug || "leadership") as CategorySlug}
-          categoryLabel={category?.name_ar || "بهجة"}
-        />
-
-        <div className="book-head-title">
-          {category && <p className="eyebrow">{category.name_ar}</p>}
-          <h1 className="h-sec book-title">{summary.book_title_ar}</h1>
-          {summary.book_title_en && (
-            <p className="meta" dir="ltr" style={{ textAlign: "end", marginTop: 8 }}>
-              {summary.book_title_en}
-            </p>
-          )}
-        </div>
-        <div className="book-head-meta">
-
-          <dl className="book-meta">
-            {summary.author && (
-              <div className="bm">
-                <dt className="bm-label">المؤلف</dt>
-                <dd className="bm-value">{summary.author}</dd>
-              </div>
-            )}
-            <div className="bm">
-              <dt className="bm-label">قراءة</dt>
-              <dd className="bm-value">{readingLabel(summary.reading_minutes || 8).replace("قراءة ", "")}</dd>
-            </div>
-            {typeof summary.rating_value === "number" && (
-              <div className="bm">
-                <dt className="bm-label">تقييم بهجة</dt>
-                <dd className="bm-value">
-                  {toArabicDigits(summary.rating_value)} من ١٠ · القيمة{" "}للقائد
-                </dd>
-              </div>
-            )}
-            <div className="bm">
-              <dt className="bm-label">الوصول</dt>
-              <dd className="bm-value">
-                {isLoggedIn ? "الملخص كاملاً مفتوح لك" : "أول ٤ أقسام مفتوحة مجاناً"}
-              </dd>
-            </div>
-          </dl>
-
-          <SummaryToc locked={!isLoggedIn} />
-        </div>
-      </header>
-
-      {/* الأقسام 1-4 — للجميع */}
-      <SummaryFree c={summary.content_free || {}} />
-
-      {/* الأقسام 5-10 — للمسجّلين */}
-      {isLoggedIn && summary.content_full ? (
-        <SummaryFull c={summary.content_full} />
-      ) : (
-        <Paywall slug={summary.slug} />
-      )}
-
-      <p className="summary-foot meta">
-        <Link href="/categories" className="textlink">تصفّح ملخصات أخرى</Link>
-      </p>
-    </article>
+    <SummaryReader
+      hero={{
+        slug: summary.slug,
+        titleAr: summary.book_title_ar,
+        titleEn: summary.book_title_en,
+        author: summary.author,
+        coverUrl: summary.cover_url,
+        readingMinutes: summary.reading_minutes,
+        rating: summary.rating_value,
+        category,
+      }}
+      free={summary.content_free || {}}
+      full={full}
+      locked={!isLoggedIn}
+      access={isLoggedIn ? "open" : "partial"}
+      gate={isLoggedIn ? null : <Paywall slug={summary.slug} />}
+    />
   );
 }
