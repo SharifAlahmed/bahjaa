@@ -23,6 +23,8 @@ type Props = {
   promise?: string;
   featured?: boolean;
   bookmarkSlot?: ReactNode;
+  /** نص زر البطاقة؛ الرئيسية تمرّر «استكشف الملخص»، وبقية الموقع على الافتراضي */
+  ctaLabel?: string;
 };
 
 
@@ -41,6 +43,7 @@ export function SummaryCard({
   promise,
   featured,
   bookmarkSlot,
+  ctaLabel = "اقرأ الملخص",
 }: Props) {
 
   return (
@@ -85,7 +88,7 @@ export function SummaryCard({
       )}
       <p className="sc-time" aria-hidden="true">{readingLabel(readingMinutes)}</p>
       <div className="sc-actions">
-        <span className="sc-cta" aria-hidden="true">اقرأ الملخص</span>
+        <span className="sc-cta" aria-hidden="true">{ctaLabel}</span>
         {bookmarkSlot}
       </div>
     </article>

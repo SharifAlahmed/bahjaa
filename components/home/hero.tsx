@@ -22,6 +22,7 @@ export function Hero() {
       </picture>
       <div className="home-hero-cta">
         <a href="#latest" className="btn btn-brand">استكشف الملخصات</a>
+        <a href="#how" className="btn btn-ghost">كيف تعمل بهجة؟</a>
       </div>
     </section>
   );
