@@ -56,7 +56,7 @@ export function FounderMessage() {
             alt="شريف الأحمد، مؤسس بهجة"
             width={1350}
             height={1318}
-            sizes="(max-width: 860px) 220px, 380px"
+            sizes="(max-width: 860px) 220px, 430px"
           />
         </div>
       </div>
