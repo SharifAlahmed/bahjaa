@@ -1,46 +1,32 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { WhyBahjaa } from "@/components/home/why-bahjaa";
-import { HowItWorks } from "@/components/home/how-it-works";
-import { Vision } from "@/components/home/vision";
+import { AboutHero } from "@/components/about/about-hero";
+import { OriginStory } from "@/components/about/origin-story";
+import { AboutVision } from "@/components/about/vision";
+import { Mission } from "@/components/about/mission";
+import { AboutValues } from "@/components/about/values";
+import { FounderLetter } from "@/components/about/founder-letter";
+import { AboutPromise } from "@/components/about/about-promise";
+import { AboutCTA } from "@/components/about/about-cta";
 
 export const metadata: Metadata = {
   title: "عن بهجة",
-  description: "بهجة محرّكٌ يحوّل المعرفة إلى خُطّة، والخُطّة إلى أثر.",
+  description:
+    "بهجة مساحة عربية للمعرفة التي تستحق وقتك؛ نختارها بوعي، ونقدّمها بوضوح وعمق، ونساعدك على تحويلها إلى شيء يمكنك استخدامه.",
 };
 
+/* الفلسفة لا المنتج: لماذا توجد بهجة، بماذا تؤمن، إلى أين تتجه، ومن وراءها.
+   رحلة «افهم ← استخرج ← طبّق ← قِس» في الرئيسية فقط */
 export default function AboutPage() {
-  /* القصة: من نحن ← المشكلة ← كيف نحلّها ← إلى أين ← ابدأ. كلمة المؤسس في الرئيسية فقط */
   return (
-    <div className="about-page">
-      <section className="about-intro" aria-labelledby="about-title">
-        <div className="wrap">
-          <div className="home-col">
-            <h1 className="about-title" id="about-title">عن بهجة</h1>
-            <p className="about-lead">بهجة: من المعرفة إلى الأثر</p>
-            <div className="home-prose">
-              <p className="home-prose-strong">
-                بهجة محرّكٌ يحوّل المعرفة إلى خُطّة، والخُطّة إلى أثر.
-              </p>
-              <p>
-                نقدّم تجربة معرفية عربية تساعد القادة وروّاد الأعمال وأصحاب الطموح
-                على الوصول إلى الأفكار الأكثر قيمة، وفهمها بوضوح، وتحويلها إلى
-                قرارات وخطوات عملية قابلة للتنفيذ.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <WhyBahjaa />
-      <HowItWorks />
-      <Vision />
-
-      <section className="about-cta">
-        <div className="wrap">
-          <Link href="/#latest" className="btn btn-brand">استكشف الملخصات</Link>
-        </div>
-      </section>
-    </div>
+    <>
+      <AboutHero />
+      <OriginStory />
+      <AboutVision />
+      <Mission />
+      <AboutValues />
+      <FounderLetter />
+      <AboutPromise />
+      <AboutCTA />
+    </>
   );
 }
