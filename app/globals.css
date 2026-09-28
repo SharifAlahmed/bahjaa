@@ -639,69 +639,7 @@ button,input{font:inherit;}
 .cats-close .dark-panel{padding-block:47px;}
 @media (max-width:600px){ .cats-close .dark-panel{padding-block:31px;} }
 
-/* ── صفحة الملخص ──────────────────────────────────────── */
-.book-head{display:grid;grid-template-columns:168px 1fr;grid-template-rows:auto auto;gap:30px;align-items:start;}
-.book-head>:first-child{grid-column:1;grid-row:1/3;}
-.book-head-title{grid-column:2;grid-row:1;min-width:0;}
-.book-head-meta{grid-column:2;grid-row:2;min-width:0;}
-@media (max-width:760px){
-  .book-head{grid-template-columns:118px 1fr;gap:18px;align-items:start;}
-  .book-head .cover{max-width:118px;padding:12px 10px;}
-  .book-head .bk-hero{width:118px;}
-  .book-head .cover-seal{width:52%;}
-  .book-head .cover-rule{width:16px;height:1.5px;}
-  .book-head .cover-title{margin-block-start:8px;font-size:14px;line-height:1.35;}
-  .book-head .cover-label{margin-block-start:6px;font-size:8px;}
-  .book-head .bk-title{margin-block-start:8px;font-size:14px;}
-  .book-head .bk-label{margin-block-start:6px;font-size:8px;}
-  .book-head>:first-child{grid-row:1;}
-  .book-head-meta{grid-column:1/-1;grid-row:2;margin-block-start:18px;}
-}
-@media (max-width:420px){
-  .book-head{grid-template-columns:92px 1fr;gap:14px;}
-  .book-head .cover{max-width:92px;}
-  .book-head .bk-hero{width:92px;}
-  .book-head .cover-title{font-size:12px;}
-  .book-head .bk-title{font-size:12px;}
-}
-
-/* شريط بيانات الكتاب */
-.book-meta{
-  margin-top:30px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
-  display:flex;flex-wrap:wrap;gap:0;
-}
-.book-meta .bm{padding:16px 0;padding-inline-end:30px;margin-inline-end:30px;border-inline-end:1px solid var(--rule);}
-.book-meta .bm:last-child{border-inline-end:0;margin-inline-end:0;padding-inline-end:0;}
-.book-meta .bm-label{font-size:11px;color:var(--brass-ink);line-height:1.8;}
-.book-meta .bm-value{font-size:15px;font-weight:500;line-height:1.7;color:var(--ink);}
-@media (max-width:600px){
-  .book-meta{display:grid;grid-template-columns:1fr 1fr;}
-  .book-meta .bm{border-inline-end:0;margin-inline-end:0;padding-inline-end:12px;padding-block:14px;}
-}
-
 .book-actions{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
-
-/* فهرس المحتوى */
-.toc{margin-top:28px;background:var(--paper-2);border:1px solid var(--rule);padding:18px 22px;}
-.toc > summary{
-  font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.5;color:var(--ink);
-  cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;
-  min-height:44px;
-}
-.toc > summary::-webkit-details-marker{display:none;}
-.toc > summary::after{content:'▾';color:var(--brass-ink);font-size:16px;transition:transform .2s ease;}
-.toc[open] > summary::after{transform:rotate(180deg);}
-.toc-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:0 0;}
-.toc-list li{width:50%;border-top:1px solid var(--rule);}
-.toc-list a{
-  display:flex;align-items:center;gap:10px;min-height:44px;
-  text-decoration:none;font-size:15px;font-weight:400;color:var(--ink-soft);
-  padding-inline-end:14px;
-}
-.toc-list a:hover{color:var(--ink);}
-.toc-list .n{font-family:var(--serif);font-size:15px;color:var(--brass-ink);min-width:22px;}
-.toc-list .lockmark{margin-inline-start:auto;color:var(--muted);display:flex;}
-@media (max-width:700px){ .toc-list li{width:100%;} .toc{padding:20px;} }
 
 /* أقسام الملخص + الرقم المتدلّي */
 .sec{display:grid;grid-template-columns:64px minmax(0,720px);gap:0 28px;padding-block:46px;border-top:1px solid var(--rule);scroll-margin-top:24px;}
@@ -826,9 +764,6 @@ button,input{font:inherit;}
 .section-block{padding-block:clamp(40px,6vw,64px);}
 .section-block + .section-block{padding-block-start:0;}
 
-/* ── القوائم داخل النظام ───────────────────────────────── */
-.toc-list{list-style:none;}
-
 /* ══════════════════════════════════════════════════════════
    طبقة التوافق — أصناف bh-* القديمة بالمقاييس الجديدة
    تبقى عاملة حتى تُستبدل صفحة صفحة بمكوّنات components/bahjaa.
@@ -838,13 +773,9 @@ button,input{font:inherit;}
 .bh-card-label  {font-family:var(--sans);font-size:18px;font-weight:700;color:var(--deep);}
 .bh-body        {font-family:var(--sans);font-size:var(--t-body);font-weight:400;line-height:var(--lh-body);color:var(--ink);}
 .bh-sub         {font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.8;color:var(--muted);}
-.bh-sec-num     {font-family:var(--sans);font-size:11px;font-weight:400;color:var(--brass-ink);}
 
 /* البطاقة صارت خطوطاً: حد رفيع على الورق، بلا تعبئة بيضاء وبلا ظل */
 .bh-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--radius-sm);box-shadow:var(--shadow-1);}
-
-/* الفخ الشائع — يبقى كما هو، فهو جزء من نظام الملخص */
-.bh-trap{background:var(--color-background);border-inline-start:3px solid var(--color-accent-gold);color:var(--color-brand-dark);border-radius:var(--radius-sm);}
 
 /* تدرّج الإخفاء فوق الجدار */
 .bh-fade{-webkit-mask-image:linear-gradient(to bottom,var(--mask-solid) 0%,transparent 100%);mask-image:linear-gradient(to bottom,var(--mask-solid) 0%,transparent 100%);}
@@ -875,20 +806,6 @@ button,input{font:inherit;}
   margin:0 auto;max-width:34ch;color:var(--ink);text-wrap:balance;
 }
 
-/* صفحة الملخص */
-/* مقياس واحد للصفحة كلها. كانت الترويسة تمتدّ ١١٢٠ بينما كل قسم مقيّد
-   بـ٧٢٠ وبلا margin:auto، فيلتصق بالبداية تاركاً شريطاً فارغاً بعرض
-   ٤٠٠ بكسل على طول الصفحة. */
-.summary-page{padding-block:clamp(40px,6vw,64px);max-width:780px;}
-.summary-page .book-title{font-size:clamp(28px,5.4vw,44px);margin-top:14px;}
-.summary-page .book-head{margin-bottom:clamp(32px,5vw,48px);}
-.summary-foot{margin-top:clamp(40px,6vw,64px);padding-top:26px;border-top:1px solid var(--rule);}
-.book-meta .bm-value{margin:0;}
-
-/* القسم الحرّ والكامل يرثان عمود القراءة */
-.summary-page > section,
-.summary-page > div{max-width:100%;}
-
 /* لمحة الجدار — أشكال لا نصّ مختلَق */
 .skeleton-head{height:20px;width:52%;background:var(--color-border);margin-bottom:20px;opacity:.9;}
 .skeleton-lines{display:flex;flex-direction:column;gap:12px;}
@@ -896,13 +813,6 @@ button,input{font:inherit;}
 
 /* ── مراسي الأقسام ────────────────────────────────────── */
 .bh-anchor{scroll-margin-block-start:calc(var(--header-h) + 32px);}
-
-/* بند فهرس مقفول: ليس رابطاً، لا يستقبل تركيزاً، ولا يوهم بوجهة */
-.toc-shut{
-  display:flex;align-items:center;gap:10px;padding:13px 2px;
-  font-size:15px;line-height:1.6;color:var(--ink-muted);cursor:default;
-}
-.toc-shut .lockmark{margin-inline-start:2px;color:var(--brass-ink);display:inline-flex;align-items:center;}
 
 .sr-only{
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
@@ -930,16 +840,6 @@ button,input{font:inherit;}
 .dark-panel :focus-visible,
 .site-header :focus-visible,
 .site-footer :focus-visible{outline-color:var(--brass);}
-
-/* ── الاقتباس الذهبي ──────────────────────────────────────
-   بلا italic: العربية لا تملك مائلاً حقيقياً، والمتصفّح يميل الحروف
-   ميلاً هندسياً فتنكسر وصلاتها ويبدو الخط مشوّهاً. التمييز يحمله
-   الخط المشجّر والحجم وعلامتا الاقتباس العربيتان. */
-.quote-ar{
-  font-family:var(--serif);font-weight:700;
-  font-size:clamp(19px,2.5vw,23px);line-height:1.75;
-  color:var(--deep);margin:0;text-wrap:balance;
-}
 
 /* ── شريط الحقائق (تحت الهيرو، لا داخله) ────────────────
    قاعدة 4.7: الهيرو أربعة عناصر نصية كحد أقصى، والشريط الإثباتي
