@@ -627,11 +627,12 @@ button,input{font:inherit;}
   font-size:16px;font-weight:500;line-height:1.8;color:var(--ink);
 }
 .cats-list{padding-bottom:clamp(40px,5vw,56px);}
-.cats-list:focus{outline:none;}
 .cats-close{padding-bottom:clamp(48px,6vw,72px);}
 .cats-close .statement{font-size:clamp(23px,3.4vw,34px);}
 .cats-close-sub{margin:14px auto 0;max-width:520px;font-size:16px;line-height:1.8;color:var(--on-dark);}
-.cats-close-btn{margin-top:26px;}
+/* خاتمة موجزة: حشو اللوحة أقل بنحو ١٣٪ (٥٤ ← ٤٧، والجوال ٣٦ ← ٣١) */
+.cats-close .dark-panel{padding-block:47px;}
+@media (max-width:600px){ .cats-close .dark-panel{padding-block:31px;} }
 
 /* ── صفحة الملخص ──────────────────────────────────────── */
 .book-head{display:grid;grid-template-columns:168px 1fr;grid-template-rows:auto auto;gap:30px;align-items:start;}

@@ -41,8 +41,7 @@ export default async function CategoriesPage() {
         <p className="cats-note">ابدأ بالسؤال الذي يشغلك، لا باسم الكتاب الذي تبحث عنه.</p>
       </section>
 
-      {/* tabIndex=-1: رابط الخاتمة ينقل التركيز إلى القائمة نفسها لا إلى أعلى الصفحة فقط */}
-      <nav className="wrap cats-list bh-anchor" id="categories" tabIndex={-1} aria-label="أقسام المكتبة">
+      <nav className="wrap cats-list bh-anchor" id="categories" aria-label="أقسام المكتبة">
         {cats.map((c) => (
           <CategoryRow
             key={c.id}
@@ -54,7 +53,7 @@ export default async function CategoriesPage() {
         ))}
       </nav>
 
-      {/* اللوحة الداكنة الوحيدة في هذه الصفحة: خاتمة تعيد القارئ إلى القائمة */}
+      {/* اللوحة الداكنة الوحيدة في هذه الصفحة: خاتمة تحريرية موجزة */}
       <section className="wrap cats-close" aria-labelledby="cats-close-title">
         <div className="dark-panel">
           <h2 className="statement" id="cats-close-title">
@@ -63,7 +62,6 @@ export default async function CategoriesPage() {
             ابدأ بالسؤال الأقرب إليك.
           </h2>
           <p className="cats-close-sub">كل قسم هو نقطة بداية لمسار معرفة يمكنك استخدامه.</p>
-          <a href="#categories" className="btn btn-accent cats-close-btn">استكشف الأقسام</a>
         </div>
       </section>
     </>
