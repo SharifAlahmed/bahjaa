@@ -223,7 +223,6 @@ button,input{font:inherit;}
 .mini-action svg{color:var(--brass-ink);flex:none;}
 .mini-action:hover{border-color:var(--brass);color:var(--ink);}
 
-
 .wrap{max-width:1120px;margin:0 auto;padding-inline:20px;}
 
 /* ── شريط الإعلان ────────────────────────────────────── */
@@ -1356,7 +1355,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 }
 
 /* ══════════════════════════════════════════════════════════
-   الرئيسية: الهيرو · لماذا بهجة · كلمة المؤسس
+   الرئيسية: مرساة التمرير (home-anchor) والهيرو
    ══════════════════════════════════════════════════════════ */
 .home-anchor{scroll-margin-block-start:var(--header-h);}
 
@@ -1379,74 +1378,9 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
   .home-hero-cta{padding:32px 0 0;}
 }
 
-/* ── لماذا بهجة: عمود قراءة واحد ── */
-.home-why{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
-.home-col{max-width:720px;}
-.home-prose{margin-top:24px;}
-.home-prose p{margin:0;font-size:var(--t-body);line-height:var(--lh-body);color:var(--ink);}
-.home-prose p + p{margin-top:18px;}
-.home-prose .home-prose-strong{font-weight:700;color:var(--green-ink);}
-.home-points{
-  list-style:none;margin:32px 0 0;padding:28px 0 0;
-  border-block-start:1px solid var(--rule);display:grid;gap:24px;
-}
-.home-point{display:flex;gap:16px;align-items:flex-start;}
-.home-point-icon{flex:none;display:inline-flex;margin-top:2px;color:var(--green-ink);}
-.home-point-title{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.5;margin:0;color:var(--ink);}
-.home-point-body{font-size:16px;line-height:1.8;color:var(--ink-soft);margin:6px 0 0;}
-.home-why .btn{margin-top:32px;}
-/* النسخة المختصرة في الرئيسية: العنوان والجملة والزر في منتصف الشاشة */
-.home-why-short .home-col{margin-inline:auto;text-align:center;}
-/* الإنفوغرافيك تحت النص بعرض المحتوى كاملاً */
-.home-why-media{margin-top:clamp(28px,4vw,40px);}
-/* البانرات ٨٨٠ بكسل على حافة البداية، على محور النصوص نفسه */
-/* بانر «رؤيتنا»: في الوسط، وكاملاً داخل الشاشة كإنفوغرافيك «كيف تعمل» (نسبة ١٧٧٤:٨٨٧) */
-.home-vision-banner{
-  margin-inline:auto;
-  width:min(100%, 1080px, calc((100svh - var(--header-h) - 100px) * 1774 / 887));
-}
-/* إنفوغرافيك «كيف تعمل»: في الوسط، وكاملاً داخل الشاشة تحت الترويسة بهامش ٥٠ فوق وتحت
-   العرض = الأصغر من: المتاح، و١٠٨٠، وعرضٍ يجعل ارتفاعه = الشاشة − الترويسة − ١٠٠ (نسبة ١٦٧٢:٩٤١) */
-.home-how .home-why-media{
-  margin-inline:auto;
-  width:min(100%, 1080px, calc((100svh - var(--header-h) - 100px) * 1672 / 941));
-}
-.home-why-media img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
-
-/* ── رؤيتنا: البانر أعلى القسم، ثم النص والبندان في عمود قراءة ── */
-.home-vision{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
-.home-vision-banner img{display:block;width:100%;height:auto;border-radius:var(--radius-panel);box-shadow:var(--shadow-soft);}
-/* «منهج بهجة»: عمود ٨٨٠ في الوسط؛ العنوان والمقدمة والخاتمة في الوسط، والبندان متجاوران ونصهما على البداية */
-.home-vision-text{max-width:880px;margin-inline:auto;margin-top:clamp(40px,5vw,56px);text-align:center;}
-.home-vision .home-prose{max-width:720px;margin-inline:auto;}
-.home-method-close{margin:28px 0 0;font-size:var(--t-body);font-weight:700;line-height:1.8;color:var(--green-ink);}
-/* إنفوغرافيك «كيف تعمل» في صفحة «عن بهجة» */
-.home-how{padding-block-end:clamp(40px,5vw,64px);}
-
-/* ── صفحة «عن بهجة» ── */
-.about-intro{padding-block:clamp(40px,6vw,72px);}
-.about-title{
-  font-family:var(--serif);font-weight:800;font-size:clamp(30px,4.6vw,52px);
-  line-height:1.28;margin:0;color:var(--ink);
-}
-.about-lead{margin:12px 0 0;font-size:20px;font-weight:700;line-height:1.6;color:var(--green-ink);}
-.about-cta{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);text-align:center;}
-/* محور واحد في الصفحة: العناوين في الوسط، والنص الطويل في عمود قراءة ٧٢٠ في الوسط
-   محاذاته على البداية؛ والخلفية تتناوب ورق/أبيض ليُرى كل فصل منفصلاً */
-.about-page .about-intro{text-align:center;}
-.about-page .about-intro .home-col{margin-inline:auto;}
-.about-page .home-why{background:var(--color-surface);}
-.about-page .home-why .home-col{margin-inline:auto;}
-.about-page .home-why .h-sec{text-align:center;}
-.about-page .home-how{padding-block:clamp(40px,5vw,64px);border-block-start:1px solid var(--rule);}
-.about-page .home-how .home-why-media{margin-top:0;}
-.about-page .home-vision{background:var(--color-surface);}
-.home-vision .home-points{margin-top:clamp(28px,4vw,40px);padding-top:0;border:0;text-align:start;}
-@media (min-width:861px){ .home-vision .home-points{grid-template-columns:1fr 1fr;gap:48px;} }
-
 /* ══════════════════════════════════════════════════════════
    الرئيسية (الإصدار ٢): المؤسس · لماذا بهجة · القيم · الوعد · كيف تعمل · الملخصات · الخاتمة
-   البادئة hm- حتى لا تتعارض مع أصناف صفحة «عن بهجة» (home-*).
+   البادئة hm- لأقسام الإصدار ٢؛ home-* الباقية للهيرو والمرساة فقط.
    إيقاع الخلفيات: أبيض ← ورق ← أبيض ← داكن ← ورق ← أبيض ← ورق
    ══════════════════════════════════════════════════════════ */
 .hm-center{text-align:center;}
