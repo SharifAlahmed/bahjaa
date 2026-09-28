@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import LoginForm from "@/app/login/login-form";
 import { SECTION_NAMES } from "@/components/summary-reader/reading-navigator";
 import { toArabicDigits } from "@/components/bahjaa/format";
+import { IconLock } from "@/components/summary-reader/icons";
 
 /**
  * الجدار — يظهر بعد القسم الرابع لغير المسجّل.
@@ -16,8 +17,13 @@ export default function Paywall({ slug }: { slug: string }) {
   const lines = [96, 88, 93, 74, 90, 62];
 
   return (
-    <div style={{ marginTop: 40 }}>
+    <div className="pw">
       <div className="locked">
+        {/* اسم القسم التالي وحده — لا شيء من محتواه */}
+        <p className="pw-next">
+          <IconLock size={15} />
+          <span>القسم {toArabicDigits(5)} · {SECTION_NAMES[4]}</span>
+        </p>
         <div className="teaser" aria-hidden="true">
           <div className="skeleton-head" />
           <div className="skeleton-lines">

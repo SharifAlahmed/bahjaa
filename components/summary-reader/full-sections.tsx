@@ -26,7 +26,7 @@ function Pillars({ items }: { items: NonNullable<ContentFull["s5"]> }) {
       <ol className="sr-pillars">
         {items.map((p, i) => (
           <li key={i} className="sr-pillar">
-            <span className="sr-pillar-n" aria-hidden="true">{toArabicDigits(i + 1)}</span>
+            <span className="sr-pillar-n" aria-hidden="true"><small>المحور</small>{toArabicDigits(i + 1)}</span>
             <div className="sr-pillar-body">
               {p.title ? <h3 className="sr-pillar-title">{p.title}</h3> : null}
               {p.essence ? <p className="sr-pillar-essence">{p.essence}</p> : null}
@@ -148,7 +148,7 @@ function Path({ s8 }: { s8: NonNullable<ContentFull["s8"]> }) {
         </ol>
         {s8.success_marker ? (
           <div className="sr-success">
-            <p className="sr-success-label"><IconGauge size={18} />بعد ٣٠ يومًا · مؤشر النجاح</p>
+            <p className="sr-success-label"><span className="sr-stage-icon"><IconGauge /></span>بعد ٣٠ يومًا · مؤشر النجاح</p>
             <p className="sr-success-text">{s8.success_marker}</p>
           </div>
         ) : null}

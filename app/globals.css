@@ -50,6 +50,12 @@
   --color-on-dark-soft: rgba(247,245,238,.66);
   --color-on-dark-line: rgba(247,245,238,.22);
   --color-on-dark-edge: rgba(247,245,238,.45);
+  /* قارئ الملخص (sr-*) */
+  --color-ink-read:    rgba(21,51,42,.82);  /* نص معرفي ثانوي — أوضح من ink-soft وأخفّ من العناوين */
+  --color-ink-line:    rgba(21,51,42,.18);  /* خطوط الربط (خط الحالة، مسار التحويل) */
+  --color-danger-wash: rgba(168,67,43,.06); /* خلفية «الفخ الشائع» */
+  --color-ink-wash:    rgba(23,127,94,.10); /* خلفية أيقونات مسار التحويل */
+  --color-ink-tint:    rgba(23,127,94,.08); /* شريط مؤشر النجاح */
 
   /* ── الزوايا ───────────────────────────────────────── */
   --radius-xs: 4px;
@@ -1776,8 +1782,8 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-bridge{margin:28px 0 0;padding-block-start:22px;border-block-start:1px solid var(--rule);font-size:18px;font-weight:600;line-height:1.85;color:var(--green-ink);}
 .sr-gains{margin-top:22px;}
 .sr-gains .sr-mini-label{color:var(--brass-ink);}
-.sr-gains p:last-child{margin:0;font-size:17px;line-height:1.9;color:var(--ink-soft);}
-.sr-author-note{margin:24px 0 0;padding:14px 18px;border:1px dashed var(--rule);border-radius:var(--radius-sm);font-size:15px;line-height:1.85;color:var(--muted);}
+.sr-gains p:last-child{margin:0;font-size:17px;line-height:1.9;color:var(--color-ink-read);}
+.sr-author-note{margin:24px 0 0;padding:14px 18px;border:1px dashed var(--rule);border-radius:var(--radius-sm);font-size:15px;line-height:1.85;color:var(--color-ink-read);}
 
 /* ٤ — الفكرة المحورية: الذروة الأولى، اللوحة الداكنة الوحيدة، بلا أيقونة */
 .sr-core{padding:clamp(36px,6vw,64px) clamp(22px,5vw,56px);background:var(--color-brand-dark);border-radius:var(--radius-panel);text-align:center;}
@@ -1788,6 +1794,13 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 }
 
 /* الجدار: السطر الواقعي عن الدخول وقائمة أسماء ٥–١٠ فقط */
+/* الجدار داخل القارئ: يلتصق بنهاية القسم الرابع، واللمحة معنونة كقسم مقفول قادم */
+.sr .pw{margin-top:-12px;}
+.sr .pw-next{display:flex;align-items:center;gap:8px;margin:0 0 14px;font-size:14px;font-weight:800;color:var(--muted);}
+.sr .pw-next svg{color:var(--brass-ink);flex:none;}
+.sr .locked .teaser{opacity:.45;}
+.sr .locked .fade{height:110px;}
+.sr .gate{margin-top:8px;}
 .gate .gate-how{margin:10px auto 0;max-width:520px;font-size:14.5px;line-height:1.8;color:var(--muted);}
 .gate .gate-rest-title{margin:28px 0 10px;font-size:14px;font-weight:800;color:var(--ink);}
 .gate .gate-rest-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
@@ -1798,17 +1811,18 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-pillars{list-style:none;margin:0;padding:0;}
 .sr-pillar{display:grid;grid-template-columns:36px minmax(0,1fr);gap:0 14px;padding-block:30px;border-block-start:1px solid var(--rule);}
 .sr-pillar:first-child{padding-block-start:0;border-block-start:0;}
-.sr-pillar-n{font-family:var(--serif);font-weight:800;font-size:30px;line-height:1.1;color:var(--brass-ink);}
+.sr-pillar-n{display:flex;flex-direction:column;align-items:center;gap:2px;padding-top:2px;font-family:var(--serif);font-weight:800;font-size:28px;line-height:1.1;color:var(--green-ink);}
+.sr-pillar-n small{font-family:var(--sans);font-size:11px;font-weight:700;line-height:1.3;color:var(--muted);}
 .sr-pillar-title{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(20px,2.2vw,23px);line-height:1.45;color:var(--ink);}
-.sr-pillar-essence{margin:12px 0 0;font-size:17.5px;line-height:1.95;color:var(--ink-soft);white-space:pre-line;}
+.sr-pillar-essence{margin:12px 0 0;max-width:36em;font-size:17.5px;line-height:1.95;color:var(--ink-soft);white-space:pre-line;}
 .sr-why-you{margin-top:20px;padding-inline-start:16px;border-inline-start:2px solid var(--green-ink);}
 .sr-why-you p:last-child{margin:0;font-size:16.5px;line-height:1.85;color:var(--ink);}
-.sr-trap{margin-top:16px;padding:14px 18px;background:rgba(168,67,43,.06);border-inline-start:3px solid var(--color-danger);border-radius:var(--radius-sm);}
+.sr-trap{margin-top:16px;padding:14px 18px;background:var(--color-danger-wash);border-inline-start:3px solid var(--color-danger);border-radius:var(--radius-sm);}
 .sr-trap-label{display:flex;align-items:center;gap:6px;margin:0 0 6px;font-size:13px;font-weight:800;color:var(--color-danger);}
 .sr-trap p:last-child{margin:0;font-size:16px;line-height:1.85;color:var(--ink);}
 @media (min-width:700px){
   .sr-pillar{grid-template-columns:56px minmax(0,1fr);gap:0 20px;padding-block:36px;}
-  .sr-pillar-n{font-size:44px;}
+  .sr-pillar-n{font-size:40px;}
 }
 
 /* ٦ — الاقتباسات: صوت الكتاب مقابل تفسير فريق بهجة */
@@ -1818,7 +1832,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-quote-text{margin:0;}
 .sr-quote-text p{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(19px,2vw,22px);line-height:1.85;color:var(--ink);}
 .sr-quote-note{margin-top:16px;padding-inline-start:16px;border-inline-start:2px solid var(--green-ink);}
-.sr-quote-note p:last-child{margin:0;font-size:15.5px;line-height:1.9;color:var(--ink-soft);}
+.sr-quote-note p:last-child{margin:0;font-size:15.5px;line-height:1.9;color:var(--color-ink-read);}
 @media (min-width:900px){
   .sr-quote{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:start;}
   .sr-quote-note{margin-top:4px;}
@@ -1826,15 +1840,15 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 
 /* ٧ — دراسة حالة على خط زمني رأسي؛ الدرس أبرز */
 .sr-case{list-style:none;margin:0;padding:0;padding-inline-start:30px;position:relative;}
-.sr-case::before{content:"";position:absolute;inset-inline-start:7px;top:10px;bottom:24px;inline-size:2px;background:rgba(21,51,42,.18);}
-.sr-case-step{position:relative;padding-block-end:22px;}
+.sr-case::before{content:"";position:absolute;inset-inline-start:7px;top:10px;bottom:24px;inline-size:2px;background:var(--color-ink-line);}
+.sr-case-step{position:relative;padding-block-end:14px;}
 .sr-case-step::before{
   content:"";position:absolute;inset-inline-start:-29px;top:6px;inline-size:14px;block-size:14px;
   border-radius:var(--radius-full);background:var(--paper);border:2px solid var(--green-ink);
 }
 .sr-case-label{margin:0;font-size:13px;font-weight:800;line-height:1.6;color:var(--green-ink);}
-.sr-case-step p:last-child{margin:4px 0 0;font-size:16.5px;line-height:1.9;color:var(--ink-soft);}
-.sr-case-lesson{padding:16px 20px;background:var(--color-surface);border:1px solid var(--rule);border-radius:var(--radius-sm);}
+.sr-case-step p:last-child{margin:2px 0 0;font-size:16.5px;line-height:1.9;color:var(--ink-soft);}
+.sr-case-lesson{margin-top:4px;padding:16px 20px;background:var(--color-surface);border:1px solid var(--rule);border-radius:var(--radius-sm);}
 .sr-case-lesson::before{background:var(--green-ink);inset-inline-start:-29px;top:22px;}
 .sr-case-lesson p:last-child{font-size:17px;font-weight:600;color:var(--ink);}
 
@@ -1845,7 +1859,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-stage{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding-block:20px;border-block-start:1px solid var(--rule);}
 .sr-stage:first-child{border-block-start:0;}
 .sr-stage-when{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:800;line-height:1.5;color:var(--green-ink);}
-.sr-stage-icon{display:grid;place-items:center;flex:none;inline-size:36px;block-size:36px;border-radius:var(--radius-full);background:rgba(23,127,94,.1);}
+.sr-stage-icon{display:grid;place-items:center;flex:none;inline-size:36px;block-size:36px;border-radius:var(--radius-full);background:var(--color-ink-wash);}
 .sr-stage-label{margin:0;font-size:17px;font-weight:800;line-height:1.5;color:var(--ink);}
 .sr-stage-body p{margin:6px 0 0;font-size:16.5px;line-height:1.85;color:var(--ink-soft);}
 .sr-stage-body .sr-team-q{font-size:17px;font-weight:600;color:var(--ink);}
@@ -1853,12 +1867,20 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-week li{display:flex;align-items:flex-start;gap:10px;font-size:16px;line-height:1.8;color:var(--ink-soft);}
 .sr-week li + li{margin-top:8px;}
 .sr-week-n{display:grid;place-items:center;flex:none;inline-size:24px;block-size:24px;margin-top:3px;border-radius:var(--radius-full);border:1.5px solid var(--green-ink);color:var(--green-ink);font-size:12px;font-weight:800;}
-.sr-success{padding:18px 22px;background:rgba(23,127,94,.08);border-block-start:1.5px solid var(--green-ink);}
+.sr-success{padding:18px 22px;background:var(--color-ink-tint);border-block-start:1.5px solid var(--green-ink);}
 .sr-success-label{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;font-weight:800;color:var(--green-ink);}
 .sr-success-text{margin:6px 0 0;font-size:18px;font-weight:700;line-height:1.8;color:var(--ink);}
+/* الختام بأيقونة بنفس مقاس أيقونات المراحل، ليقع على امتداد خط المسار */
+.sr-success-label .sr-stage-icon{inline-size:36px;block-size:36px;}
 @media (min-width:700px){
-  .sr-stage{grid-template-columns:150px minmax(0,1fr);gap:24px;align-items:start;}
+  .sr-stage{position:relative;grid-template-columns:150px minmax(0,1fr);gap:24px;align-items:start;}
   .sr-stage-when{padding-top:2px;}
+  /* رابط رأسي رفيع من أيقونة كل مرحلة إلى التالية (والأخيرة إلى مؤشر النجاح) */
+  .sr-stage::after{
+    content:"";position:absolute;inset-inline-start:17px;
+    top:66px;bottom:-18px;inline-size:2px;border-radius:1px;background:var(--color-ink-line);
+  }
+  .sr-path-stages:not(:has(+ .sr-success)) .sr-stage:last-child::after{display:none;}
 }
 
 /* ٩ — رؤية فريق بهجة: صوت المحرّر — مناطق بخطوط وعلامات لا بطاقة جامعة */
@@ -1867,7 +1889,7 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-zone:first-child{border-block-start:0;padding-block-start:4px;}
 .sr-zone-label{display:flex;align-items:center;gap:10px;margin:0;font-size:17px;font-weight:800;line-height:1.5;color:var(--ink);}
 .sr-zone-icon{display:inline-flex;color:var(--brass-ink);flex:none;}
-.sr-zone p{margin:8px 0 0;max-width:680px;font-size:17px;line-height:1.95;color:var(--ink-soft);}
+.sr-zone p{margin:8px 0 0;max-width:680px;font-size:17px;line-height:1.95;color:var(--color-ink-read);}
 
 /* ١٠ — التقييم: مقياس مقسّم هادئ + المبرّر */
 .sr-rating{margin:0;}
@@ -1879,10 +1901,12 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-rate-bar{grid-column:1 / -1;display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:12px 0 0;}
 .sr-rate-bar span{block-size:8px;border-radius:2px;background:var(--rule);}
 .sr-rate-bar span.on{background:var(--green-ink);}
-.sr-rate-why{grid-column:1 / -1;margin:10px 0 0;font-size:15.5px;line-height:1.85;color:var(--ink-soft);}
+.sr-rate-why{grid-column:1 / -1;margin:10px 0 0;font-size:15.5px;line-height:1.85;color:var(--color-ink-read);}
 
 /* ── خاتمة الملخص ── */
-.sr-end{padding-block:clamp(40px,6vw,64px);border-block-start:1px solid var(--rule);text-align:center;}
+.sr-end{padding-block:8px clamp(40px,6vw,64px);text-align:center;}
+.sr-sec--rating{padding-block-end:clamp(28px,4vw,36px);}
+.sr-end-q::before{content:"";display:block;inline-size:40px;block-size:2px;margin:0 auto 20px;background:var(--brass);}
 .sr-end-q{margin:0 auto;max-width:560px;font-family:var(--serif);font-weight:800;font-size:clamp(20px,2.4vw,26px);line-height:1.55;color:var(--ink);text-wrap:balance;}
 .sr-end-btn{margin-top:24px;}
 .sr-end-q + .sr-end-btn{margin-top:28px;}
