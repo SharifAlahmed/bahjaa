@@ -5,7 +5,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const tajawalBold = fetch(
-  new URL("../../public/fonts/tajawal-700.woff2", import.meta.url)
+  "https://bahjaa.com/fonts/tajawal-700.woff2"
 ).then((res) => res.arrayBuffer());
 
 export default async function Image() {
