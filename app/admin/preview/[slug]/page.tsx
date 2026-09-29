@@ -62,6 +62,7 @@ export default async function PreviewPage({
         full={s.content_full ?? null}
         locked={false}
         access={null}
+        trackProgress={false}
       />
     </>
   );

@@ -15,7 +15,7 @@ type Props = { params: Promise<{ slug: string }> };
  * وحتى لو طلبناه، قاعدة البيانات تمنع دور anon من قراءة هذا العمود أصلاً.
  * الجدار مطبّق في طبقتين: هنا، وفي Postgres.
  */
-async function getSummary(slug: string) {
+async function getSummary(slug: string, includeBookmark = false) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -44,7 +44,21 @@ async function getSummary(slug: string) {
     category = (cat as { slug: string; name_ar: string } | null) ?? null;
   }
 
-  return { summary, category, isLoggedIn: !!user };
+  let bookmarkStatus: "want_to_read" | "liked" | null = null;
+  if (includeBookmark && user && summary) {
+    const { data: bookmark } = await supabase
+      .from("bh_bookmarks")
+      .select("status")
+      .eq("user_id", user.id)
+      .eq("summary_id", summary.id)
+      .maybeSingle();
+
+    if (bookmark?.status === "want_to_read" || bookmark?.status === "liked") {
+      bookmarkStatus = bookmark.status;
+    }
+  }
+
+  return { summary, category, isLoggedIn: !!user, bookmarkStatus };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -71,7 +85,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function SummaryPage({ params }: Props) {
   const { slug } = await params;
-  const { summary, category, isLoggedIn } = await getSummary(slug);
+  const { summary, category, isLoggedIn, bookmarkStatus } = await getSummary(slug, true);
   if (!summary) notFound();
 
   // أمان: content_full لا يُطلب أصلاً للزائر (getSummary)، ولا يُمرَّر للعارض إلا بجلسة
@@ -94,6 +108,8 @@ export default async function SummaryPage({ params }: Props) {
       locked={!isLoggedIn}
       access={isLoggedIn ? "open" : "partial"}
       gate={isLoggedIn ? null : <Paywall slug={summary.slug} />}
+      summaryId={summary.id}
+      bookmarkStatus={bookmarkStatus}
     />
   );
 }
