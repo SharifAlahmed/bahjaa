@@ -6,8 +6,8 @@ export const contentType = "image/png";
 
 export default async function OpenGraphImage() {
   const [regular, bold] = await Promise.all([
-    fetch("https://bahjaa.com/fonts/tajawal-400.woff2").then((res) => res.arrayBuffer()),
-    fetch("https://bahjaa.com/fonts/tajawal-700.woff2").then((res) => res.arrayBuffer()),
+    fetch("https://raw.githubusercontent.com/googlefonts/tajawal/main/fonts/ttf/Tajawal-Regular.ttf").then((res) => res.arrayBuffer()),
+    fetch("https://raw.githubusercontent.com/googlefonts/tajawal/main/fonts/ttf/Tajawal-Bold.ttf").then((res) => res.arrayBuffer()),
   ]);
 
   return new ImageResponse(
