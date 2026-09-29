@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import NewsletterForm from "@/components/NewsletterForm";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bahjaa.com"),
   title: "نشرة بهجة: فكرة واحدة تستحق وقتك كل أسبوع",
   description:
     "تعرّف على بهجة واشترك في رسالتها الأسبوعية: فكرة مختارة بعناية، موضوعة في سياقها، ومهيأة للتطبيق.",
