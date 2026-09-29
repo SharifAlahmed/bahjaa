@@ -241,7 +241,7 @@ export default function LoginForm({
       )}
 
       <p className="bh-sub text-center text-xs pt-2">
-        بدخولك توافق على استقبال رسائل بهجة. يمكنك إلغاء الاشتراك في أي وقت.
+        نستخدم بريدك لإرسال رمز الدخول وتأمين وصولك إلى حسابك.
       </p>
     </form>
   );

@@ -50,7 +50,7 @@ export default function Paywall({ slug }: { slug: string }) {
 
         <div className="gate-form">
           <Suspense fallback={<div style={{ minHeight: 188 }} />}>
-            <LoginForm nextOverride={`/s/${slug}`} submitLabel="أرسل لي رمز الدخول" />
+            <LoginForm nextOverride={`/s/${slug}#sec-5`} submitLabel="أرسل لي رمز الدخول" />
           </Suspense>
         </div>
 
