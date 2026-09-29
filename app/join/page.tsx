@@ -13,8 +13,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/logo/bahjaa-logo.png",
-        alt: "بهجة",
+        url: "/join/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "بهجة — المعرفة لم تعد هي المشكلة. المشكلة هي: ماذا نفعل بكل ما نعرفه؟",
       },
     ],
   },
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "بهجة — المعرفة لم تعد هي المشكلة",
     description: "المشكلة هي: ماذا نفعل بكل ما نعرفه؟",
-    images: ["/logo/bahjaa-logo.png"],
+    images: ["/join/opengraph-image"],
   },
 };
 
