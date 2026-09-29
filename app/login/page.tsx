@@ -11,17 +11,48 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  searchParams: Promise<{ next?: string | string[] }>;
+  searchParams: Promise<{
+    next?: string | string[];
+    reason?: string | string[];
+  }>;
 };
 
+function first(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 function safeNext(raw: string | string[] | undefined) {
-  const value = Array.isArray(raw) ? raw[0] : raw;
+  const value = first(raw);
   return value && value.startsWith("/") && !value.startsWith("//") ? value : "/";
 }
 
+function loginCopy(rawReason: string | string[] | undefined) {
+  const reason = first(rawReason);
+
+  if (reason === "save") {
+    return {
+      title: "احفظ هذا الملخص في مكتبتك",
+      body: "ادخل ببريدك ليكتمل الحفظ وتعود إلى المكان نفسه. بلا كلمة مرور.",
+    };
+  }
+
+  if (reason === "library") {
+    return {
+      title: "ادخل إلى مكتبتك",
+      body: "اكتب بريدك وسيصلك رمز دخول لفتح مكتبتك. بلا كلمة مرور.",
+    };
+  }
+
+  return {
+    title: "افتح الملخصات كاملة",
+    body: "اكتب بريدك وسيصلك رمز دخول. بلا كلمة مرور تحفظها، وبلا بطاقة.",
+  };
+}
+
 export default async function LoginPage({ searchParams }: Props) {
-  const { next: rawNext } = await searchParams;
+  const { next: rawNext, reason: rawReason } = await searchParams;
   const next = safeNext(rawNext);
+  const copy = loginCopy(rawReason);
 
   // من دخل فعلاً لا يرى نموذج الدخول مرة أخرى، ويكمل إلى الوجهة التي قصدها.
   const supabase = await createClient();
@@ -34,10 +65,10 @@ export default async function LoginPage({ searchParams }: Props) {
     <div className="mx-auto max-w-md px-4 py-20">
       <div className="bh-card p-8">
         <h1 className="bh-sec-title text-brand-dark text-center">
-          افتح الملخصات كاملة
+          {copy.title}
         </h1>
         <p className="bh-body text-center mt-2">
-          اكتب بريدك وسيصلك رمز دخول. بلا كلمة مرور تحفظها، وبلا بطاقة.
+          {copy.body}
         </p>
 
         <Suspense fallback={<div className="h-40" />}>
