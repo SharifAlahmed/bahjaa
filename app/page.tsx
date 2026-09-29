@@ -6,6 +6,7 @@ import { BrandPromise } from "@/components/home/brand-promise";
 import { KnowledgeJourney } from "@/components/home/knowledge-journey";
 import { LatestSummaries } from "@/components/home/latest-summaries";
 import { FinalCTA } from "@/components/home/final-cta";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,7 @@ export default function HomePage() {
       <KnowledgeJourney />
       <LatestSummaries />
       <FinalCTA />
+      <NewsletterForm />
     </>
   );
 }
