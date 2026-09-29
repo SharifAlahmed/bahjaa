@@ -13,11 +13,20 @@ export const metadata: Metadata = {
     description: "المشكلة هي: ماذا نفعل بكل ما نعرفه؟",
     url: "/join",
     type: "website",
+    images: [
+      {
+        url: "/join-og.png",
+        width: 1200,
+        height: 630,
+        alt: "بهجة — المعرفة لم تعد هي المشكلة. المشكلة هي: ماذا نفعل بكل ما نعرفه؟",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "بهجة — المعرفة لم تعد هي المشكلة",
     description: "المشكلة هي: ماذا نفعل بكل ما نعرفه؟",
+    images: ["/join-og.png"],
   },
 };
 
