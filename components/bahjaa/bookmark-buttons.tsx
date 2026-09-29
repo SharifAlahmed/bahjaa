@@ -1,8 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Status = "want_to_read" | "liked" | null;
+type SavedStatus = Exclude<Status, null>;
+
+const PENDING_BOOKMARK_KEY = "bahjaa:pending-bookmark";
+
+type PendingBookmark = {
+  summaryId: string;
+  status: SavedStatus;
+};
 
 // أيقونة الإشارة المرجعية
 function BookmarkIcon({ filled }: { filled: boolean }) {
@@ -24,6 +32,41 @@ function HeartIcon({ filled }: { filled: boolean }) {
   );
 }
 
+function savePendingBookmark(summaryId: string, status: SavedStatus) {
+  try {
+    const pending: PendingBookmark = { summaryId, status };
+    window.sessionStorage.setItem(PENDING_BOOKMARK_KEY, JSON.stringify(pending));
+  } catch {
+    // إذا منع المتصفح sessionStorage، يبقى مسار العودة محفوظاً حتى لو تعذّر تنفيذ الحفظ تلقائياً.
+  }
+}
+
+function readPendingBookmark(): PendingBookmark | null {
+  try {
+    const raw = window.sessionStorage.getItem(PENDING_BOOKMARK_KEY);
+    if (!raw) return null;
+    const pending = JSON.parse(raw) as Partial<PendingBookmark>;
+    if (
+      typeof pending.summaryId !== "string" ||
+      !["want_to_read", "liked"].includes(pending.status || "")
+    ) {
+      window.sessionStorage.removeItem(PENDING_BOOKMARK_KEY);
+      return null;
+    }
+    return pending as PendingBookmark;
+  } catch {
+    return null;
+  }
+}
+
+function clearPendingBookmark() {
+  try {
+    window.sessionStorage.removeItem(PENDING_BOOKMARK_KEY);
+  } catch {
+    // لا شيء إضافي
+  }
+}
+
 export function BookmarkButtons({
   summaryId,
   initialStatus,
@@ -35,7 +78,46 @@ export function BookmarkButtons({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  async function toggle(newStatus: "want_to_read" | "liked") {
+  // بعد العودة من تسجيل الدخول: نفّذ نية الحفظ التي بدأت قبل الدخول، مرة واحدة.
+  useEffect(() => {
+    const pending = readPendingBookmark();
+    if (!pending || pending.summaryId !== summaryId) return;
+
+    let cancelled = false;
+
+    async function replayPending() {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/bookmarks", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ summary_id: summaryId, status: pending!.status }),
+        });
+
+        if (res.ok) {
+          clearPendingBookmark();
+          if (!cancelled) {
+            setStatus(pending!.status);
+            router.refresh();
+          }
+        } else if (res.status !== 401) {
+          // خطأ غير متعلق بالجلسة: لا نكرر الطلب بلا نهاية في كل زيارة.
+          clearPendingBookmark();
+        }
+      } catch {
+        // نحتفظ بالنية؛ يمكن إعادة المحاولة عند العودة أو إعادة تحميل الصفحة.
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    replayPending();
+    return () => {
+      cancelled = true;
+    };
+  }, [router, summaryId]);
+
+  async function toggle(newStatus: SavedStatus) {
     if (loading) return;
     setLoading(true);
 
@@ -61,7 +143,13 @@ export function BookmarkButtons({
 
       if (res.status === 401) {
         setStatus(prev);
-        router.push("/login");
+
+        // للزائر، الضغط على زر غير نشط يعني نية حفظ. نخزنها في نفس التبويب،
+        // ثم نعيده إلى الصفحة نفسها بعد OTP، حيث تُنفذ تلقائياً.
+        if (next !== null) savePendingBookmark(summaryId, next);
+
+        const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+        router.push(`/login?next=${encodeURIComponent(returnTo)}`);
       } else if (!res.ok) {
         setStatus(prev); // revert on error
       }
