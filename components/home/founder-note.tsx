@@ -1,18 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
 
-/* رسالة من المؤسس — نسخة الرئيسية المختصرة. بهجة علامة يقودها مؤسسها،
-   فيبقى هذا القسم بعد الهيرو مباشرة. النص يميناً والصورة يساراً. */
+/* رسالة من المؤسس — نسخة الرئيسية المختصرة. على الجوال:
+   العنوان أولاً، ثم صورة المؤسس، ثم النص. على سطح المكتب يبقى النص يميناً والصورة يساراً. */
 export function FounderMessage() {
   return (
     <section className="hm-founder" aria-labelledby="founder-title">
       <div className="wrap hm-founder-grid">
-        <div className="hm-founder-text">
+        <div className="hm-founder-intro">
           <p className="hm-eyebrow">رسالة من المؤسس</p>
           <h2 className="hm-founder-statement" id="founder-title">
             لسنا بحاجة إلى أن نعرف أكثر فقط، بل إلى أن نستفيد أكثر مما نعرف.
           </h2>
+        </div>
 
+        <div className="hm-founder-photo">
+          <Image
+            src="/founder.jpg"
+            alt="شريف الأحمد، مؤسس بهجة"
+            width={1350}
+            height={1318}
+            sizes="(max-width: 860px) 240px, 430px"
+          />
+        </div>
+
+        <div className="hm-founder-body">
           <div className="hm-prose">
             <p>أؤمن أن مشكلتنا اليوم ليست في نقص المعرفة، بل في وفرتها.</p>
             <p>
@@ -48,16 +60,6 @@ export function FounderMessage() {
             اقرأ قصة بهجة
             <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 6 8 12l6 6" /></svg>
           </Link>
-        </div>
-
-        <div className="hm-founder-photo">
-          <Image
-            src="/founder.jpg"
-            alt="شريف الأحمد، مؤسس بهجة"
-            width={1350}
-            height={1318}
-            sizes="(max-width: 860px) 220px, 430px"
-          />
         </div>
       </div>
     </section>
