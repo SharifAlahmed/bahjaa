@@ -1,14 +1,25 @@
 "use client";
 
 import { useEffect } from "react";
+import { readReadingState, writeReadingState } from "@/lib/reading-state";
 
 const AR = "٠١٢٣٤٥٦٧٨٩";
 const ar = (n: number) => String(n).replace(/\d/g, (d) => AR[Number(d)]);
 
-/* تحسين تدريجي فقط: يبرز القسم الظاهر في المستكشف، ويكتب «٤ / ١٠ · الاسم» في
-   ملخّص الجوال، ويطوي قائمة الجوال بعد اختيار قسم. لا يستقبل أي محتوى من الملخص —
-   أسماء الأقسام وحدها. بلا JavaScript تبقى الروابط والمراسي والقائمة تعمل كما هي. */
-export function ReadingProgress({ names }: { names: string[] }) {
+/* تحسين تدريجي: يبرز القسم الظاهر، يحدّث تسمية مستكشف الجوال، ويحفظ آخر موضع
+   للقراءة محلياً في المتصفح عند صفحات الملخص العامة فقط. لا يُرسل محتوى الملخص
+   ولا أي بيانات شخصية إلى التخزين المحلي. */
+export function ReadingProgress({
+  names,
+  slug,
+  title,
+  track = true,
+}: {
+  names: string[];
+  slug?: string;
+  title?: string;
+  track?: boolean;
+}) {
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
     const sections = names
@@ -25,6 +36,19 @@ export function ReadingProgress({ names }: { names: string[] }) {
         else a.removeAttribute("aria-current");
       });
       if (label) label.textContent = `${ar(n)} / ١٠ · ${names[n - 1]}`;
+
+      if (track && slug && title) {
+        const current = readReadingState();
+        const complete = current?.slug === slug ? current.complete : false;
+        writeReadingState({
+          slug,
+          title,
+          section: n,
+          sectionName: names[n - 1],
+          updatedAt: Date.now(),
+          complete,
+        });
+      }
     };
 
     const io = new IntersectionObserver(
@@ -50,7 +74,7 @@ export function ReadingProgress({ names }: { names: string[] }) {
       io.disconnect();
       menu?.removeEventListener("click", close);
     };
-  }, [names]);
+  }, [names, slug, title, track]);
 
   return null;
 }
