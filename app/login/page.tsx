@@ -10,13 +10,25 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function LoginPage() {
-  // من دخل فعلاً لا يرى نموذج الدخول مرة أخرى
+type Props = {
+  searchParams: Promise<{ next?: string | string[] }>;
+};
+
+function safeNext(raw: string | string[] | undefined) {
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  return value && value.startsWith("/") && !value.startsWith("//") ? value : "/";
+}
+
+export default async function LoginPage({ searchParams }: Props) {
+  const { next: rawNext } = await searchParams;
+  const next = safeNext(rawNext);
+
+  // من دخل فعلاً لا يرى نموذج الدخول مرة أخرى، ويكمل إلى الوجهة التي قصدها.
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (user) redirect("/");
+  if (user) redirect(next);
 
   return (
     <div className="mx-auto max-w-md px-4 py-20">
