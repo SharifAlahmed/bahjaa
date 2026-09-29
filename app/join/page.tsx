@@ -24,16 +24,16 @@ export const metadata: Metadata = {
 export default function JoinPage() {
   return (
     <div className="bg-background">
-      <section className="mx-auto w-full max-w-[720px] px-5 pb-14 pt-16 sm:px-8 sm:pb-20 sm:pt-24">
+      <section className="mx-auto w-full max-w-[720px] px-5 pb-12 pt-14 sm:px-8 sm:pb-16 sm:pt-20">
         <p className="eyebrow text-start">نشرة بهجة الأسبوعية</p>
 
-        <h1 className="mt-4 text-start font-display text-[clamp(36px,7vw,64px)] font-bold leading-[1.35] text-brand-dark [text-wrap:balance]">
+        <h1 className="mt-4 text-start font-display text-[clamp(32px,6vw,58px)] font-bold leading-[1.4] text-brand-dark [text-wrap:balance]">
           المعرفة لم تعد هي المشكلة.
           <br />
           المشكلة هي: ماذا نفعل بكل ما نعرفه؟
         </h1>
 
-        <div className="mt-8 space-y-5 text-start text-[18px] leading-[1.95] text-ink-soft">
+        <div className="mt-7 space-y-5 text-start text-[18px] leading-[1.95] text-ink-soft">
           <p>
             نقرأ الكتب، نحفظ المقالات، نشاهد المقاطع، ونتنقل بين عشرات الأفكار
             والأدوات.
@@ -44,7 +44,7 @@ export default function JoinPage() {
           </p>
         </div>
 
-        <p className="mt-9 text-start font-display text-[28px] font-bold leading-[1.5] text-brand-dark">
+        <p className="mt-8 text-start font-display text-[28px] font-bold leading-[1.5] text-brand-dark">
           لهذا وُجدت بهجة.
         </p>
 
@@ -56,6 +56,14 @@ export default function JoinPage() {
         <blockquote className="mt-8 border-s-2 border-brand-ink ps-5 text-start font-display text-[clamp(22px,3.4vw,30px)] font-bold leading-[1.7] text-brand-dark">
           لا نلخّص المعرفة لتقرأ أكثر، بل لنساعدك على أن تفهم أعمق وتطبّق أفضل.
         </blockquote>
+
+        <a
+          href="#join-form"
+          className="mt-6 inline-flex min-h-11 items-center gap-2 text-start text-[15px] font-bold text-brand-ink no-underline"
+        >
+          انضم إلى رسالة بهجة الأسبوعية
+          <span aria-hidden="true">↓</span>
+        </a>
       </section>
 
       <section className="border-y border-border bg-surface">
@@ -67,8 +75,9 @@ export default function JoinPage() {
 
           <div className="mt-6 space-y-5 text-start text-[17px] leading-[1.95] text-ink-soft">
             <p>
-              خلال سنوات من العمل مع قادة ومديرين، رأيت فرقاً واضحاً بين من
-              يكتفي بالمعرفة ومن يحوّلها إلى قرار وسلوك ونتيجة.
+              خلال أكثر من سبعة وعشرين عاماً من العمل مع قادة ومديرين وفرق
+              ومؤسسات مختلفة، رأيت فرقاً واضحاً بين من يكتفي بالمعرفة ومن
+              يحوّلها إلى قرار وسلوك ونتيجة.
             </p>
             <p>
               بعضهم كان يطبق ما يتعلمه فيتغيّر عمله، وبعضهم كان يعرف الكثير لكن
@@ -116,7 +125,7 @@ export default function JoinPage() {
         </div>
       </section>
 
-      <section className="border-t border-border bg-surface">
+      <section id="join-form" className="scroll-mt-28 border-t border-border bg-surface sm:scroll-mt-32">
         <div className="mx-auto w-full max-w-[720px] px-5 py-14 sm:px-8 sm:py-20">
           <h2 className="text-start font-display text-[clamp(28px,4vw,38px)] font-bold leading-[1.5] text-brand-dark">
             انضم إلى رسالة بهجة الأسبوعية
