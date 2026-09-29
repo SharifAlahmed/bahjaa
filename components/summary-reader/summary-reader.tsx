@@ -7,13 +7,15 @@ import { FreeSections, freePresence } from "./free-sections";
 import { FullSections, fullPresence } from "./full-sections";
 import { SummaryEnd } from "./summary-end";
 
+type BookmarkStatus = "want_to_read" | "liked" | null;
+
 /**
  * العارض المشترك بين /s/[slug] و/admin/preview/[slug].
  *
  * أمان: `full` يمرّره الخادم فقط حين يحقّ للقارئ رؤيته (جلسة، أو أدمن).
  * للزائر يكون null، فلا تُبنى الأقسام ٥–١٠ ولا يُرسل منها شيء إلى المتصفح؛
  * المستكشف يأخذ حالات (رابط/مقفول/غائب) لا محتوى. كل المكوّنات هنا خادمية
- * عدا ReadingProgress التي لا تستقبل إلا أسماء الأقسام.
+ * عدا التحسينات التدريجية للقراءة والتفاعل.
  */
 export function SummaryReader({
   hero,
@@ -22,6 +24,9 @@ export function SummaryReader({
   locked,
   access,
   gate,
+  summaryId,
+  bookmarkStatus = null,
+  trackProgress = true,
 }: {
   hero: HeroData;
   free: ContentFree;
@@ -31,6 +36,11 @@ export function SummaryReader({
   access: "open" | "partial" | null;
   /** الجدار (للزائر فقط) — يمرّره الخادم */
   gate?: ReactNode;
+  /** موجود في صفحة الملخص العامة لتفعيل إجراءات الحفظ في الخاتمة */
+  summaryId?: string;
+  bookmarkStatus?: BookmarkStatus;
+  /** معاينة الأدمن لا تكتب أي تقدّم قراءة محلي */
+  trackProgress?: boolean;
 }) {
   const fp = freePresence(free);
   const lp = full ? fullPresence(full) : [false, false, false, false, false, false];
@@ -49,13 +59,25 @@ export function SummaryReader({
             <ReadingNavigator states={states} locked={locked} mode="mobile" />
             <FreeSections c={free} />
             {full && !locked ? <FullSections c={full} /> : gate}
-            <SummaryEnd category={hero.category} reflect={!!full && !locked} />
+            <SummaryEnd
+              category={hero.category}
+              reflect={!!full && !locked}
+              summaryId={summaryId}
+              slug={hero.slug}
+              bookmarkStatus={bookmarkStatus}
+              trackCompletion={trackProgress}
+            />
           </div>
           <aside className="sr-aside">
             <ReadingNavigator states={states} locked={locked} mode="rail" />
           </aside>
         </div>
-        <ReadingProgress names={[...SECTION_NAMES]} />
+        <ReadingProgress
+          names={[...SECTION_NAMES]}
+          slug={hero.slug}
+          title={hero.titleAr}
+          track={trackProgress}
+        />
       </div>
     </article>
   );
