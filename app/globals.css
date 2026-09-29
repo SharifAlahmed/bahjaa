@@ -1696,6 +1696,9 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 /* الجدار: السطر الواقعي عن الدخول وقائمة أسماء ٥–١٠ فقط */
 /* الجدار داخل القارئ: يلتصق بنهاية القسم الرابع، واللمحة معنونة كقسم مقفول قادم */
 .sr .pw{margin-top:-12px;}
+/* القرار المعتمد: 44px بالضبط بين نهاية الفكرة المحورية وبداية الجدار */
+.sr .sr-sec--core:has(+ .pw){padding-block-end:44px;}
+.sr .sr-sec--core + .pw{margin-top:0;}
 .sr .pw-next{display:flex;align-items:center;gap:8px;margin:0 0 14px;font-size:14px;font-weight:800;color:var(--muted);}
 .sr .pw-next svg{color:var(--brass-ink);flex:none;}
 .sr .locked .teaser{opacity:.45;}
