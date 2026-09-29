@@ -66,6 +66,9 @@ export function NavLinks({ user, isAdmin }: Props) {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  const returnTo = pathname === "/login" ? "/" : pathname;
+  const loginHref = `/login?next=${encodeURIComponent(returnTo)}`;
+
   const navLink = (href: string, label: string, extra?: string) => (
     <Link
       href={href}
@@ -90,7 +93,7 @@ export function NavLinks({ user, isAdmin }: Props) {
             <button type="submit" className="nav-cta btn">خروج</button>
           </form>
         ) : (
-          <Link href="/login" className="nav-cta hide-mobile">دخول</Link>
+          <Link href={loginHref} className="nav-cta hide-mobile">دخول</Link>
         )}
 
         {/* زر القائمة على الجوال */}
@@ -129,7 +132,7 @@ export function NavLinks({ user, isAdmin }: Props) {
             </button>
           </form>
         ) : (
-          <Link href="/login" className="btn btn-primary" style={{ marginBlockStart: 16 }} onClick={closeMenu}>
+          <Link href={loginHref} className="btn btn-primary" style={{ marginBlockStart: 16 }} onClick={closeMenu}>
             دخول
           </Link>
         )}
