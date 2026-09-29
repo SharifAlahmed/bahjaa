@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { SummaryReader } from "@/components/summary-reader/summary-reader";
+import NewsletterForm from "@/components/NewsletterForm";
 import Paywall from "@/components/paywall";
 import type { Summary } from "@/lib/types";
 
@@ -92,6 +93,7 @@ export default async function SummaryPage({ params }: Props) {
   const full = isLoggedIn ? summary.content_full ?? null : null;
 
   return (
+    <>
     <SummaryReader
       hero={{
         slug: summary.slug,
@@ -111,5 +113,7 @@ export default async function SummaryPage({ params }: Props) {
       summaryId={summary.id}
       bookmarkStatus={bookmarkStatus}
     />
+    <NewsletterForm />
+    </>
   );
 }
