@@ -36,14 +36,16 @@ export default function Paywall({ slug }: { slug: string }) {
       </div>
 
       <section className="gate" id="email-gate" aria-labelledby="gate-title">
-        <h2 id="gate-title" className="gate-title">أكمل من الفهم إلى التطبيق</h2>
+        <h2 id="gate-title" className="gate-title">
+          <IconLock size={21} />
+          <span>سجّل دخولك لقراءة الملخص بالكامل</span>
+        </h2>
 
         <p className="gate-sub">
-          الأقسام التالية تأخذك من فهم أفكار الكتاب إلى استخدامها في حياتك وعملك وقراراتك.
+          ما يلي ليس مجرد قراءة إضافية، بل الجزء الذي يحوّل الفهم إلى استخدام عملي في قراراتك وحياتك وعملك.
         </p>
         <p className="gate-how">
-          مجاني بالكامل: لا بطاقة ولا كلمة مرور. أدخل بريدك، يصلك رمز من ٨ أرقام،
-          وتعود إلى هذا الملخص من حيث توقّفت.
+          الدخول مجاني بالكامل. أدخل بريدك الإلكتروني، وسيصلك رمز من 8 أرقام لتكمل من حيث توقفت.
         </p>
 
         <div className="gate-form">
