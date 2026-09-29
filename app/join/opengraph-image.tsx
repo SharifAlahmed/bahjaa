@@ -4,13 +4,7 @@ export const alt = "بهجة — المعرفة لم تعد هي المشكلة.
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const tajawalBold = fetch(
-  "https://bahjaa.com/fonts/tajawal-700.woff2"
-).then((res) => res.arrayBuffer());
-
-export default async function Image() {
-  const font = await tajawalBold;
-
+export default function Image() {
   return new ImageResponse(
     (
       <div
@@ -23,7 +17,7 @@ export default async function Image() {
           justifyContent: "space-between",
           background: "rgb(247,245,238)",
           padding: "66px 76px",
-          fontFamily: "Tajawal",
+          fontFamily: "sans-serif",
           color: "rgb(21,51,42)",
           position: "relative",
           overflow: "hidden",
@@ -102,16 +96,6 @@ export default async function Image() {
         </div>
       </div>
     ),
-    {
-      ...size,
-      fonts: [
-        {
-          name: "Tajawal",
-          data: font,
-          style: "normal",
-          weight: 700,
-        },
-      ],
-    }
+    size
   );
 }
