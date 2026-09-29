@@ -1284,6 +1284,25 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
   .home-hero-cta{padding:32px 0 0;}
 }
 
+/* ── تابع القراءة: يظهر فقط لمن لديه موضع قراءة محلي غير مكتمل ── */
+.hm-continue{background:var(--paper);padding-block:0 clamp(24px,4vw,40px);}
+.hm-continue-card{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:20px 24px;background:var(--color-surface);border:1px solid var(--rule);
+  border-radius:var(--radius-card);
+}
+.hm-continue-copy{min-width:0;}
+.hm-continue-title{
+  margin:4px 0 0;font-family:var(--serif);font-size:clamp(19px,2.2vw,24px);
+  font-weight:800;line-height:1.45;color:var(--ink);
+}
+.hm-continue-meta{margin:6px 0 0;font-size:14px;line-height:1.7;color:var(--muted);}
+.hm-continue-btn{flex:none;min-height:46px;padding-inline:22px;}
+@media (max-width:640px){
+  .hm-continue-card{align-items:stretch;flex-direction:column;padding:18px;}
+  .hm-continue-btn{width:100%;}
+}
+
 /* ══════════════════════════════════════════════════════════
    الرئيسية (الإصدار ٢): المؤسس · لماذا بهجة · القيم · الوعد · كيف تعمل · الملخصات · الخاتمة
    البادئة hm- لأقسام الإصدار ٢؛ home-* الباقية للهيرو والمرساة فقط.
@@ -1827,8 +1846,22 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-sec--rating{padding-block-end:clamp(28px,4vw,36px);}
 .sr-end-q::before{content:"";display:block;inline-size:40px;block-size:2px;margin:0 auto 20px;background:var(--brass);}
 .sr-end-q{margin:0 auto;max-width:560px;font-family:var(--serif);font-weight:800;font-size:clamp(20px,2.4vw,26px);line-height:1.55;color:var(--ink);text-wrap:balance;}
+.sr-end-actions{
+  max-width:560px;margin:28px auto 0;padding:22px 24px;
+  background:var(--color-surface);border:1px solid var(--rule);border-radius:var(--radius-card);
+}
+.sr-end-actions-title{margin:0;font-size:15px;font-weight:800;line-height:1.7;color:var(--ink);}
+.sr-end-actions .bookmark-btns{justify-content:center;margin-top:14px;}
+.sr-end-actions .bm-btn{min-height:44px;padding-inline:14px;}
+.sr-end-actions .bm-label{display:inline;}
+.sr-end-library{margin-top:12px;color:var(--green-ink);font-weight:700;}
 .sr-end-btn{margin-top:24px;}
 .sr-end-q + .sr-end-btn{margin-top:28px;}
+@media (max-width:600px){
+  .sr-end-actions{padding:20px 16px;}
+  .sr-end-actions .bookmark-btns{flex-direction:column;}
+  .sr-end-actions .bm-btn{justify-content:center;width:100%;}
+}
 
 /* ── شريط معاينة الأدمن ── */
 .sr-admin-bar{background:var(--color-surface);border-block-end:2px solid var(--brass);}
