@@ -149,7 +149,7 @@ export function BookmarkButtons({
         if (next !== null) savePendingBookmark(summaryId, next);
 
         const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-        router.push(`/login?next=${encodeURIComponent(returnTo)}`);
+        router.push(`/login?next=${encodeURIComponent(returnTo)}&reason=save`);
       } else if (!res.ok) {
         setStatus(prev); // revert on error
       }
