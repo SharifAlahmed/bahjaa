@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { FounderMessage } from "@/components/home/founder-note";
+import { ContinueReading } from "@/components/home/continue-reading";
 import { WhyHome } from "@/components/home/why-home";
 import { BahjaaValues } from "@/components/home/bahjaa-values";
 import { BrandPromise } from "@/components/home/brand-promise";
@@ -14,6 +15,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <ContinueReading />
       <FounderMessage />
       <WhyHome />
       <BahjaaValues />
