@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/join/opengraph-image",
+        url: "/join-og.jpg",
         width: 1200,
         height: 630,
         alt: "بهجة — المعرفة لم تعد هي المشكلة. المشكلة هي: ماذا نفعل بكل ما نعرفه؟",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "بهجة — المعرفة لم تعد هي المشكلة",
     description: "المشكلة هي: ماذا نفعل بكل ما نعرفه؟",
-    images: ["/join/opengraph-image"],
+    images: ["/join-og.jpg"],
   },
 };
 
