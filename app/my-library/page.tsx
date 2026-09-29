@@ -27,7 +27,7 @@ export default async function MyLibraryPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (!user) redirect("/login?next=%2Fmy-library");
 
   const { data } = await supabase
     .from("bh_bookmarks")
