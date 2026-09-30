@@ -2293,3 +2293,28 @@ body:has(.join-landing) > #main {
     gap:30px 24px;
   }
 }
+
+
+/* ══ الفوتر: Final refinement · سبتمبر ٢٠٢٦ ══ */
+.site-footer .footer-tagline{
+  color:var(--color-ink-soft);
+  font-size:14px;
+  line-height:1.85;
+}
+.site-footer .footer-col a{
+  color:var(--color-ink-soft);
+}
+.footer-grid{
+  padding-block:42px 30px;
+}
+.footer-col{
+  gap:9px;
+}
+.footer-bottom{
+  padding-block:14px;
+}
+@media (max-width:760px){
+  .footer-grid{
+    padding-block:34px 24px;
+  }
+}
