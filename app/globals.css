@@ -2247,3 +2247,49 @@ body:has(.join-landing) > #main {
     font-size:14px;
   }
 }
+
+
+/* ══ الرئيسية: Newsletter + footer refinement · سبتمبر ٢٠٢٦ ══ */
+/* النموذج نفسه يحمل عنوانه؛ نتجنب تكرار الوعد خارجه */
+.hm-newsletter{
+  padding-block:clamp(52px,6vw,76px);
+}
+.hm-newsletter .hm-eyebrow{
+  margin-bottom:18px;
+}
+.hm-newsletter-form{
+  margin-top:0;
+}
+.hm-newsletter-trust{
+  margin-top:10px;
+  font-size:13.5px;
+  line-height:1.75;
+}
+
+/* الفوتر: خاتمة هادئة لا كتلة معلومات ثقيلة */
+.site-footer{
+  border-block-start:1px solid var(--rule);
+}
+.footer-grid{
+  padding-block:48px 34px;
+  gap:34px 28px;
+}
+.footer-col-title{
+  font-weight:600;
+}
+.footer-brand-name{
+  font-weight:700;
+}
+.footer-tagline{
+  max-width:36ch;
+  line-height:1.85;
+}
+.footer-bottom{
+  padding-block:16px;
+}
+@media (max-width:760px){
+  .footer-grid{
+    padding-block:38px 28px;
+    gap:30px 24px;
+  }
+}
