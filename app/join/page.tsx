@@ -75,6 +75,29 @@ export default function JoinPage() {
         </a>
       </section>
 
+      <section id="join-form" className="scroll-mt-28 border-t border-border bg-surface sm:scroll-mt-32">
+        <div className="mx-auto w-full max-w-[720px] px-5 py-14 sm:px-8 sm:py-20">
+          <h2 className="text-start font-display text-[clamp(28px,4vw,38px)] font-bold leading-[1.5] text-brand-dark">
+            انضم إلى رسالة بهجة الأسبوعية
+          </h2>
+          <p className="mt-3 text-start text-[17px] leading-[1.9] text-ink-soft">
+            أدخل بريدك، وستصلك رسالة واحدة تستحق وقتك كل أسبوع.
+          </p>
+
+          <NewsletterForm formId={JOIN_FORM_ID} className="w-full my-7" />
+
+          <p className="text-start text-sm leading-7 text-ink-muted">
+            مجانية بالكامل · رسالة واحدة أسبوعياً · يمكنك إلغاء الاشتراك في أي
+            وقت.
+          </p>
+
+          <div className="mt-8 border-t border-border pt-5 text-start">
+            <p className="font-bold text-brand-dark">يكتبها شريف الأحمد</p>
+            <p className="mt-1 text-sm text-ink-muted">مؤسس بهجة</p>
+          </div>
+        </div>
+      </section>
+
       <section className="border-y border-border bg-surface">
         <div className="mx-auto w-full max-w-[720px] px-5 py-14 sm:px-8 sm:py-20">
           <p className="eyebrow text-start">رسالة من المؤسس</p>
@@ -134,28 +157,6 @@ export default function JoinPage() {
         </div>
       </section>
 
-      <section id="join-form" className="scroll-mt-28 border-t border-border bg-surface sm:scroll-mt-32">
-        <div className="mx-auto w-full max-w-[720px] px-5 py-14 sm:px-8 sm:py-20">
-          <h2 className="text-start font-display text-[clamp(28px,4vw,38px)] font-bold leading-[1.5] text-brand-dark">
-            انضم إلى رسالة بهجة الأسبوعية
-          </h2>
-          <p className="mt-3 text-start text-[17px] leading-[1.9] text-ink-soft">
-            أدخل بريدك، وستصلك رسالة واحدة تستحق وقتك كل أسبوع.
-          </p>
-
-          <NewsletterForm formId={JOIN_FORM_ID} className="w-full my-7" />
-
-          <p className="text-start text-sm leading-7 text-ink-muted">
-            مجانية بالكامل · رسالة واحدة أسبوعياً · يمكنك إلغاء الاشتراك في أي
-            وقت.
-          </p>
-
-          <div className="mt-8 border-t border-border pt-5 text-start">
-            <p className="font-bold text-brand-dark">يكتبها شريف الأحمد</p>
-            <p className="mt-1 text-sm text-ink-muted">مؤسس بهجة</p>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
