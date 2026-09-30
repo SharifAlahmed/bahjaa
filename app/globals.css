@@ -1881,3 +1881,22 @@ body:has(.join-landing) > .site-footer {
 body:has(.join-landing) > #main {
   min-height: 100vh;
 }
+
+
+/* ── /join · Beehiiv compact embed ────────────────────── */
+.join-compact-form{
+  height:156px;
+  overflow:hidden;
+}
+.join-compact-form > iframe{
+  display:block;
+  transform:translateY(-26px);
+}
+@media (max-width:600px){
+  .join-compact-form{
+    height:150px;
+  }
+  .join-compact-form > iframe{
+    transform:translateY(-28px);
+  }
+}

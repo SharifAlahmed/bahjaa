@@ -93,7 +93,7 @@ export default function JoinPage() {
           <NewsletterForm
             formId={JOIN_FORM_ID}
             className="my-4 w-full sm:my-6"
-            boxClassName="mx-auto min-h-[207px] max-w-2xl"
+            boxClassName="join-compact-form mx-auto max-w-2xl"
           />
 
           <p className="text-center text-sm leading-7 text-ink-muted">
