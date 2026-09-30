@@ -2676,3 +2676,128 @@ body:has(.join-landing) > #main {
     padding:24px 22px;
   }
 }
+
+
+/* ══ الأقسام: Premium editorial cards · سبتمبر ٢٠٢٦ ══ */
+/* أقل شبهًا بالـdashboard وأكثر قربًا من بطاقة تحريرية فاخرة */
+.cats-card-grid{
+  gap:18px;
+}
+
+.cat-card{
+  min-height:220px;
+  padding:24px 24px 22px;
+  border-radius:var(--radius-md);
+  border-color:rgba(21,51,42,.10);
+  box-shadow:none;
+  background:var(--paper-2);
+}
+.cat-card::before{
+  width:48px;
+  height:2px;
+  background:var(--brass);
+}
+.cat-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(
+    145deg,
+    color-mix(in srgb,var(--brass) 5%,transparent) 0%,
+    transparent 38%
+  );
+}
+.cat-card:hover,
+.cat-card:focus-visible{
+  transform:translateY(-2px);
+  border-color:rgba(142,106,41,.28);
+  box-shadow:0 12px 28px rgba(11,20,18,.06);
+}
+
+.cat-card-num{
+  position:absolute;
+  inset-block-start:16px;
+  inset-inline-end:20px;
+  font-family:var(--serif);
+  font-size:54px;
+  line-height:1;
+  font-weight:700;
+  color:rgba(142,106,41,.10);
+  z-index:0;
+}
+.cat-card-copy,
+.cat-card-foot{
+  position:relative;
+  z-index:1;
+}
+.cat-card-name{
+  margin:6px 0 0;
+  font-size:clamp(22px,2vw,26px);
+  font-weight:700;
+  line-height:1.45;
+  max-width:12ch;
+}
+.cat-card-outcome{
+  margin:14px 0 0;
+  max-width:27ch;
+  font-size:15px;
+  line-height:1.85;
+  color:var(--ink-soft);
+}
+.cat-card-foot{
+  margin-top:auto;
+  padding-top:22px;
+  border-top:1px solid rgba(21,51,42,.07);
+}
+.cat-card-count{
+  font-size:12.5px;
+  color:var(--muted);
+}
+.cat-card-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--brass-ink);
+}
+.cat-card-link svg{
+  transition:transform .18s ease;
+}
+.cat-card:hover .cat-card-link svg,
+.cat-card:focus-visible .cat-card-link svg{
+  transform:translateX(-3px);
+}
+
+/* تنويع هادئ داخل نفس الهوية، لا rainbow */
+.cat-card-leadership,
+.cat-card-strategy{
+  background:color-mix(in srgb,var(--paper) 82%,var(--color-surface));
+}
+.cat-card-entrepreneurship,
+.cat-card-business{
+  background:color-mix(in srgb,var(--brass) 4%,var(--color-surface));
+}
+.cat-card-productivity,
+.cat-card-teams{
+  background:color-mix(in srgb,var(--green) 3%,var(--color-surface));
+}
+
+@media(max-width:900px){
+  .cat-card{
+    min-height:210px;
+  }
+}
+@media(max-width:600px){
+  .cat-card{
+    min-height:190px;
+    padding:22px 20px 20px;
+  }
+  .cat-card-num{
+    font-size:46px;
+  }
+  .cat-card-name{
+    font-size:23px;
+  }
+}
