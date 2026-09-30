@@ -30,12 +30,10 @@ export default async function CategoriesPage() {
     <>
       <section className="wrap cats-intro cats-intro-v2">
         <p className="eyebrow">الأقسام</p>
-        <h1 className="h-sec cats-title">ما الذي تريد أن تفهمه أو تحسّنه الآن؟</h1>
+        <h1 className="h-sec cats-title">ما الذي يشغلك الآن؟</h1>
         <p className="read col cats-lede">
-          اختر القسم الأقرب لتحدّيك، واكتشف المعرفة التي تساعدك على رؤية الصورة بوضوح
-          واتخاذ خطوة أفضل.
+          اختر القسم الأقرب، وابدأ بالمعرفة التي تساعدك على فهمه واتخاذ خطوة أفضل.
         </p>
-        <p className="cats-note">ابدأ بسؤالك، لا باسم الكتاب.</p>
       </section>
 
       <nav
