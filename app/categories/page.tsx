@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "الأقسام",
   description:
-    "استكشف أقسام بهجة ومسارات المعرفة في القيادة، ريادة الأعمال، الإنتاجية، الاستراتيجية، الفرق، والمال والأعمال.",
+    "استكشف أقسام بهجة في القيادة، ريادة الأعمال، الإنتاجية، الاستراتيجية، الفرق، والمال والأعمال.",
   alternates: { canonical: "/categories" },
 };
 
@@ -29,7 +29,7 @@ export default async function CategoriesPage() {
   return (
     <>
       <section className="wrap cats-intro cats-intro-v2">
-        <p className="eyebrow">مسارات المعرفة</p>
+        <p className="eyebrow">الأقسام</p>
         <h1 className="h-sec cats-title">ابدأ بالسؤال الذي يشغلك الآن</h1>
         <p className="read col cats-lede">
           اختر المجال الأقرب لما تحاول فهمه أو تحسينه، ثم ابدأ بالمعرفة التي تساعدك
@@ -41,7 +41,7 @@ export default async function CategoriesPage() {
       <nav
         className="wrap cats-list cats-card-grid bh-anchor"
         id="categories"
-        aria-label="مسارات المعرفة في بهجة"
+        aria-label="أقسام بهجة"
       >
         {cats.map((c) => (
           <CategoryRow
