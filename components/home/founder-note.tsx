@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function FounderMessage() {
   return (
-    <section className="hm-founder" aria-labelledby="founder-title">
+    <section className="hm-founder hm-founder-v3" aria-labelledby="founder-title">
       <div className="wrap hm-founder-grid">
         <div className="hm-founder-intro">
           <p className="hm-eyebrow">رسالة من المؤسس</p>
@@ -26,21 +26,24 @@ export function FounderMessage() {
         <div className="hm-founder-body">
           <div className="hm-prose">
             <p>
-              خلال سنوات من العمل مع قادة وفرق ومؤسسات محلية ودولية، ومن تجربتي في
-              التدريب والكوتشينغ، تعلّمت أن القيمة لا تأتي فقط من امتلاك الإجابات،
-              بل من <strong>طرح السؤال الصحيح، وفهم السياق، وكشف الافتراضات، والوصول إلى جوهر الفكرة</strong>.
+              خلال سنوات من العمل مع قادة وفرق ومؤسسات محلية ودولية، ومن تجربتي
+              في التدريب والكوتشينغ، تعلّمت أن القيمة لا تأتي فقط من امتلاك
+              الإجابات، بل من <strong>طرح السؤال الصحيح، وفهم السياق، والوصول إلى جوهر الفكرة</strong>.
             </p>
+
+            <p className="hm-founder-question">
+              <strong>
+                ما الفكرة الأهم؟ لماذا تهمنا؟ كيف يمكن أن تغيّر فهمنا أو قرارنا؟
+                وماذا يمكن أن نفعل بها؟
+              </strong>
+            </p>
+
             <p>
               من هنا بدأت <strong>بهجة</strong>، وتشكّلت منهجيتها: لا نكتفي بتلخيص
-              كتاب أو مقال أو دراسة حالة، بل نسأل:
+              كتاب أو مقال أو دراسة حالة، بل نحوّل المعرفة إلى
+              <strong> فهم أوضح، وقرار أفضل، وخطوات قابلة للتطبيق</strong>.
             </p>
-            <p className="hm-founder-question">
-              <strong>ما الفكرة الأهم؟ لماذا تهمنا؟ كيف يمكن أن تغيّر فهمنا أو قرارنا؟
-              وماذا يمكن أن نفعل بها؟</strong>
-            </p>
-            <p>
-              ثم نحوّل المعرفة إلى <strong>فهم أوضح، وقرار أفضل، وخطوات قابلة للتطبيق</strong>.
-            </p>
+
             <p className="hm-founder-coda">
               معرفة تستحق وقتك. أسئلة تكشف الجوهر. فهم يحسّن قراراتك. وتطبيق يصنع أثرًا.
             </p>
