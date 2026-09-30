@@ -26,12 +26,3 @@ export function CategoryRow({ slug, name, outcome, count }: Props) {
   )
 }
 
-/** السؤال الذي يحمله القارئ إلى القسم — مفتاحها slug القسم في bh_categories */
-export const CATEGORY_OUTCOMES: Record<string, string> = {
-  leadership:       'كيف تقود بوضوح عندما تصبح القرارات أصعب؟',
-  entrepreneurship: 'كيف تبني شيئًا يريده الناس ويستحق أن ينمو؟',
-  productivity:     'كيف تنجز باستمرار دون أن تستنزف نفسك؟',
-  strategy:         'كيف ترى الصورة الأكبر قبل أن تختار خطوتك التالية؟',
-  teams:            'كيف تبني فريقًا أفضل، وثقافة تساعده على النجاح؟',
-  business:         'كيف تتخذ قرارات مالية وتجارية بوعي أكبر؟',
-}
