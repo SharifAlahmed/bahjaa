@@ -2489,3 +2489,49 @@ body:has(.join-landing) > #main {
   font-size:17px;
   line-height:1.95;
 }
+
+
+/* ══ عن بهجة: Founder authority profile · سبتمبر ٢٠٢٦ ══ */
+.ab-founder-profile{
+  padding-block:clamp(56px,7vw,84px);
+}
+.ab-founder-profile .ab-founder-grid{
+  align-items:center;
+}
+.ab-founder-profile .ab-founder-photo{
+  max-width:360px;
+}
+.ab-founder-profile-name{
+  margin:8px 0 0;
+  font-size:clamp(26px,3vw,34px);
+  line-height:1.4;
+  font-weight:700;
+  color:var(--ink);
+}
+.ab-founder-profile-role{
+  margin:10px 0 0;
+  max-width:660px;
+  font-size:16px;
+  line-height:1.85;
+  color:var(--ink-soft);
+}
+.ab-founder-profile-body{
+  margin-top:24px;
+  max-width:680px;
+}
+.ab-founder-profile-body p{
+  font-size:17px;
+  line-height:1.95;
+}
+.ab-founder-profile .ab-key{
+  margin-top:22px;
+  padding-inline-start:16px;
+  border-inline-start:2px solid var(--brass);
+  color:var(--green-ink);
+  font-weight:700;
+}
+@media(max-width:760px){
+  .ab-founder-profile .ab-founder-photo{
+    max-width:260px;
+  }
+}
