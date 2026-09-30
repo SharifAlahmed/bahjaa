@@ -1867,3 +1867,17 @@ article.book-card{position:relative;display:flex;flex-direction:column;color:inh
 .sr-admin-bar{background:var(--color-surface);border-block-end:2px solid var(--brass);}
 .sr-admin-bar-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-block:12px;}
 .sr-admin-bar p{margin:0;font-size:14px;font-weight:800;color:var(--ink);}
+
+
+/* ── /join · صفحة هبوط مستقلة ──────────────────────────
+   تحجب عناصر الموقع العامة فقط عندما تكون صفحة /join موجودة.
+   يبقى الشعار داخل الصفحة نفسها لتقليل مخارج التشتت. */
+body:has(.join-landing) > .announce-bar,
+body:has(.join-landing) > .site-header,
+body:has(.join-landing) > .site-footer {
+  display: none;
+}
+
+body:has(.join-landing) > #main {
+  min-height: 100vh;
+}
