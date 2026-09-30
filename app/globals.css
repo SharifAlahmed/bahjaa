@@ -2448,3 +2448,30 @@ body:has(.join-landing) > #main {
     max-width:260px;
   }
 }
+
+
+/* ══ عن بهجة: Final editorial polish · سبتمبر ٢٠٢٦ ══ */
+/* Hero تحريري أخف: يحافظ على الحضور من دون ثقل بصري */
+.ab-hero-v2 .ab-hero-title{
+  font-size:clamp(34px,4.2vw,48px);
+  font-weight:700;
+  line-height:1.32;
+  max-width:22ch;
+}
+
+/* بعد حذف العنوان المرئي لرسالة المؤسس يبدأ النص مباشرة */
+.ab-founder-v2 .ab-letter-body{
+  margin-top:0;
+}
+
+@media (min-width:861px){
+  .ab-hero-v2 .ab-hero-title{
+    white-space:nowrap;
+  }
+}
+@media (max-width:600px){
+  .ab-hero-v2 .ab-hero-title{
+    font-size:clamp(31px,8.4vw,38px);
+    white-space:normal;
+  }
+}
