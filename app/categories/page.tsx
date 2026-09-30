@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
-import { CategoryRow, CATEGORY_OUTCOMES } from "@/components/bahjaa/category-row";
+import { CategoryRow } from "@/components/bahjaa/category-row";
+import { categoryQuestion } from "@/lib/category-presentation";
 import type { Category } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -46,7 +47,7 @@ export default async function CategoriesPage() {
             key={c.id}
             slug={c.slug}
             name={c.name_ar}
-            outcome={CATEGORY_OUTCOMES[c.slug] || c.description_ar || ""}
+            outcome={categoryQuestion(c.slug, c.name_ar, c.description_ar)}
             count={tally.get(c.id) || 0}
           />
         ))}
