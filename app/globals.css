@@ -2318,3 +2318,220 @@ body:has(.join-landing) > #main {
     padding-block:34px 24px;
   }
 }
+
+
+/* ══ عن بهجة: Concise authority refactor · سبتمبر ٢٠٢٦ ══ */
+/* الصفحة أصبحت رحلة هوية مختصرة: قصة ← مقصد ← قيم ← مؤسس ← وعد ← خطوة تالية */
+.ab-hero-v2{
+  padding-block:clamp(52px,7vw,84px);
+}
+.ab-hero-v2 .ab-hero-title{
+  max-width:15ch;
+}
+.ab-hero-v2 .ab-hero-lede{
+  max-width:720px;
+  margin-top:18px;
+}
+
+/* القصة: ثلاثة مقاطع فقط، ومساحة أقل بعد حذف التكرار */
+.ab-story-v2{
+  padding-block:clamp(52px,6vw,76px);
+}
+.ab-story-v2 .ab-prose{
+  max-width:700px;
+}
+.ab-story-v2 .ab-prose p{
+  line-height:1.9;
+}
+.ab-story-v2 .ab-turn{
+  color:var(--green-ink);
+  font-weight:600;
+}
+
+/* الرؤية والرسالة: زوج واحد بدل قسمين متشابهين */
+.ab-purpose{
+  padding-block:clamp(52px,6vw,76px);
+}
+.ab-purpose-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0;
+  margin-top:30px;
+  border-block:1px solid var(--rule);
+}
+.ab-purpose-item{
+  padding:30px clamp(20px,3vw,36px);
+}
+.ab-purpose-item + .ab-purpose-item{
+  border-inline-start:1px solid var(--rule);
+}
+.ab-purpose .ab-vision-lead,
+.ab-purpose-copy{
+  margin:10px 0 0;
+  font-size:clamp(17px,1.7vw,20px);
+  line-height:1.9;
+  color:var(--ink);
+}
+.ab-purpose .ab-vision-lead{
+  font-weight:600;
+}
+
+/* القيم: مبدأ واحد = فكرة واحدة */
+.ab-values-v2{
+  padding-block:clamp(52px,6vw,76px);
+}
+.ab-values-v2 .ab-values-list{
+  margin-top:28px;
+}
+.ab-values-v2 .ab-value{
+  padding-block:24px;
+}
+.ab-values-v2 .ab-value-copy{
+  margin:0;
+  max-width:66ch;
+  font-size:16px;
+  line-height:1.85;
+  color:var(--ink-soft);
+}
+
+/* رسالة المؤسس: شخصية وذات سلطة، بلا إعادة الرؤية والمنهج */
+.ab-founder-v2{
+  padding-block:clamp(56px,7vw,84px);
+}
+.ab-founder-v2 .ab-founder-grid{
+  align-items:center;
+}
+.ab-founder-v2 .ab-founder-photo{
+  max-width:360px;
+}
+.ab-founder-v2 .ab-letter-body{
+  max-width:680px;
+}
+.ab-founder-v2 .ab-letter-body p{
+  font-size:17px;
+  line-height:1.95;
+}
+.ab-founder-v2 .ab-key{
+  margin-top:22px;
+  padding-inline-start:16px;
+  border-inline-start:2px solid var(--brass);
+  color:var(--green-ink);
+  font-weight:700;
+}
+.ab-founder-v2 .ab-sign{
+  margin-top:24px;
+}
+
+/* CTA ختامي: قرار واحد فقط */
+.ab-cta-v2{
+  padding-block:clamp(50px,6vw,72px);
+}
+.ab-cta-v2 .ab-cta-body{
+  max-width:540px;
+}
+.ab-cta-v2 .ab-cta-actions{
+  margin-top:24px;
+}
+
+@media (max-width:760px){
+  .ab-purpose-grid{
+    grid-template-columns:1fr;
+  }
+  .ab-purpose-item + .ab-purpose-item{
+    border-inline-start:0;
+    border-block-start:1px solid var(--rule);
+  }
+  .ab-purpose-item{
+    padding-inline:0;
+  }
+  .ab-founder-v2 .ab-founder-photo{
+    max-width:260px;
+  }
+}
+
+
+/* ══ عن بهجة: Final editorial polish · سبتمبر ٢٠٢٦ ══ */
+/* Hero تحريري أخف: يحافظ على الحضور من دون ثقل بصري */
+.ab-hero-v2 .ab-hero-title{
+  font-size:clamp(34px,4.2vw,48px);
+  font-weight:700;
+  line-height:1.32;
+  max-width:22ch;
+}
+
+/* بعد حذف العنوان المرئي لرسالة المؤسس يبدأ النص مباشرة */
+.ab-founder-v2 .ab-letter-body{
+  margin-top:0;
+}
+
+@media (min-width:861px){
+  .ab-hero-v2 .ab-hero-title{
+    white-space:nowrap;
+  }
+}
+@media (max-width:600px){
+  .ab-hero-v2 .ab-hero-title{
+    font-size:clamp(31px,8.4vw,38px);
+    white-space:normal;
+  }
+}
+
+
+/* ══ عن بهجة: Story reading flow correction · سبتمبر ٢٠٢٦ ══ */
+.ab-story-v3 .ab-story-copy{
+  max-width:760px;
+  margin-inline:auto;
+}
+.ab-story-v3 .ab-h2{
+  margin-bottom:24px;
+}
+.ab-story-v3 .ab-prose p{
+  font-size:17px;
+  line-height:1.95;
+}
+
+
+/* ══ عن بهجة: Founder authority profile · سبتمبر ٢٠٢٦ ══ */
+.ab-founder-profile{
+  padding-block:clamp(56px,7vw,84px);
+}
+.ab-founder-profile .ab-founder-grid{
+  align-items:center;
+}
+.ab-founder-profile .ab-founder-photo{
+  max-width:360px;
+}
+.ab-founder-profile-name{
+  margin:8px 0 0;
+  font-size:clamp(26px,3vw,34px);
+  line-height:1.4;
+  font-weight:700;
+  color:var(--ink);
+}
+.ab-founder-profile-role{
+  margin:10px 0 0;
+  max-width:660px;
+  font-size:16px;
+  line-height:1.85;
+  color:var(--ink-soft);
+}
+.ab-founder-profile-body{
+  margin-top:24px;
+  max-width:680px;
+}
+.ab-founder-profile-body p{
+  font-size:17px;
+  line-height:1.95;
+}
+.ab-founder-profile .ab-key{
+  margin-top:22px;
+  padding-inline-start:16px;
+  border-inline-start:2px solid var(--brass);
+  color:var(--green-ink);
+  font-weight:700;
+}
+@media(max-width:760px){
+  .ab-founder-profile .ab-founder-photo{
+    max-width:260px;
+  }
+}

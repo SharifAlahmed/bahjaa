@@ -1,16 +1,13 @@
-/* افتتاحية «عن بهجة»: بيان تحريري مقتضب على الورق، بلا صورة ولا رسم */
+/* افتتاحية «عن بهجة»: تعريف واضح ومقتضب، بلا تكرار للوعد النهائي. */
 export function AboutHero() {
   return (
-    <section className="ab-hero" aria-labelledby="about-title">
+    <section className="ab-hero ab-hero-v2" aria-labelledby="about-title">
       <div className="wrap">
         <p className="ab-eyebrow">عن بهجة</p>
-        <h1 className="ab-hero-title" id="about-title">من المعرفة الى الأثر</h1>
+        <h1 className="ab-hero-title" id="about-title">من المعرفة إلى الأثر</h1>
         <p className="ab-hero-lede">
-          بهجة مساحة عربية للمعرفة التي تستحق وقتك؛ نختارها بوعي، ونقدّمها بوضوح وعمق،
-          ونساعدك على تحويلها إلى شيء يمكنك استخدامه.
-        </p>
-        <p className="ab-hero-note">
-          لأننا لا نريدك أن تعرف أكثر، بل أن تستفيد وتطبق أكثر مما تعرف.
+          بهجة منصة عربية للمعرفة التطبيقية، تساعد القادة ورواد الأعمال على تحويل المعرفة
+          إلى فهم أوضح، وقرارات أفضل، وخطوات قابلة للتطبيق.
         </p>
       </div>
     </section>

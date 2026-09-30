@@ -1,20 +1,16 @@
 import Link from "next/link";
 
-/* الخطوة التالية: الأقسام، ورابط نصي للعودة إلى الرئيسية */
+/* خطوة واحدة واضحة بعد التعريف بالمنصة. */
 export function AboutCTA() {
   return (
-    <section className="ab-cta" aria-labelledby="about-cta-title">
+    <section className="ab-cta ab-cta-v2" aria-labelledby="about-cta-title">
       <div className="wrap">
-        <h2 className="ab-cta-title" id="about-cta-title">ابدأ بالمعرفة التي تستحق وقتك.</h2>
+        <h2 className="ab-cta-title" id="about-cta-title">ابدأ بما يستحق وقتك</h2>
         <p className="ab-cta-body">
-          اختر السؤال الأقرب إليك، واكتشف المعرفة التي تساعدك على فهمه والتعامل معه بصورة أفضل.
+          استكشف المعرفة التي تساعدك على فهم أفضل واتخاذ قرار أوضح.
         </p>
         <div className="ab-cta-actions">
           <Link href="/categories" className="btn btn-brand">استكشف الأقسام</Link>
-          <Link href="/" className="hm-link">
-            العودة إلى الرئيسية
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 6 8 12l6 6" /></svg>
-          </Link>
         </div>
       </div>
     </section>

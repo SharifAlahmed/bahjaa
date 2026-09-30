@@ -1,10 +1,9 @@
 import Image from "next/image";
 
-/* رسالة المؤسس كاملة — رسالة شخصية لا شهادة. الصورة بجانب النص على سطح المكتب،
-   ومضغوطة فوقه على الجوال. الجملة المفتاحية بارزة داخل الرسالة نفسها */
+/* من يقف وراء بهجة؟ قسم ثقة وسلطة مهنية، لا رسالة مؤسس ثانية. */
 export function FounderLetter() {
   return (
-    <section className="ab-founder" aria-labelledby="letter-title">
+    <section className="ab-founder ab-founder-profile" aria-labelledby="founder-profile-title">
       <div className="wrap ab-founder-grid">
         <div className="ab-founder-photo">
           <Image
@@ -12,62 +11,28 @@ export function FounderLetter() {
             alt="شريف الأحمد، مؤسس بهجة"
             width={1350}
             height={1318}
-            sizes="(max-width: 860px) 200px, 400px"
+            sizes="(max-width: 860px) 220px, 380px"
           />
         </div>
 
         <article className="ab-letter">
-          <h2 className="ab-eyebrow" id="letter-title">رسالة من المؤسس</h2>
-          <div className="ab-prose ab-letter-body">
-            <p>أؤمن أن مشكلتنا اليوم ليست في نقص المعرفة، بل في وفرتها.</p>
-            <p>
-              وأعرف شعور أن تقرأ كتابًا مهمًا، أو تشاهد فكرة ملهمة، أو تحفظ مقالًا تنوي العودة
-              إليه… ثم تمضي الأيام، وتتراكم المصادر، ويبقى السؤال نفسه:
-            </p>
-            <p>
-              <strong>ماذا استفدت فعلًا؟ وما الذي تغيّر في طريقة تفكيري أو قراراتي أو عملي؟</strong>
-            </p>
-            <p>ربما لهذا السبب وُلدت بهجة.</p>
-            <p>
-              لأنني، مثلك، لا أبحث عن المزيد من المعلومات لمجرد المعرفة. أبحث عن الأفكار التي تستحق
-              وقتي، وعن الفهم الذي يساعدني على رؤية الأمور بوضوح، وعن معرفة يمكن أن تتحول إلى قرار
-              أفضل، أو خطوة عملية، أو نتيجة حقيقية.
-            </p>
-            <p>أردت أن نبني مكانًا لا يضيف إلى ضجيج المحتوى، بل يساعدك على الوصول إلى جوهره.</p>
-            <p>
-              مكانًا نختار فيه ما يستحق، ونستخرج أهم أفكاره، ونضعها في سياق واضح، ثم نحولها إلى
-              خطوات يمكن فهمها وتطبيقها وقياس أثرها.
-            </p>
-            <p>لأنني أعتقد أننا نتشارك الغاية نفسها:</p>
-            <p className="ab-key">
-              لسنا بحاجة إلى أن نعرف أكثر فقط، بل إلى أن نستفيد أكثر مما نعرف.
-            </p>
-            <p className="ab-stanza">
-              أن نقرأ فكرة فترتّب شيئًا في أذهاننا.
-              <br />
-              أن نفهم شيئًا فيغيّر قرارًا.
-              <br />
-              أن نتعلم شيئًا فنجرّبه.
-              <br />
-              وأن يصبح للمعرفة أثر نراه في حياتنا وعملنا.
-            </p>
-            <p className="ab-turn">لهذا وُجدت بهجة.</p>
-            <p className="ab-coda">
-              من المعرفة إلى الفهم، ومن الفهم إلى التطبيق، ومن التطبيق إلى أثر حقيقي.
-            </p>
-          </div>
+          <p className="ab-eyebrow">من يقف وراء بهجة؟</p>
+          <h2 className="ab-founder-profile-name" id="founder-profile-title">شريف الأحمد</h2>
+          <p className="ab-founder-profile-role">
+            مؤسس بهجة · مدرب وكوتش مهني معتمد · بخبرة تتجاوز 25 عامًا في تطوير الأعمال
+            والعمل مع قادة وفرق ومؤسسات محلية ودولية.
+          </p>
 
-          <div className="ab-sign">
-            <Image
-              className="ab-signature"
-              src="/signature.png"
-              alt=""
-              width={509}
-              height={124}
-              sizes="180px"
-            />
-            <p className="ab-sign-name">شريف الأحمد</p>
-            <p className="ab-sign-role">مؤسس بهجة</p>
+          <div className="ab-prose ab-founder-profile-body">
+            <p>
+              جاءت بهجة من تقاطع هذه الخبرة مع التفكير الاستراتيجي والكوتشينغ المهني:
+              كيف ننتقل من كثرة المعلومات إلى السؤال الصحيح، ومن الفهم إلى قرار وفعل
+              يمكن تطبيقه وقياس أثره.
+            </p>
+
+            <p className="ab-key">
+              بهجة هي محاولة لتحويل هذه الخبرة إلى منهج معرفي يمكن للآخرين استخدامه.
+            </p>
           </div>
         </article>
       </div>
