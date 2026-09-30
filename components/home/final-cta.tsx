@@ -5,18 +5,12 @@ export function FinalCTA() {
     <section className="hm-final hm-newsletter" aria-labelledby="final-title">
       <div className="wrap hm-center">
         <p className="hm-eyebrow">رسالة بهجة الأسبوعية</p>
-        <h2 className="hm-final-title" id="final-title">
-          فكرة واحدة تستحق وقتك، كل أسبوع.
-        </h2>
-        <p className="hm-final-body">
-          من كتاب أو دراسة حالة أو مصدر موثوق، نختار فكرة واحدة ونقدّمها بطريقة
-          تساعدك على فهمها واستخدامها فعلًا.
-        </p>
+        <h2 className="sr-only" id="final-title">اشترك في رسالة بهجة الأسبوعية</h2>
 
         <div className="hm-newsletter-form">
           <NewsletterForm
             className="w-full my-0"
-            boxClassName="mx-auto max-w-2xl min-h-[180px]"
+            boxClassName="mx-auto max-w-2xl min-h-[170px]"
           />
         </div>
 
