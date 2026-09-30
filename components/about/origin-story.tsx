@@ -1,9 +1,9 @@
-/* القصة وراء بهجة: لماذا وُجدت المنصة، في ثلاث فقرات فقط. */
+/* القصة وراء بهجة: مسار قراءة واحد بلا عناصر جانبية تنافس النص. */
 export function OriginStory() {
   return (
-    <section className="ab-story ab-story-v2" aria-labelledby="story-title">
-      <div className="wrap ab-story-grid">
-        <div className="ab-prose">
+    <section className="ab-story ab-story-v3" aria-labelledby="story-title">
+      <div className="wrap">
+        <div className="ab-prose ab-story-copy">
           <h2 className="ab-h2" id="story-title">القصة وراء بهجة</h2>
 
           <p>
@@ -21,11 +21,6 @@ export function OriginStory() {
             إلى معرفة يمكن استخدامها.
           </p>
         </div>
-
-        <aside className="ab-story-quote" aria-hidden="true">
-          <span className="ab-rule" />
-          <p>ما الذي يستحق أن نعرفه فعلًا؟</p>
-        </aside>
       </div>
     </section>
   );
