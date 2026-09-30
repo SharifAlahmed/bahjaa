@@ -1,28 +1,43 @@
-import { getImageProps } from "next/image";
+import Image from "next/image";
 
-/* الهيرو صورة واحدة بعرض الصفحة تحت الترويسة، بنسخة عمودية للجوال (أقل من ٦٠٠ بكسل).
-   العنوان داخل الصورة، فيُكرَّر لقارئ الشاشة في h1 مخفي */
 export function Hero() {
-  const common = { alt: "", sizes: "(max-width: 1438px) 100vw, 1338px", priority: true };
-  const {
-    props: { srcSet: desktopSrcSet },
-  } = getImageProps({ ...common, src: "/home/hero-banner.webp", width: 1672, height: 941 });
-  const {
-    props: { srcSet: mobileSrcSet, ...mobileImg },
-  } = getImageProps({ ...common, src: "/home/hero-mobile.webp", width: 1122, height: 1402 });
-
   return (
-    <section className="home-hero" aria-labelledby="hero-title">
-      <h1 className="sr-only" id="hero-title">
-        استخرج أفضل الأفكار القيادية في ١٥ دقيقة فقط
-      </h1>
-      <picture>
-        <source media="(min-width: 600px)" srcSet={desktopSrcSet} width={1672} height={941} />
-        <img {...mobileImg} srcSet={mobileSrcSet} alt="" />
-      </picture>
-      <div className="home-hero-cta">
-        <a href="#latest" className="btn btn-brand">استكشف الملخصات</a>
-        <a href="#how" className="btn btn-ghost">كيف تعمل بهجة؟</a>
+    <section className="home-hero home-hero-v3" aria-labelledby="hero-title">
+      <div className="wrap home-hero-grid">
+        <div className="home-hero-copy">
+          <p className="hm-eyebrow">منصة عربية للمعرفة التطبيقية</p>
+
+          <h1 className="home-hero-title" id="hero-title">
+            <span>معرفة تستحق وقتك.</span>
+            <span>تساعدك على فهم أعمق واتخاذ قرار أفضل.</span>
+          </h1>
+
+          <p className="home-hero-lede">
+            نختار أهم الكتب والأفكار ودراسات الحالة، ونقدّمها بطريقة تساعدك على فهم
+            جوهرها وتحويلها إلى قرارات وخطوات قابلة للتطبيق.
+          </p>
+
+          <div className="home-hero-actions">
+            <a href="#latest" className="btn btn-brand">استكشف الملخصات</a>
+            <a href="#how" className="btn btn-ghost">اكتشف منهج بهجة</a>
+          </div>
+
+          <p className="home-hero-authority">
+            <strong>أسّسها شريف الأحمد</strong> — بخبرة عملية مع قادة وفرق ومؤسسات،
+            ومنهج يستفيد من التفكير الاستراتيجي ومهارات الكوتشينغ المهني.
+          </p>
+        </div>
+
+        <figure className="home-hero-visual">
+          <Image
+            src="/join/good-to-great-books.jpg"
+            width={860}
+            height={602}
+            priority
+            sizes="(max-width: 860px) 100vw, 520px"
+            alt="كتاب «من جيد إلى عظيم» وملخص بهجة كمثال على تحويل المعرفة إلى خلاصة عملية"
+          />
+        </figure>
       </div>
     </section>
   );
