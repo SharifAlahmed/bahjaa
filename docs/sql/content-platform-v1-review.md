@@ -65,18 +65,30 @@ A product is commercial packaging.
 
 A learning path can be sold alone, included in a bundle, or made free without changing its learning structure.
 
+## Verified against the connected Supabase project
+
+Verified on the current project containing Bahjaa tables:
+
+- `bh_categories.id` = `uuid`
+- `bh_summaries.id` = `uuid`
+- `bh_summaries.category_id` = `uuid`
+- `bh_summaries.category_id` has an FK to `bh_categories.id`
+- `bh_bookmarks.summary_id` = `uuid` and has an FK to `bh_summaries.id`
+- RLS is enabled on `bh_categories`, `bh_summaries`, `bh_admins`, and `bh_bookmarks`
+- current rows: 6 categories, 9 summaries, 2 bookmarks
+
+Therefore the v1 blueprint assumptions that `legacy_summary_id` and category relationships use UUID are compatible with the current schema.
+
 ## Important review points before execution
 
-1. Confirm current `bh_categories.id` is UUID.
-2. Confirm current `bh_summaries.id` is UUID before using `legacy_summary_id uuid`.
-3. Decide whether published paid-content metadata should be visible publicly for SEO. Current blueprint says yes.
-4. Confirm whether prices should be public. Current blueprint says active prices are public.
-5. Decide whether a single content item may have multiple primary formats. Current blueprint enforces one.
-6. Decide whether a single content item may have more than one primary source. Current blueprint enforces one.
-7. Decide whether learning-path items will eventually include non-content steps such as quizzes or tasks. If yes, generalize the item table before launch.
-8. Define admin/editor roles before adding client-side write policies.
-9. Define the payment provider before creating order/payment transaction tables.
-10. Design an entitlement resolver before exposing `paid`/`premium` payloads.
+1. Decide whether published paid-content metadata should be visible publicly for SEO. Current blueprint says yes.
+2. Confirm whether prices should be public. Current blueprint says active prices are public.
+3. Decide whether a single content item may have multiple primary formats. Current blueprint enforces one.
+4. Decide whether a single content item may have more than one primary source. Current blueprint enforces one.
+5. Decide whether learning-path items will eventually include non-content steps such as quizzes or tasks. If yes, generalize the item table before launch.
+6. Define admin/editor roles before adding client-side write policies.
+7. Define the payment provider before creating order/payment transaction tables.
+8. Design an entitlement resolver before exposing `paid`/`premium` payloads.
 
 ## Recommended execution sequence
 
