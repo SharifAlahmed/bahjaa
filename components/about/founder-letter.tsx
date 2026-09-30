@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-/* رسالة المؤسس: تضيف الخبرة والمنظور الشخصي، ولا تعيد قصة المنصة كاملة. */
+/* منظور المؤسس الشخصي: خبرة عملية تشرح لماذا صُمّمت بهجة بهذه الفلسفة. */
 export function FounderLetter() {
   return (
-    <section className="ab-founder ab-founder-v2" aria-labelledby="letter-title">
+    <section className="ab-founder ab-founder-v2" aria-labelledby="founder-name-title">
       <div className="wrap ab-founder-grid">
         <div className="ab-founder-photo">
           <Image
@@ -16,7 +16,7 @@ export function FounderLetter() {
         </div>
 
         <article className="ab-letter">
-          <h2 className="ab-eyebrow" id="letter-title">رسالة من المؤسس</h2>
+          <h2 className="sr-only" id="founder-name-title">شريف الأحمد، مؤسس بهجة</h2>
 
           <div className="ab-prose ab-letter-body">
             <p>
@@ -26,8 +26,8 @@ export function FounderLetter() {
             </p>
 
             <p>
-              لهذا أردت أن تكون بهجة أكثر من مكان لقراءة الملخصات؛ مكانًا يساعدك
-              على الوصول إلى جوهر الفكرة، وربطها بسياقك، ثم استخدامها في قرار أو عمل.
+              لهذا أردت أن تكون بهجة أكثر من منصة تقدّم المعرفة التطبيقية؛ مكانًا
+              يساعدك على الوصول إلى جوهر الفكرة، وربطها بسياقك، ثم استخدامها في قرار أو عمل.
             </p>
 
             <p className="ab-key">
