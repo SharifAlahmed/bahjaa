@@ -4,19 +4,9 @@ import { countLabel } from './format'
 
 type Props = { slug: string; name: string; outcome: string; count: number }
 
-const CATEGORY_NUMBERS: Record<string, string> = {
-  leadership: '١',
-  entrepreneurship: '٢',
-  productivity: '٣',
-  strategy: '٤',
-  teams: '٥',
-  business: '٦',
-}
-
 export function CategoryRow({ slug, name, outcome, count }: Props) {
   return (
     <Link className={`cat-card cat-card-${slug}`} href={`/c/${slug}`}>
-      <span className="cat-card-num" aria-hidden="true">{CATEGORY_NUMBERS[slug] || ''}</span>
 
       <div className="cat-card-copy">
         <h2 className="cat-card-name">{name}</h2>
