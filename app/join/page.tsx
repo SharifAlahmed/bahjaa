@@ -96,11 +96,11 @@ export default function JoinPage() {
             boxClassName="mx-auto min-h-[207px] max-w-2xl"
           />
 
-          <p className="text-start text-sm leading-7 text-ink-muted">
+          <p className="text-center text-sm leading-7 text-ink-muted">
             مجانية بالكامل · رسالة واحدة أسبوعياً · إلغاء الاشتراك في أي وقت.
           </p>
 
-          <p className="mt-5 border-t border-border pt-4 text-start text-sm leading-7 text-ink-muted sm:mt-6 sm:pt-5">
+          <p className="mt-5 border-t border-border pt-4 text-center text-sm leading-7 text-ink-muted sm:mt-6 sm:pt-5">
             يكتبها <span className="font-bold text-brand-dark">شريف الأحمد</span> · مؤسس بهجة
           </p>
         </section>
