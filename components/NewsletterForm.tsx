@@ -10,9 +10,12 @@ const DEFAULT_FORM_ID = "9e72b41b-b210-47d8-abb2-cd6addd0a62a";
 export default function NewsletterForm({
   formId = DEFAULT_FORM_ID,
   className = "w-full my-12",
+  boxClassName = "mx-auto max-w-2xl min-h-[220px]",
 }: {
   formId?: string;
   className?: string;
+  /** حاوية إطار beehiiv — الافتراضي كما هو في بقية الموقع؛ /join يمرّر ارتفاعاً أدق */
+  boxClassName?: string;
 } = {}) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -34,7 +37,7 @@ export default function NewsletterForm({
 
   return (
     <section dir="rtl" aria-label="اشترك في نشرة بهجة" className={className}>
-      <div ref={ref} className="mx-auto max-w-2xl min-h-[220px]" />
+      <div ref={ref} className={boxClassName} />
     </section>
   );
 }
