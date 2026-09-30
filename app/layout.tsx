@@ -7,10 +7,10 @@ import SiteFooter from "@/components/layout/SiteFooter";
 export const metadata: Metadata = {
   title: {
     template: "%s · بهجة",
-    default: "بهجة — ملخصات الكتب بالعربية",
+    default: "بهجة — منصة عربية للمعرفة التطبيقية",
   },
   description:
-    "منصة عربية تحوّل كتب القيادة وريادة الأعمال إلى خطوات عملية. اقرأ أول ٤ أقسام مجاناً.",
+    "منصة عربية للمعرفة التطبيقية، تساعد القادة ورواد الأعمال على تحويل المعرفة إلى فهم أوضح، وقرارات أفضل، وخطوات قابلة للتطبيق.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
