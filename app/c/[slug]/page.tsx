@@ -128,6 +128,12 @@ export default async function CategoryPage({ params }: Props) {
             </div>
           </section>
 
+          {rest.length === 0 && (
+            <section className="wrap category-single-note" aria-label="المزيد قريبًا">
+              <p>سنضيف المزيد إلى هذا القسم تباعًا.</p>
+            </section>
+          )}
+
           {rest.length > 0 && (
             <section className="wrap category-library">
               <div className="category-library-head">
