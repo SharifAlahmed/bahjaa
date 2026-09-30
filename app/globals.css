@@ -2801,3 +2801,10 @@ body:has(.join-landing) > #main {
     font-size:23px;
   }
 }
+
+
+/* ══ الأقسام: Remove artificial sequencing · سبتمبر ٢٠٢٦ ══ */
+/* الأقسام قابلة للتوسع؛ لا ترقيم ولا إيحاء بتسلسل ثابت */
+.cat-card-num{
+  display:none !important;
+}
