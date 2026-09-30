@@ -79,7 +79,7 @@ export async function LatestSummaries() {
 
           <p className="hm-latest-more">
             <Link href="/categories" className="btn btn-ghost">
-              استكشف جميع الملخصات ←
+              استكشف الأقسام ←
             </Link>
           </p>
         </div>
