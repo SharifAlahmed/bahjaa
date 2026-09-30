@@ -2014,3 +2014,31 @@ body:has(.join-landing) > #main {
   line-height:1.8;
   color:var(--muted);
 }
+
+
+/* ══ الرئيسية: Typography refinement · سبتمبر ٢٠٢٦ ══ */
+/* أخفّ وأكثر تحريرية: 800 يُحجز للتأكيد النادر فقط */
+.home-hero-v3 .home-hero-title{font-weight:700;}
+.home-hero-v3 .home-hero-authority strong{font-weight:700;}
+
+.hm-latest .hm-eyebrow,
+.hm-founder .hm-eyebrow,
+.hm-journey-v3 .hm-eyebrow,
+.hm-newsletter .hm-eyebrow{font-weight:600;}
+
+.hm-latest .sc-title{font-weight:700;}
+.hm-latest .sc-badge{font-weight:600;}
+.hm-latest .sc-cta{font-weight:600;}
+
+.hm-founder-statement{font-weight:700;}
+.hm-founder .hm-prose strong{font-weight:600;}
+.hm-founder-question strong{font-weight:700;}
+.hm-founder-coda{font-weight:700;}
+.hm-founder-name{font-weight:700;}
+.hm-founder .hm-link{font-weight:600;}
+
+.hm-journey-v3 .hm-step-title{font-weight:700;}
+.hm-journey-v3 .hm-step-n{font-weight:700;}
+.hm-journey-v3 .hm-journey-close{font-weight:700;}
+
+.hm-newsletter .hm-final-title{font-weight:700;}
