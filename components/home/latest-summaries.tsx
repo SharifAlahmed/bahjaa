@@ -5,8 +5,7 @@ import { SummaryCard } from "@/components/SummaryCard";
 import { BookmarkButtons } from "@/components/bahjaa/bookmark-buttons";
 import { LIST_COLUMNS, type Category, type SummaryListItem } from "@/lib/types";
 
-/* «ابدأ بما يستحق وقتك» — أحدث ٤ ملخصات منشورة من البيانات.
-   id="latest" هدف زر الهيرو، وlatest-summaries باقٍ لروابط التذييل ومكتبتي */
+/* أول دليل عملي على قيمة بهجة: أحدث ٤ ملخصات مباشرة بعد الهيرو. */
 export async function LatestSummaries() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -65,10 +64,12 @@ export async function LatestSummaries() {
                     promise={s.content_free?.s1?.problem}
                     ctaLabel="استكشف الملخص"
                     bookmarkSlot={
-                      <BookmarkButtons
-                        summaryId={s.id}
-                        initialStatus={bmMap.get(s.id) ?? null}
-                      />
+                      user ? (
+                        <BookmarkButtons
+                          summaryId={s.id}
+                          initialStatus={bmMap.get(s.id) ?? null}
+                        />
+                      ) : undefined
                     }
                   />
                 );
@@ -77,7 +78,9 @@ export async function LatestSummaries() {
           )}
 
           <p className="hm-latest-more">
-            <Link href="/categories" className="btn btn-ghost">استكشف الأقسام</Link>
+            <Link href="/categories" className="btn btn-ghost">
+              استكشف جميع الملخصات ←
+            </Link>
           </p>
         </div>
       </section>
