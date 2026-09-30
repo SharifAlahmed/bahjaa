@@ -1,30 +1,20 @@
 import { Hero } from "@/components/home/hero";
-import { FounderMessage } from "@/components/home/founder-note";
-import { ContinueReading } from "@/components/home/continue-reading";
-import { WhyHome } from "@/components/home/why-home";
-import { BahjaaValues } from "@/components/home/bahjaa-values";
-import { BrandPromise } from "@/components/home/brand-promise";
-import { KnowledgeJourney } from "@/components/home/knowledge-journey";
 import { LatestSummaries } from "@/components/home/latest-summaries";
+import { FounderMessage } from "@/components/home/founder-note";
+import { KnowledgeJourney } from "@/components/home/knowledge-journey";
 import { FinalCTA } from "@/components/home/final-cta";
-import NewsletterForm from "@/components/NewsletterForm";
 
 export const dynamic = "force-dynamic";
 
-/* قصة واحدة: الهيرو ← رسالة المؤسس ← لماذا بهجة ← القيم ← الوعد ← كيف تعمل ← الملخصات ← الخاتمة */
+/* الرئيسية: وعد واضح ← المنتج ← المؤسس ← المنهج ← الاشتراك */
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <ContinueReading />
-      <FounderMessage />
-      <WhyHome />
-      <BahjaaValues />
-      <BrandPromise />
-      <KnowledgeJourney />
       <LatestSummaries />
+      <FounderMessage />
+      <KnowledgeJourney />
       <FinalCTA />
-      <NewsletterForm />
     </>
   );
 }

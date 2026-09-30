@@ -4,7 +4,7 @@ export const SITE = {
   name:   "بهجة",
   url:    "https://bahjaa.com",
   contact: {
-    email: "hello@bahjaa.com",  // ← عدّل هنا
+    email: "support@bahjaa.com",  // ← عدّل هنا
   },
 } as const;
 
