@@ -2475,3 +2475,17 @@ body:has(.join-landing) > #main {
     white-space:normal;
   }
 }
+
+
+/* ══ عن بهجة: Story reading flow correction · سبتمبر ٢٠٢٦ ══ */
+.ab-story-v3 .ab-story-copy{
+  max-width:760px;
+  margin-inline:auto;
+}
+.ab-story-v3 .ab-h2{
+  margin-bottom:24px;
+}
+.ab-story-v3 .ab-prose p{
+  font-size:17px;
+  line-height:1.95;
+}
