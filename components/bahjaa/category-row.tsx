@@ -1,24 +1,37 @@
-// components/bahjaa/category-row.tsx — بطاقة تحريرية لمسار المعرفة
+// components/bahjaa/category-row.tsx — بطاقة تحريرية فاخرة لمسار المعرفة
 import Link from 'next/link'
 import { countLabel } from './format'
 
 type Props = { slug: string; name: string; outcome: string; count: number }
 
+const CATEGORY_NUMBERS: Record<string, string> = {
+  leadership: '١',
+  entrepreneurship: '٢',
+  productivity: '٣',
+  strategy: '٤',
+  teams: '٥',
+  business: '٦',
+}
+
 export function CategoryRow({ slug, name, outcome, count }: Props) {
   return (
-    <Link className="cat-card" href={`/c/${slug}`}>
-      <span className="cat-card-kicker">مسار معرفة</span>
-      <h2 className="cat-card-name">{name}</h2>
-      <p className="cat-card-outcome">{outcome}</p>
+    <Link className={`cat-card cat-card-${slug}`} href={`/c/${slug}`}>
+      <span className="cat-card-num" aria-hidden="true">{CATEGORY_NUMBERS[slug] || ''}</span>
 
-      <span className="cat-card-foot">
+      <div className="cat-card-copy">
+        <h2 className="cat-card-name">{name}</h2>
+        <p className="cat-card-outcome">{outcome}</p>
+      </div>
+
+      <div className="cat-card-foot">
         <span className="cat-card-count">{countLabel(count)}</span>
-        <span className="cat-card-arrow" aria-hidden="true">
-          <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <span className="cat-card-link">
+          استكشف
+          <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M14 6 8 12l6 6" />
           </svg>
         </span>
-      </span>
+      </div>
     </Link>
   )
 }
