@@ -2168,3 +2168,82 @@ body:has(.join-landing) > #main {
     padding:14px 16px;
   }
 }
+
+
+/* ══ الرئيسية: Bahjaa method refinement · سبتمبر ٢٠٢٦ ══ */
+.hm-journey-v4{
+  padding-block:clamp(56px,7vw,92px);
+}
+.hm-journey-v4 .hm-journey-head{
+  max-width:760px;
+  margin-inline:auto;
+}
+.hm-journey-v4 .hm-journey-head .h-sec{
+  margin-top:8px;
+  font-size:clamp(26px,3.2vw,36px);
+  font-weight:700;
+}
+.hm-journey-v4 .hm-journey-intro{
+  max-width:640px;
+  margin:14px auto 0;
+  font-size:16.5px;
+  line-height:1.85;
+}
+.hm-journey-v4 .hm-steps{
+  margin-top:48px;
+}
+.hm-journey-v4 .hm-step-title{
+  font-size:21px;
+  font-weight:700;
+}
+.hm-journey-v4 .hm-step-body{
+  max-width:17ch;
+  margin:8px auto 0;
+  font-size:14.5px;
+  line-height:1.75;
+}
+.hm-journey-v4 .hm-step-n{
+  box-shadow:0 0 0 7px var(--paper);
+}
+.hm-journey-v4 .hm-journey-close{
+  width:fit-content;
+  max-width:100%;
+  margin:42px auto 0;
+  padding:12px 18px;
+  border:1px solid var(--rule);
+  background:var(--color-surface);
+  border-radius:var(--radius-full);
+  font-size:15px;
+  line-height:1.7;
+  font-weight:600;
+}
+@media (min-width:861px){
+  .hm-journey-v4 .hm-steps{
+    --c:56px;
+    grid-template-columns:repeat(6,1fr);
+    gap:16px;
+  }
+  .hm-journey-v4 .hm-step{
+    padding-top:calc(var(--c) + 18px);
+  }
+  .hm-journey-v4 .hm-step-n{
+    font-size:20px;
+  }
+}
+@media (max-width:600px){
+  .hm-journey-v4 .hm-journey-head{
+    text-align:start;
+  }
+  .hm-journey-v4 .hm-journey-intro{
+    margin-inline:0;
+  }
+  .hm-journey-v4 .hm-step-body{
+    max-width:none;
+    margin-inline:0;
+  }
+  .hm-journey-v4 .hm-journey-close{
+    border-radius:var(--radius-md);
+    text-align:center;
+    font-size:14px;
+  }
+}
