@@ -3,13 +3,12 @@ import { createClient } from "@/lib/supabase/server";
 import { CategoryRow, CATEGORY_OUTCOMES } from "@/components/bahjaa/category-row";
 import type { Category } from "@/lib/types";
 
-// تقرأ حالة الجلسة من الكوكيز — يجب أن تُبنى عند كل طلب، بلا تخزين مؤقت
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "الأقسام",
   description:
-    "تصفّح ملخصات بهجة حسب المجال: القيادة، ريادة الأعمال، الإنتاجية، الاستراتيجية، الفرق، والمال والأعمال.",
+    "استكشف أقسام بهجة ومسارات المعرفة في القيادة، ريادة الأعمال، الإنتاجية، الاستراتيجية، الفرق، والمال والأعمال.",
   alternates: { canonical: "/categories" },
 };
 
@@ -29,19 +28,21 @@ export default async function CategoriesPage() {
 
   return (
     <>
-      <section className="wrap cats-intro">
-        <p className="eyebrow">ستة أقسام</p>
-        <h1 className="h-sec cats-title">
-          اختر القسم الذي يشبه سؤالك هذا الأسبوع
-        </h1>
+      <section className="wrap cats-intro cats-intro-v2">
+        <p className="eyebrow">مسارات المعرفة</p>
+        <h1 className="h-sec cats-title">ابدأ بالسؤال الذي يشغلك الآن</h1>
         <p className="read col cats-lede">
-          كل قسم يجمع الكتب التي تعالج نوعاً واحداً من الأسئلة. الأقسام الأربعة الأولى من كل
-          ملخص مفتوحة بلا تسجيل.
+          اختر المجال الأقرب لما تحاول فهمه أو تحسينه، ثم ابدأ بالمعرفة التي تساعدك
+          على اتخاذ خطوة أفضل.
         </p>
-        <p className="cats-note">ابدأ بالسؤال الذي يشغلك، لا باسم الكتاب الذي تبحث عنه.</p>
+        <p className="cats-note">لا تبدأ باسم الكتاب؛ ابدأ بما تريد أن تفهمه أو تغيّره.</p>
       </section>
 
-      <nav className="wrap cats-list bh-anchor" id="categories" aria-label="أقسام المكتبة">
+      <nav
+        className="wrap cats-list cats-card-grid bh-anchor"
+        id="categories"
+        aria-label="مسارات المعرفة في بهجة"
+      >
         {cats.map((c) => (
           <CategoryRow
             key={c.id}
@@ -52,18 +53,6 @@ export default async function CategoriesPage() {
           />
         ))}
       </nav>
-
-      {/* اللوحة الداكنة الوحيدة في هذه الصفحة: خاتمة تحريرية موجزة */}
-      <section className="wrap cats-close" aria-labelledby="cats-close-title">
-        <div className="dark-panel">
-          <h2 className="statement" id="cats-close-title">
-            لا تعرف من أين تبدأ؟
-            <br />
-            ابدأ بالسؤال الأقرب إليك.
-          </h2>
-          <p className="cats-close-sub">كل قسم هو نقطة بداية لمسار معرفة يمكنك استخدامه.</p>
-        </div>
-      </section>
     </>
   );
 }
