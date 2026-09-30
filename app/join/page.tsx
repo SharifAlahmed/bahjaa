@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default function JoinPage() {
   return (
     <div className="join-landing min-h-screen bg-background">
-      <main className="mx-auto w-full max-w-[680px] px-5 pb-14 pt-8 sm:px-8 sm:pb-20 sm:pt-12">
+      <div className="mx-auto w-full max-w-[680px] px-5 pb-14 pt-8 sm:px-8 sm:pb-20 sm:pt-12">
         <Image
           src="/logo/bahjaa-logo.png"
           width={104}
@@ -84,7 +84,7 @@ export default function JoinPage() {
             يكتبها <span className="font-bold text-brand-dark">شريف الأحمد</span> · مؤسس بهجة
           </p>
         </section>
-      </main>
+      </div>
     </div>
   );
 }
