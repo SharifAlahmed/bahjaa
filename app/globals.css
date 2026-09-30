@@ -1881,3 +1881,11 @@ body:has(.join-landing) > .site-footer {
 body:has(.join-landing) > #main {
   min-height: 100vh;
 }
+
+/* صورة المقارنة في /join: أعرض قليلاً من عمود النص (حتى ٨٦٠) ومتمركزة،
+   وعلى الجوال بعرض المحتوى كاملاً (الشاشة ناقص الحشو ٢٠×٢) */
+.join-visual {
+  --join-visual-w: min(860px, 100vw - 40px);
+  inline-size: var(--join-visual-w);
+  margin-inline: calc((100% - var(--join-visual-w)) / 2);
+}

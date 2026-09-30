@@ -47,10 +47,10 @@ export default function JoinPage() {
         <section className="mt-8 sm:mt-10">
           <p className="eyebrow text-start">رسالة بهجة الأسبوعية</p>
 
-          <h1 className="mt-3 text-start font-display text-[clamp(34px,6vw,54px)] font-bold leading-[1.38] text-brand-dark [text-wrap:balance]">
-            المعرفة لم تعد هي المشكلة.
-            <br />
-            الفارق فيما نفعله بما نعرفه.
+          {/* سطران واضحان: كل جملة كتلة مستقلة متوازنة، فلا تبقى كلمة وحيدة في سطر */}
+          <h1 className="mt-3 text-start font-display text-[clamp(27px,4.4vw,44px)] font-bold leading-[1.4] text-brand-dark">
+            <span className="block [text-wrap:balance]">لا تحتاج إلى مزيد من المعلومات.</span>
+            <span className="block [text-wrap:balance]">تحتاج إلى معرفة تساعدك على اتخاذ قرار أفضل.</span>
           </h1>
 
           <p className="mt-6 text-start text-[18px] leading-[1.9] text-ink-soft">
@@ -58,11 +58,20 @@ export default function JoinPage() {
             تحويل أهم الكتب والأفكار ودراسات الحالة إلى فهم أوضح وقرارات وخطوات
             عملية.
           </p>
-
-          <p className="mt-5 text-start font-display text-[20px] font-bold leading-[1.8] text-brand-dark">
-            لا نلخّص المعرفة لتقرأ أكثر، بل لنساعدك على أن تفهم أعمق وتطبّق أفضل.
-          </p>
         </section>
+
+        {/* المقارنة البصرية: الكتاب الكامل ← ملخص بهجة. أعرض قليلاً من عمود النص على سطح المكتب
+            (حتى ٨٦٠) وبعرض المحتوى كاملاً على الجوال، بنسبة الصورة الأصلية */}
+        <figure className="join-visual mt-9 sm:mt-10">
+          <Image
+            src="/join/good-to-great.webp"
+            width={1672}
+            height={941}
+            alt="ملخص بهجة لكتاب «من جيد إلى عظيم»: ٣٨٤ صفحة و١٠ ساعات قراءة في الكتاب الكامل، مقابل ٩ صفحات و١٥ دقيقة في ملخص بهجة"
+            sizes="(max-width: 900px) 100vw, 860px"
+            className="block h-auto w-full rounded-[var(--radius-card)]"
+          />
+        </figure>
 
         <section id="join-form" className="mt-10 border-t border-border pt-9 sm:mt-12 sm:pt-10">
           <h2 className="text-start font-display text-[clamp(27px,4vw,36px)] font-bold leading-[1.5] text-brand-dark">
@@ -70,8 +79,8 @@ export default function JoinPage() {
           </h2>
 
           <p className="mt-3 text-start text-[17px] leading-[1.85] text-ink-soft">
-            من كتاب، أو دراسة حالة، أو مصدر موثوق — نضعها في سياقها ونحوّلها إلى
-            شيء يمكنك استخدامه فعلاً.
+            كل أسبوع، نختار فكرة واحدة من كتاب أو دراسة حالة أو مصدر موثوق،
+            ونقدّمها لك بطريقة تساعدك على فهمها واستخدامها فعلاً.
           </p>
 
           <NewsletterForm formId={JOIN_FORM_ID} className="w-full my-6" />
