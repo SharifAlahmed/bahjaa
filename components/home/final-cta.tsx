@@ -1,25 +1,28 @@
-import Link from "next/link";
+import NewsletterForm from "@/components/NewsletterForm";
 
-/* الخاتمة. الزر إلى /categories لأنها ما تعرضه المكتبة فعلاً (لا صفحة تجمع كل الملخصات) */
 export function FinalCTA() {
   return (
-    <section className="hm-final" aria-labelledby="final-title">
+    <section className="hm-final hm-newsletter" aria-labelledby="final-title">
       <div className="wrap hm-center">
+        <p className="hm-eyebrow">رسالة بهجة الأسبوعية</p>
         <h2 className="hm-final-title" id="final-title">
-          لا تجمع معرفة أكثر.
-          <br />
-          ابدأ باستخدام ما تتعلمه.
+          فكرة واحدة تستحق وقتك، كل أسبوع.
         </h2>
         <p className="hm-final-body">
-          اختر الفكرة التي تحتاجها اليوم، وافهمها بعمق، ثم حوّلها إلى خطوة.
+          من كتاب أو دراسة حالة أو مصدر موثوق، نختار فكرة واحدة ونقدّمها بطريقة
+          تساعدك على فهمها واستخدامها فعلًا.
         </p>
-        <div className="hm-final-actions">
-          <Link href="/categories" className="btn btn-brand">استكشف محتوى بهجة</Link>
-          <Link href="/about" className="hm-link">
-            تعرّف أكثر على بهجة
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 6 8 12l6 6" /></svg>
-          </Link>
+
+        <div className="hm-newsletter-form">
+          <NewsletterForm
+            className="w-full my-0"
+            boxClassName="mx-auto max-w-2xl min-h-[180px]"
+          />
         </div>
+
+        <p className="hm-newsletter-trust">
+          مجانية بالكامل · رسالة واحدة أسبوعياً · إلغاء الاشتراك في أي وقت.
+        </p>
       </div>
     </section>
   );
