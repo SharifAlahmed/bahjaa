@@ -2115,6 +2115,13 @@ body:has(.join-landing) > #main {
   .home-hero-v3 .home-hero-visual img{transform:none;}
 }
 
+/* سطح المكتب: الـHero يبدأ أعلى. مصدر الفراغ كان حشوة علوية ٧٧–٨٤px
+   مع توسيط رأسي ينزل الصورة ١٠٨px عن بداية النص؛ الآن ٥٦px والعمودان من الأعلى. */
+@media (min-width:861px){
+  .home-hero-v3{padding-block-start:56px;}
+  .home-hero-v3 .home-hero-grid{align-items:start;}
+}
+
 
 /* ══ الرئيسية: Founder message refinement · سبتمبر ٢٠٢٦ ══ */
 .hm-founder-v3 .hm-founder-statement{
