@@ -2,9 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { createClient } from "@/lib/supabase/client";
 
 const RESEND_SECONDS = 60;
+
+// مفتاح Turnstile العام. غيابه (كبيئات Preview) يُخفي التحقق ولا يكسر الصفحة.
+// الحماية الفعلية في Supabase: بعد تفعيل CAPTCHA يرفض الخادم أي طلب بلا رمز صالح.
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 /** يحوّل أخطاء Supabase الإنجليزية إلى عربية مفهومة */
 function arabicError(raw: string): string {
@@ -13,6 +18,8 @@ function arabicError(raw: string): string {
   const wait = raw.match(/after (\d+) seconds?/i);
   if (wait) return `انتظر ${wait[1]} ثانية قبل طلب رمز جديد.`;
 
+  if (m.includes("captcha"))
+    return "تعذّر التحقق الأمني. انتظر لحظة ثم حاول مجدداً.";
   if (m.includes("rate limit"))
     return "وصلنا حدّ الإرسال مؤقتاً. حاول بعد دقائق قليلة.";
   if (m.includes("expired") || m.includes("invalid"))
@@ -46,7 +53,30 @@ export default function LoginForm({
   const [cooldown, setCooldown] = useState(0);
   const [done, setDone] = useState(false);
 
+  const [captchaToken, setCaptchaToken] = useState("");
+
   const codeRef = useRef<HTMLInputElement>(null);
+  const turnstileRef = useRef<TurnstileInstance | undefined>(undefined);
+
+  const captchaReady = !TURNSTILE_SITE_KEY || captchaToken !== "";
+
+  // رمز Turnstile صالح لمرة واحدة: نمسحه ونطلب تحدياً جديداً بعد كل استخدام.
+  function resetCaptcha() {
+    setCaptchaToken("");
+    turnstileRef.current?.reset();
+  }
+
+  const captcha = TURNSTILE_SITE_KEY ? (
+    <Turnstile
+      ref={turnstileRef}
+      siteKey={TURNSTILE_SITE_KEY}
+      options={{ language: "ar", size: "flexible" }}
+      onSuccess={setCaptchaToken}
+      onExpire={() => setCaptchaToken("")}
+      onError={() => setCaptchaToken("")}
+      onTimeout={() => setCaptchaToken("")}
+    />
+  ) : null;
 
   // عدّاد إعادة الإرسال
   useEffect(() => {
@@ -64,15 +94,25 @@ export default function LoginForm({
     e?.preventDefault();
     if (busy || cooldown > 0) return;
 
+    if (!captchaReady) {
+      setError("انتظر اكتمال التحقق الأمني ثم حاول مجدداً.");
+      return;
+    }
+
     setBusy(true);
     setError("");
 
     const supabase = createClient();
     const { error: err } = await supabase.auth.signInWithOtp({
       email: email.trim(),
-      options: { shouldCreateUser: true },
+      options: {
+        shouldCreateUser: true,
+        ...(TURNSTILE_SITE_KEY ? { captchaToken } : {}),
+      },
     });
 
+    // استُهلك الرمز — نجح الطلب أو فشل
+    resetCaptcha();
     setBusy(false);
 
     if (err) {
@@ -172,11 +212,13 @@ export default function LoginForm({
           </p>
         )}
 
+        {captcha && <div className="mt-6">{captcha}</div>}
+
         <div className="flex items-center justify-center gap-4 mt-6 text-[13px]">
           <button
             type="button"
             onClick={() => sendCode()}
-            disabled={cooldown > 0 || busy}
+            disabled={cooldown > 0 || busy || !captchaReady}
             className="font-bold text-brand-ink hover:text-brand-dark transition disabled:text-ink-soft disabled:cursor-default"
           >
             {cooldown > 0 ? `إعادة الإرسال بعد ${cooldown} ثانية` : "أرسل رمزاً جديداً"}
@@ -190,6 +232,7 @@ export default function LoginForm({
               setStep("email");
               setError("");
               setCode("");
+              setCaptchaToken(""); // نموذج البريد يُنشئ تحدياً جديداً
             }}
             className="font-bold text-ink-soft hover:text-brand-dark transition"
           >
@@ -226,9 +269,11 @@ export default function LoginForm({
         className="w-full rounded-xl border border-border bg-background px-4 py-3 text-[15px] outline-none focus:border-brand-ink focus:ring-2 focus:ring-brand-ink/20 transition"
       />
 
+      {captcha}
+
       <button
         type="submit"
-        disabled={busy}
+        disabled={busy || !captchaReady}
         className="w-full rounded-xl bg-brand-ink text-white font-bold py-3.5 hover:bg-brand-dark transition disabled:opacity-60"
       >
         {busy ? "جارٍ الإرسال…" : submitLabel}
