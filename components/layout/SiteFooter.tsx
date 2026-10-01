@@ -5,6 +5,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import type { Category } from "@/lib/types";
 import { SITE, toArabicNumerals } from "@/lib/site.config";
+import FooterNewsletter from "./FooterNewsletter";
 
 export default async function SiteFooter() {
   const supabase = await createClient();
@@ -63,6 +64,9 @@ export default async function SiteFooter() {
         </div>
 
       </div>
+
+      {/* النشرة — شريط مدمج بين الأعمدة والسطر الأخير */}
+      <FooterNewsletter />
 
       {/* السطر الأخير */}
       <div className="wrap footer-bottom">
