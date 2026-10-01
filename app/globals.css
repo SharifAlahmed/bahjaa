@@ -2106,6 +2106,15 @@ body:has(.join-landing) > #main {
   }
 }
 
+/* الرئيسية: الصورة أولاً تحت ٨٦١px — هيدر ← صورة ← نص ← أزرار. سطح المكتب بلا تغيير.
+   الصورة داخل الحاوية بهوامش الجوال نفسها (بلا تكبير يخرجها عنها). */
+@media (max-width:860px){
+  .home-hero-v3{padding-block-start:16px;}
+  .home-hero-v3 .home-hero-grid{gap:28px;}
+  .home-hero-v3 .home-hero-visual{order:-1;}
+  .home-hero-v3 .home-hero-visual img{transform:none;}
+}
+
 
 /* ══ الرئيسية: Founder message refinement · سبتمبر ٢٠٢٦ ══ */
 .hm-founder-v3 .hm-founder-statement{
