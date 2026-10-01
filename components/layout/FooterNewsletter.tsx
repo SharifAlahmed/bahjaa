@@ -13,7 +13,9 @@ export default function FooterNewsletter() {
   if (PAGES_WITH_OWN_FORM.includes(pathname)) return null;
 
   return (
-    <div className="wrap footer-newsletter">
+    <div className="footer-news">
+      <p className="footer-news-title">رسالة بهجة الأسبوعية</p>
+      <p className="footer-news-desc">فكرة واحدة تستحق وقتك، كل أسبوع.</p>
       <NewsletterForm className="w-full" boxClassName="footer-newsletter-box" />
     </div>
   );

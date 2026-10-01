@@ -61,12 +61,10 @@ export default async function SiteFooter() {
         <div className="footer-col">
           <p className="footer-col-title">تواصل</p>
           <a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a>
+          <FooterNewsletter />
         </div>
 
       </div>
-
-      {/* النشرة — شريط مدمج بين الأعمدة والسطر الأخير */}
-      <FooterNewsletter />
 
       {/* السطر الأخير */}
       <div className="wrap footer-bottom">
