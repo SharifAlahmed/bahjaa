@@ -2319,6 +2319,33 @@ body:has(.join-landing) > #main {
   }
 }
 
+/* نشرة الفوتر: داخل عمود «تواصل» تحت البريد — عنوان ووصف منّا، وصف واحد للحقل والزر.
+   نموذج beehiiv إطار خارجي يحمل عنوانه وحشوته البيضاء (≈٨٠px من كل جهة) ولا يمكن تنسيق داخله؛
+   فنثبّته من أسفله ونقصّ ما عدا صف الحقل والزر، ونصغّره ٨٠٪ ليبقى نص الزر في سطر واحد.
+   إن تغيّر تصميم النموذج في beehiiv وجب مراجعة هذه القيم. */
+@media (min-width:761px){
+  .footer-grid{grid-template-columns:1.3fr 1fr 1fr minmax(300px,1.25fr);}
+  .footer-news{max-width:340px;}
+}
+.footer-news{margin-block-start:12px;width:100%;}
+.footer-news-title{
+  margin:0;font-size:14px;font-weight:600;line-height:1.7;color:var(--color-brand-dark);
+}
+.footer-news-desc{
+  margin:0 0 8px;font-size:13px;line-height:1.7;color:var(--color-ink-soft);
+}
+.footer-newsletter-box{
+  display:flex;flex-direction:column;justify-content:flex-end;
+  height:50px;overflow:hidden;border-radius:var(--radius-btn);
+}
+.footer-newsletter-box iframe{
+  flex:none;
+  width:calc(125% + 150px) !important;
+  margin-inline:calc(-12.5% - 75px);
+  margin-block-end:-57px;
+  transform:scale(.8);transform-origin:bottom center;
+}
+
 
 /* ══ عن بهجة: Concise authority refactor · سبتمبر ٢٠٢٦ ══ */
 /* الصفحة أصبحت رحلة هوية مختصرة: قصة ← مقصد ← قيم ← مؤسس ← وعد ← خطوة تالية */

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import type { Category } from "@/lib/types";
 import { SITE, toArabicNumerals } from "@/lib/site.config";
+import FooterNewsletter from "./FooterNewsletter";
 
 export default async function SiteFooter() {
   const supabase = await createClient();
@@ -60,6 +61,7 @@ export default async function SiteFooter() {
         <div className="footer-col">
           <p className="footer-col-title">تواصل</p>
           <a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a>
+          <FooterNewsletter />
         </div>
 
       </div>
