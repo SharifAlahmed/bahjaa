@@ -3002,9 +3002,28 @@ body:has(.join-landing) > #main {
 }
 
 @media(max-width:820px){
+  /* عمود واحد: القاعدة أعلاه تعيد العمودين فتلغي تصغير الشاشات الصغيرة السابق */
   .category-start-grid{
+    grid-template-columns:minmax(0,1fr);
     gap:28px;
   }
+  .category-start-card{justify-self:start;max-width:420px;}
+}
+/* الجوال: بطاقة «ابدأ من هنا» مدمجة — غلاف أقصر، حشوة أقل،
+   التقييم ومدة القراءة في صف واحد، والزر مع أزرار الحفظ في صف يليهما مباشرة */
+@media(max-width:600px){
+  .category-start-card .sc{
+    display:grid;grid-template-columns:minmax(0,1fr) auto;
+    column-gap:12px;align-items:baseline;
+    padding:10px 10px 12px;
+  }
+  .category-start-card .sc > *{grid-column:1 / -1;}
+  .category-start-card .sc > .rating-line,
+  .category-start-card .sc > .sc-time{grid-column:auto;margin-block-start:8px;}
+  .category-start-card .sc-cover-wrap{padding:16px 10px 14px;}
+  .category-start-card .sc-cover-wrap .bk{width:104px;}
+  .category-start-card .sc-actions{flex-wrap:nowrap;margin-block-start:0;padding-block-start:10px;}
+  .category-start-card .sc-cta{flex-basis:auto;min-height:44px;font-size:14px;}
 }
 @media(max-width:600px){
   .category-hero{
