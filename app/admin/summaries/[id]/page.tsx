@@ -11,6 +11,8 @@ import {
 import { EditorForm, type PublishedInfo } from "./editor-form";
 import { VersionHistory, type VersionItem } from "./version-history";
 import { DangerZone } from "./danger-zone";
+import { CoverPanel } from "./cover-panel";
+import { previousCovers } from "@/lib/admin/cover";
 
 export const dynamic = "force-dynamic";
 
@@ -71,6 +73,26 @@ export default async function SummaryEditorPage({
     .order("sort_order");
   const categories = (cats || []) as { id: string; name_ar: string }[];
 
+  // الأغلفة السابقة: روابط مميّزة من سجل النسخ (قراءة فقط)، والغلاف الحالي دائماً من الصف الحي
+  const { data: coverRows } = await supabase
+    .from("bh_summary_versions")
+    .select("id, cover_url:snapshot->>cover_url")
+    .eq("summary_id", id)
+    .order("id", { ascending: false })
+    .limit(200);
+  const coverPanel = (hasTextDraft: boolean) => (
+    <CoverPanel
+      summaryId={row.id}
+      isLive={row.status === "published"}
+      hasTextDraft={hasTextDraft}
+      initialCoverUrl={row.cover_url}
+      initialPrevious={previousCovers(
+        ((coverRows || []) as unknown as { cover_url: string | null }[]).map((c) => c.cover_url),
+        row.cover_url, process.env.NEXT_PUBLIC_SUPABASE_URL!, row.id,
+      )}
+    />
+  );
+
   // ── لم يُنشر قط: مسار الخطوة ٢ كما هو ──
   if (!row.first_published_at) {
     return (
@@ -84,6 +106,7 @@ export default async function SummaryEditorPage({
           publishBlocked={publish === "blocked"}
           published={null}
         />
+        {coverPanel(false)}
         <DangerZone summaryId={row.id} slug={row.slug} title={row.book_title_ar} isLive={false} />
       </>
     );
@@ -161,6 +184,7 @@ export default async function SummaryEditorPage({
         publishBlocked={publish === "blocked"}
         published={published}
       />
+      {coverPanel(!!draft)}
       <VersionHistory summaryId={row.id} slug={row.slug} hasDraft={!!draft} items={history} />
       <DangerZone summaryId={row.id} slug={row.slug} title={row.book_title_ar} isLive={row.status === "published"} />
     </>

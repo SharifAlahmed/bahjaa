@@ -11,6 +11,7 @@ import {
   type EditorValues, type Issue, type SectionId, type StoredSummary,
 } from "@/lib/admin/summary-content";
 import { changedSections, planPublish, type EditableContent } from "@/lib/admin/publish-flow";
+import { COVER_BUCKET, ownCoverObjectPath } from "@/lib/admin/cover";
 
 export type SaveResult =
   | { ok: true; updatedAt: string; values: EditorValues }
@@ -393,4 +394,47 @@ export async function deleteSummaryPermanently(
   revalidatePath("/categories");
   revalidatePath(`/s/${confirmSlug}`);
   return { ok: true };
+}
+
+export type CoverResult =
+  | { ok: true; coverUrl: string | null; updatedAt: string }
+  | { ok: false; message: string };
+
+/**
+ * تعيين غلاف الملخص أو إزالته — مباشرة على صف bh_summaries (المنشور والمسودة سواء)،
+ * ومشغّل اللقطات يحفظ الغلاف السابق في سجل النسخ. لا يمسّ النص ولا مسودة التعديلات.
+ * لا يُقبل إلا رابط داخل bh-covers يخص هذا الملخص نفسه، وكائنه موجود فعلاً.
+ */
+export async function setSummaryCover(id: string, coverUrl: string | null): Promise<CoverResult> {
+  const supabase = await admin();
+  if (!supabase) return { ok: false, message: "غير مصرّح." };
+
+  const { data: row } = await supabase
+    .from("bh_summaries").select("id, slug, cover_url, updated_at").eq("id", id).maybeSingle();
+  const current = row as { id: string; slug: string; cover_url: string | null; updated_at: string } | null;
+  if (!current) return { ok: false, message: "الملخص غير موجود." };
+
+  if (coverUrl !== null) {
+    const objectPath = ownCoverObjectPath(coverUrl, process.env.NEXT_PUBLIC_SUPABASE_URL!, id);
+    if (!objectPath) return { ok: false, message: "رابط الغلاف مرفوض: يجب أن يكون ملفاً مرفوعاً لهذا الملخص نفسه." };
+    const slash = objectPath.lastIndexOf("/");
+    const folder = slash === -1 ? "" : objectPath.slice(0, slash);
+    const name = objectPath.slice(slash + 1);
+    const { data: found, error: listError } = await supabase.storage.from(COVER_BUCKET).list(folder, { search: name, limit: 100 });
+    if (listError) return { ok: false, message: `تعذّر التحقق من ملف الغلاف: ${listError.message}` };
+    if (!(found || []).some((f) => f.name === name)) return { ok: false, message: "ملف الغلاف غير موجود في التخزين." };
+  }
+
+  if (current.cover_url === coverUrl) return { ok: true, coverUrl, updatedAt: current.updated_at };
+
+  const { data: updated, error } = await supabase
+    .from("bh_summaries").update({ cover_url: coverUrl }).eq("id", id).select("cover_url, updated_at").maybeSingle();
+  if (error || !updated) return { ok: false, message: `تعذّر تحديث الغلاف: ${error?.message ?? "لم يتغيّر أي صف"}` };
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/categories");
+  revalidatePath(`/s/${current.slug}`);
+  const fresh = updated as { cover_url: string | null; updated_at: string };
+  return { ok: true, coverUrl: fresh.cover_url, updatedAt: fresh.updated_at };
 }

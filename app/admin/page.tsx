@@ -7,7 +7,6 @@ import {
   unpublishSummary,
   setFeatured,
   unsetFeatured,
-  uploadCoverAction,
 } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -216,36 +215,6 @@ function Group({ title, rows, pendingIds, empty }: { title: string; rows: Row[];
                   )}
                 </div>
               </div>
-
-              {/* الصف الثاني: رفع الغلاف */}
-              <form
-                action={uploadCoverAction.bind(null, r.id, r.slug)}
-                encType="multipart/form-data"
-                className="mt-3 flex items-center gap-2 flex-wrap"
-              >
-                <label
-                  className="text-xs"
-                  style={{ color: "var(--color-ink-muted)" }}
-                  htmlFor={`cover-${r.id}`}
-                >
-                  غلاف الكتاب (JPG/PNG/WebP · ٢ ميغابايت كحد أقصى):
-                </label>
-                <input
-                  id={`cover-${r.id}`}
-                  type="file"
-                  name="cover"
-                  accept="image/jpeg,image/png,image/webp"
-                  className="text-xs"
-                  style={{ color: "var(--color-ink-soft)" }}
-                />
-                <button
-                  type="submit"
-                  className="px-3 py-1 rounded-lg border border-border text-xs font-bold transition"
-                  style={{ color: "var(--color-ink-soft)" }}
-                >
-                  رفع
-                </button>
-              </form>
             </div>
           ))}
         </div>
