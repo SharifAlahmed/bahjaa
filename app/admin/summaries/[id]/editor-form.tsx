@@ -23,11 +23,34 @@ type Props = {
 type TextDef = readonly [string, string, number];
 const fid = (field: string) => `f-${field.replaceAll(".", "-")}`;
 
+/** أسفل ما يغطّي أعلى الصفحة حين يلتصق: هيدر الموقع، وشريط المحرّر (لاصق على سطح المكتب فقط).
+    لكل عنصر لاصق: موضع التصاقه (top) + ارتفاعه؛ والنتيجة أبعدها عن أعلى الشاشة. */
+function stickyOffset(): number {
+  let offset = 0;
+  for (const selector of [".site-header", ".adm-top"]) {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (!el) continue;
+    const style = getComputedStyle(el);
+    if (style.position !== "sticky") continue;
+    offset = Math.max(offset, (parseFloat(style.top) || 0) + el.getBoundingClientRect().height);
+  }
+  return offset;
+}
+
+/** ينتقل إلى الحقل (أو عنصره، أو قسمه) ويضعه ظاهراً تحت الأشرطة اللاصقة ثم يركّز عليه */
 function focusField(field: string) {
-  const el = document.getElementById(fid(field)) ?? document.getElementById(`sec-${field.split(".")[0]}`);
+  const parts = field.split(".");
+  let el: HTMLElement | null = null;
+  // الحقل نفسه، ثم أقرب أصل له معرّف (عنصر القائمة ثم القائمة)، ثم القسم
+  for (let n = parts.length; n > 0 && !el; n--) el = document.getElementById(fid(parts.slice(0, n).join(".")));
+  if (!el) el = document.getElementById(`sec-${parts[0] === "meta" ? "basic" : parts[0]}`);
   if (!el) return;
-  el.scrollIntoView({ block: "center" });
-  if (el instanceof HTMLElement) el.focus({ preventScroll: true });
+  // العنوان (label) فوق الحقل يبقى ظاهراً أيضاً
+  const anchor = el.closest<HTMLElement>(".adm-field") ?? el;
+  const top = anchor.getBoundingClientRect().top + window.scrollY - stickyOffset() - 16;
+  // قفزة فورية: التمرير الناعم على نموذج طويل بطيء ويترك الحقل خارج الشاشة لحظة التركيز
+  window.scrollTo({ top: Math.max(0, top), behavior: "instant" });
+  el.focus({ preventScroll: true });
 }
 
 export function EditorForm({
