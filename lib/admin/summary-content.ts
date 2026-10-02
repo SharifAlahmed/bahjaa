@@ -340,7 +340,7 @@ export function mergeContent(
 }
 
 // ── التحقق ───────────────────────────────────────────────────
-/** أخطاء مانعة — نفسها للحفظ وللنشر */
+/** أخطاء الشكل والقيم — تمنع الحفظ والنشر معاً */
 export function validateValues(v: EditorValues, categoryIds: readonly string[] | null): Issue[] {
   const errors: Issue[] = [];
   const add = (field: string, section: SectionId, message: string) => errors.push({ field, section, message });
@@ -372,8 +372,10 @@ export function validateValues(v: EditorValues, categoryIds: readonly string[] |
   return errors;
 }
 
-/** ملاحظات اكتمال وتوصيات أعداد — لا تمنع الحفظ ولا النشر */
-export function completenessWarnings(v: EditorValues): Issue[] {
+/** شروط الاكتمال — تمنع النشر فقط، ولا تمنع الحفظ. المسودة يجوز أن تكون ناقصة؛ المنشور لا.
+    المطلوب: كل نصوص الأقسام، وقوائم غير فارغة، ومحاور واقتباسات مكتملة، والدرجات الثلاث ومبرّراتها.
+    «الفخ الشائع» اختياري، وأعداد القوائم توصيات لا شروط. */
+export function publishRequirements(v: EditorValues): Issue[] {
   const out: Issue[] = [];
   const add = (field: string, section: SectionId, message: string) => out.push({ field, section, message });
   const texts = (section: SectionId, values: Record<string, string>, defs: readonly (readonly [string, string, number])[]) => {
@@ -381,31 +383,46 @@ export function completenessWarnings(v: EditorValues): Issue[] {
   };
   texts("s1", v.s1, TEXT_FIELDS.s1);
   texts("s2", v.s2, TEXT_FIELDS.s2);
+  if (v.s3.questions.length === 0) add("s3.questions", "s3", "أضف سؤالاً واحداً على الأقل.");
+  v.s3.questions.forEach((q, i) => { if (!q.trim()) add(`s3.questions.${i}`, "s3", `السؤال ${ar(i + 1)} فارغ.`); });
   texts("s3", v.s3 as unknown as Record<string, string>, TEXT_FIELDS.s3);
   texts("s4", v.s4, TEXT_FIELDS.s4);
-  texts("s7", v.s7, TEXT_FIELDS.s7);
-  texts("s8", v.s8 as unknown as Record<string, string>, [...TEXT_FIELDS.s8a, ...TEXT_FIELDS.s8b]);
-  texts("s9", v.s9, TEXT_FIELDS.s9);
 
+  if (v.s5.length === 0) add("s5", "s5", "أضف محوراً واحداً على الأقل.");
+  v.s5.forEach((p, i) => {
+    if (!p.title.trim()) add(`s5.${i}.title`, "s5", `المحور ${ar(i + 1)} بلا عنوان.`);
+    if (!p.essence.trim()) add(`s5.${i}.essence`, "s5", `المحور ${ar(i + 1)} بلا جوهر.`);
+    if (!p.why_you.trim()) add(`s5.${i}.why_you`, "s5", `المحور ${ar(i + 1)} بلا «لماذا يهمك».`);
+  });
+  if (v.s6.length === 0) add("s6", "s6", "أضف اقتباساً واحداً على الأقل.");
+  v.s6.forEach((q, i) => {
+    if (!q.quote.trim()) add(`s6.${i}.quote`, "s6", `الاقتباس ${ar(i + 1)} فارغ.`);
+    if (!q.interpretation.trim()) add(`s6.${i}.interpretation`, "s6", `الاقتباس ${ar(i + 1)} بلا تفسير.`);
+  });
+  texts("s7", v.s7, TEXT_FIELDS.s7);
+  texts("s8", v.s8 as unknown as Record<string, string>, TEXT_FIELDS.s8a);
+  if (v.s8.week_plan.length === 0) add("s8.week_plan", "s8", "أضف خطوة واحدة على الأقل لخطة الأسبوع.");
+  v.s8.week_plan.forEach((q, i) => { if (!q.trim()) add(`s8.week_plan.${i}`, "s8", `خطوة الأسبوع ${ar(i + 1)} فارغة.`); });
+  texts("s8", v.s8 as unknown as Record<string, string>, TEXT_FIELDS.s8b);
+  texts("s9", v.s9, TEXT_FIELDS.s9);
+  for (const [key, jkey, label] of SCORE_FIELDS) {
+    if (!v.s10[key].trim()) add(`s10.${key}`, "s10", `درجة «${label}» فارغة.`);
+    if (!v.s10[jkey].trim()) add(`s10.${jkey}`, "s10", `مبرّر «${label}» فارغ.`);
+  }
+  return out;
+}
+
+/** توصيات أعداد القوائم — ناعمة: لا تمنع الحفظ ولا النشر */
+export function countRecommendations(v: EditorValues): Issue[] {
+  const out: Issue[] = [];
   const count = (field: string, section: SectionId, n: number, hint: { min: number; max: number; text: string }) => {
-    if (n < hint.min || n > hint.max) add(field, section, `${hint.text} (الموجود الآن: ${ar(n)}).`);
+    if (n > 0 && (n < hint.min || n > hint.max))
+      out.push({ field, section, message: `${hint.text} (الموجود الآن: ${ar(n)}).` });
   };
   count("s3.questions", "s3", v.s3.questions.length, LIST_HINTS.questions);
   count("s8.week_plan", "s8", v.s8.week_plan.length, LIST_HINTS.week_plan);
   count("s5", "s5", v.s5.length, LIST_HINTS.s5);
   count("s6", "s6", v.s6.length, LIST_HINTS.s6);
-
-  v.s3.questions.forEach((q, i) => { if (!q.trim()) add(`s3.questions.${i}`, "s3", `السؤال ${ar(i + 1)} فارغ.`); });
-  v.s8.week_plan.forEach((q, i) => { if (!q.trim()) add(`s8.week_plan.${i}`, "s8", `خطوة الأسبوع ${ar(i + 1)} فارغة.`); });
-  v.s5.forEach((p, i) => {
-    if (!p.title.trim()) add(`s5.${i}.title`, "s5", `المحور ${ar(i + 1)} بلا عنوان.`);
-    if (!p.essence.trim()) add(`s5.${i}.essence`, "s5", `المحور ${ar(i + 1)} بلا جوهر.`);
-  });
-  v.s6.forEach((q, i) => { if (!q.quote.trim()) add(`s6.${i}.quote`, "s6", `الاقتباس ${ar(i + 1)} فارغ.`); });
-  for (const [key, jkey, label] of SCORE_FIELDS) {
-    if (!v.s10[key].trim()) add(`s10.${key}`, "s10", `درجة «${label}» فارغة.`);
-    if (!v.s10[jkey].trim()) add(`s10.${jkey}`, "s10", `مبرّر «${label}» فارغ.`);
-  }
   return out;
 }
 
@@ -477,12 +494,15 @@ export function sizeIssue(contentFree: unknown, contentFull: unknown): Issue | n
   };
 }
 
-/** التحقق من الصف المخزَّن كما هو — يُستخدم قبل النشر مباشرة */
+/** التحقق من الصف المخزَّن كما هو — يُستخدم قبل النشر مباشرة.
+    = تحقق الحفظ (validateValues + الأنواع + الحجم) + شروط اكتمال النشر. */
 export function validateStored(row: StoredSummary, categoryIds: readonly string[] | null): Issue[] {
+  const values = toEditorValues(row);
   const size = sizeIssue(row.content_free, row.content_full);
   return [
-    ...validateValues(toEditorValues(row), categoryIds),
+    ...validateValues(values, categoryIds),
     ...structuralIssues(row.content_free, row.content_full),
     ...(size ? [size] : []),
+    ...publishRequirements(values),
   ];
 }

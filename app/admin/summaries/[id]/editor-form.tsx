@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useState, useTransition } from "react"
 import { toArabicNumerals } from "@/lib/site.config";
 import {
   LIST_HINTS, MINUTES_MAX, MINUTES_MIN, PILLAR_FIELDS, QUOTE_FIELDS, SCORE_FIELDS, SECTIONS, TEXT_FIELDS,
-  completenessWarnings, validateValues,
+  countRecommendations, publishRequirements, validateValues,
   type EditorValues, type Issue, type SectionId,
 } from "@/lib/admin/summary-content";
 import { publishFromEditor, saveDraftSummary } from "./actions";
@@ -43,16 +43,20 @@ export function EditorForm({
       ? { tone: "error", text: "لم يُنشر الملخص: صحّح الحقول المعلَّمة ثم احفظ وأعد المحاولة." }
       : null,
   );
+  // شروط اكتمال النشر تُعلَّم على الحقول بعد محاولة نشر فقط — المسودة الناقصة ليست خطأً
+  const [showRequired, setShowRequired] = useState(publishBlocked);
   const [saving, startSaving] = useTransition();
   const [publishing, startPublishing] = useTransition();
 
   const categoryIds = useMemo(() => categories.map((c) => c.id), [categories]);
   const errors = useMemo(() => validateValues(values, categoryIds), [values, categoryIds]);
-  const warnings = useMemo(() => completenessWarnings(values), [values]);
+  const required = useMemo(() => publishRequirements(values), [values]);
+  const recommendations = useMemo(() => countRecommendations(values), [values]);
   const dirty = JSON.stringify(values) !== baseline;
   const allErrors = useMemo(() => [...errors, ...serverIssues], [errors, serverIssues]);
-  const errorOf = (field: string) => allErrors.find((i) => i.field === field)?.message;
-  const sectionHasError = (s: SectionId) => allErrors.some((i) => i.section === s);
+  const marked = useMemo(() => (showRequired ? [...allErrors, ...required] : allErrors), [allErrors, required, showRequired]);
+  const errorOf = (field: string) => marked.find((i) => i.field === field)?.message;
+  const sectionHasError = (s: SectionId) => marked.some((i) => i.section === s);
 
   const update = useCallback((fn: (draft: EditorValues) => void) => {
     setValues((prev) => {
@@ -73,7 +77,7 @@ export function EditorForm({
   // عند رفض النشر: الانتقال إلى أول حقل فيه خطأ
   useEffect(() => {
     if (!publishBlocked) return;
-    const first = [...validateValues(initialValues, categoryIds), ...storedIssues][0];
+    const first = [...validateValues(initialValues, categoryIds), ...storedIssues, ...publishRequirements(initialValues)][0];
     if (first) focusField(first.field);
     // مرة واحدة عند التحميل
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,6 +110,13 @@ export function EditorForm({
 
   function onPublish() {
     if (dirty || allErrors.length) return;
+    if (required.length) {
+      // الملخص الناقص لا يُنشر: نعلّم الحقول الناقصة وننتقل إلى أولها (والخادم يفرض الشرط نفسه)
+      setShowRequired(true);
+      setMessage({ tone: "error", text: "لم يُنشر الملخص: أكمل الحقول المطلوبة للنشر ثم احفظ." });
+      focusField(required[0].field);
+      return;
+    }
     startPublishing(async () => {
       await publishFromEditor(id, savedSlug);
     });
@@ -139,7 +150,7 @@ export function EditorForm({
         className="adm-btn"
         onClick={onPublish}
         disabled={busy || dirty || allErrors.length > 0}
-        title={dirty ? "احفظ التغييرات أولاً" : allErrors.length ? "صحّح الأخطاء أولاً" : undefined}
+        title={dirty ? "احفظ التغييرات أولاً" : allErrors.length ? "صحّح الأخطاء أولاً" : required.length ? "أكمل الحقول المطلوبة للنشر" : undefined}
       >
         {publishing ? "جارٍ النشر…" : "نشر"}
       </button>
@@ -212,6 +223,7 @@ export function EditorForm({
       <div className="adm-field" id={fid(field)} tabIndex={-1}>
         <p className="adm-label">{label} <span className="adm-count">({toArabicNumerals(list.length)})</span></p>
         <p className="adm-hint">{hint}</p>
+        {errorOf(field) ? <p className="adm-error">{errorOf(field)}</p> : null}
         {list.map((v, i) => (
           <div className="adm-row" key={i}>
             <span className="adm-row-n" aria-hidden="true">{toArabicNumerals(i + 1)}</span>
@@ -221,6 +233,7 @@ export function EditorForm({
               rows={2}
               value={v}
               aria-label={`${itemLabel} ${toArabicNumerals(i + 1)}`}
+              aria-invalid={errorOf(`${field}.${i}`) ? true : undefined}
               onChange={(e) => update((d) => { get(d)[i] = e.target.value; })}
             />
             {itemControls(
@@ -358,6 +371,7 @@ export function EditorForm({
           {card("s5", (
             <div id={fid("s5")} tabIndex={-1}>
               <p className="adm-hint">{LIST_HINTS.s5.text} · الموجود الآن: {toArabicNumerals(values.s5.length)}</p>
+              {errorOf("s5") ? <p className="adm-error">{errorOf("s5")}</p> : null}
               {values.s5.map((p, i) => (
                 <div className="adm-item" key={i} id={fid(`s5.${i}`)}>
                   <div className="adm-item-head">
@@ -383,6 +397,7 @@ export function EditorForm({
           {card("s6", (
             <div id={fid("s6")} tabIndex={-1}>
               <p className="adm-hint">{LIST_HINTS.s6.text} · الموجود الآن: {toArabicNumerals(values.s6.length)}</p>
+              {errorOf("s6") ? <p className="adm-error">{errorOf("s6")}</p> : null}
               {values.s6.map((q, i) => (
                 <div className="adm-item" key={i} id={fid(`s6.${i}`)}>
                   <div className="adm-item-head">
@@ -441,11 +456,27 @@ export function EditorForm({
                 </ul>
               </div>
             ) : null}
-            {warnings.length > 0 ? (
-              <details className="adm-checklist">
-                <summary>ملاحظات اكتمال لا تمنع الحفظ ({toArabicNumerals(warnings.length)})</summary>
+            {required.length > 0 ? (
+              <div className="adm-required">
+                <p>مطلوب قبل النشر ({toArabicNumerals(required.length)}) — لا يمنع الحفظ:</p>
                 <ul>
-                  {warnings.map((i) => (
+                  {required.map((i) => (
+                    <li key={i.field + i.message}>
+                      <button type="button" className="adm-link" onClick={() => focusField(i.field)}>
+                        {SECTIONS.find((s) => s.id === i.section)?.title}: {i.message}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="adm-hint">المحتوى مكتمل للنشر.</p>
+            )}
+            {recommendations.length > 0 ? (
+              <details className="adm-checklist">
+                <summary>توصيات لا تمنع الحفظ ولا النشر ({toArabicNumerals(recommendations.length)})</summary>
+                <ul>
+                  {recommendations.map((i) => (
                     <li key={i.field + i.message}>
                       <button type="button" className="adm-link" onClick={() => focusField(i.field)}>
                         {SECTIONS.find((s) => s.id === i.section)?.title}: {i.message}
@@ -454,9 +485,7 @@ export function EditorForm({
                   ))}
                 </ul>
               </details>
-            ) : (
-              <p className="adm-hint">لا ملاحظات اكتمال.</p>
-            )}
+            ) : null}
             <div className="adm-save-row">
               <span className="adm-state" data-state={state} role="status">{stateText}</span>
               {actions}

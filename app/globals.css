@@ -3099,6 +3099,9 @@ body:has(.join-landing) > #main {
 .adm-notice{background:var(--color-danger-wash);border:1px solid var(--rule);border-inline-start:3px solid var(--color-danger);color:var(--ink);}
 .adm-notice p{margin:0;font-weight:700;}
 .adm-notice ul,.adm-checklist ul{margin:8px 0 0;padding-inline-start:20px;}
+.adm-required{margin:0 0 12px;padding:12px 14px;border:1px solid var(--rule);border-inline-start:3px solid var(--color-accent-ink);border-radius:var(--radius-sm);font-size:14px;line-height:1.9;color:var(--ink);}
+.adm-required p{margin:0;font-weight:700;}
+.adm-required ul{margin:8px 0 0;padding-inline-start:20px;}
 .adm-checklist{margin:0;font-size:14px;line-height:1.9;color:var(--ink-soft);}
 .adm-checklist summary{cursor:pointer;font-weight:700;color:var(--ink);}
 
