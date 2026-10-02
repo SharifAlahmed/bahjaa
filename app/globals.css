@@ -3120,6 +3120,13 @@ body:has(.join-landing) > #main {
 .adm-history-wrap{padding-block:0 96px;}
 .adm-editor:has(+ .adm-history-wrap){padding-block-end:14px;}
 .sr-admin-links{display:flex;flex-wrap:wrap;gap:6px 16px;font-weight:400 !important;}
+.adm-history-wrap:has(+ .adm-danger-wrap){padding-block-end:14px;}
+.adm-danger{border-color:var(--color-danger);}
+.adm-danger .adm-card-head h2,.adm-danger-lead{color:var(--color-danger);}
+.adm-danger-lead{margin:6px 0 0;font-size:15px;font-weight:700;line-height:1.8;}
+.adm-danger-list{margin:8px 0 0;padding-inline-start:20px;font-size:14px;line-height:1.9;color:var(--ink);}
+.adm-danger-slug{font-weight:400;overflow-wrap:anywhere;}
+.adm-danger-actions{margin-block-start:14px;}
 .adm-history{list-style:none;margin:12px 0 0;padding:0;}
 .adm-history-item{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px 16px;padding-block:14px;border-block-start:1px solid var(--rule);}
 .adm-history-main{flex:1;min-width:220px;}
