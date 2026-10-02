@@ -56,13 +56,6 @@ export async function unpublishSummary(id: string, slug?: string) {
   refresh(slug);
 }
 
-export async function deleteSummary(id: string, slug?: string) {
-  const supabase = await guard();
-  const { error } = await supabase.from("bh_summaries").delete().eq("id", id);
-  assertMutationSucceeded(error);
-  refresh(slug);
-}
-
 /** تمييز ملخص كأبرز ملخص في الصفحة الرئيسية — ملخص واحد فقط في أي وقت */
 export async function setFeatured(id: string, slug?: string) {
   const supabase = await guard();

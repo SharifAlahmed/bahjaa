@@ -5,7 +5,6 @@ import { getAdminEmail } from "@/lib/supabase/admin";
 import {
   publishSummary,
   unpublishSummary,
-  deleteSummary,
   setFeatured,
   unsetFeatured,
   uploadCoverAction,
@@ -32,7 +31,12 @@ type Row = {
   bh_categories: { name_ar: string } | null;
 };
 
-export default async function AdminPage() {
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ deleted?: string }>;
+}) {
+  const { deleted } = await searchParams;
   const email = await getAdminEmail();
 
   if (!email) {
@@ -90,6 +94,12 @@ export default async function AdminPage() {
           نشر. لا حاجة لأي تحرير في المتصفح.
         </p>
       </div>
+
+      {deleted ? (
+        <div className="bh-card p-4 mt-6" role="status">
+          <p className="bh-body">حُذف الملخص نهائياً.</p>
+        </div>
+      ) : null}
 
       <Group title="المسودات — بانتظار مراجعتك" rows={drafts} pendingIds={pendingIds} empty="لا توجد مسودات." />
       <Group title="المنشور" rows={published} pendingIds={pendingIds} empty="لم تنشر شيئاً بعد." />
@@ -204,15 +214,6 @@ function Group({ title, rows, pendingIds, empty }: { title: string; rows: Row[];
                       </button>
                     </form>
                   )}
-
-                  <form action={deleteSummary.bind(null, r.id, r.slug)}>
-                    <button
-                      className="px-3 py-1.5 rounded-lg text-sm font-bold transition hover:bg-red-50"
-                      style={{ color: "var(--color-danger)" }}
-                    >
-                      حذف
-                    </button>
-                  </form>
                 </div>
               </div>
 

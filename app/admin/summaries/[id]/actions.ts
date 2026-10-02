@@ -368,3 +368,29 @@ export async function restoreSummaryVersion(
   revalidatePath("/admin");
   return { ok: true };
 }
+
+/**
+ * الحذف النهائي (منطقة الخطر): عبر bh_delete_summary فقط، ويتطلب المسار (slug) المطابق حرفياً.
+ * قاعدة البيانات ترفض الحذف إن وُجدت تعديلات غير منشورة.
+ */
+export async function deleteSummaryPermanently(
+  id: string,
+  confirmSlug: string,
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  const supabase = await admin();
+  if (!supabase) return { ok: false, message: "غير مصرّح." };
+
+  const { error } = await supabase.rpc("bh_delete_summary", { p_summary_id: id, p_confirm_slug: confirmSlug });
+  if (error) {
+    if (error.code === "23514" && error.message.includes("unpublished changes"))
+      return { ok: false, message: "لم يُحذف الملخص: لديه تعديلات غير منشورة. انشرها أو تراجع عنها أولاً ثم أعد المحاولة." };
+    if (error.message.includes("confirmation slug"))
+      return { ok: false, message: "لم يُحذف الملخص: المسار المكتوب لا يطابق مسار هذا الملخص." };
+    return { ok: false, message: `لم يُحذف الملخص: ${error.message}` };
+  }
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/categories");
+  revalidatePath(`/s/${confirmSlug}`);
+  return { ok: true };
+}

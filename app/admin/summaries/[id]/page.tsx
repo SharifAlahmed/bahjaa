@@ -10,6 +10,7 @@ import {
 } from "@/lib/admin/publish-flow";
 import { EditorForm, type PublishedInfo } from "./editor-form";
 import { VersionHistory, type VersionItem } from "./version-history";
+import { DangerZone } from "./danger-zone";
 
 export const dynamic = "force-dynamic";
 
@@ -73,15 +74,18 @@ export default async function SummaryEditorPage({
   // ── لم يُنشر قط: مسار الخطوة ٢ كما هو ──
   if (!row.first_published_at) {
     return (
-      <EditorForm
-        id={row.id}
-        initialValues={toEditorValues(row)}
-        initialUpdatedAt={row.updated_at}
-        categories={categories}
-        storedIssues={structuralIssues(row.content_free, row.content_full)}
-        publishBlocked={publish === "blocked"}
-        published={null}
-      />
+      <>
+        <EditorForm
+          id={row.id}
+          initialValues={toEditorValues(row)}
+          initialUpdatedAt={row.updated_at}
+          categories={categories}
+          storedIssues={structuralIssues(row.content_free, row.content_full)}
+          publishBlocked={publish === "blocked"}
+          published={null}
+        />
+        <DangerZone summaryId={row.id} slug={row.slug} title={row.book_title_ar} isLive={false} />
+      </>
     );
   }
 
@@ -158,6 +162,7 @@ export default async function SummaryEditorPage({
         published={published}
       />
       <VersionHistory summaryId={row.id} slug={row.slug} hasDraft={!!draft} items={history} />
+      <DangerZone summaryId={row.id} slug={row.slug} title={row.book_title_ar} isLive={row.status === "published"} />
     </>
   );
 }
