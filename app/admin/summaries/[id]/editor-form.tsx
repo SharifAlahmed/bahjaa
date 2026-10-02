@@ -9,7 +9,25 @@ import {
   countRecommendations, publishRequirements, validateValues,
   type EditorValues, type Issue, type SectionId,
 } from "@/lib/admin/summary-content";
-import { publishFromEditor, saveDraftSummary } from "./actions";
+import {
+  discardSummaryEdits, publishFromEditor, publishSummaryEdits, saveDraftSummary, saveSummaryEdits,
+} from "./actions";
+
+/** ملخص سبق نشره: تعديلاته تُحفظ في مسودة ولا تمس النسخة الحية حتى «نشر التعديلات» */
+export type PublishedInfo = {
+  /** ظاهر للعموم الآن؟ (سبق نشره لكنه مخفي حالياً = false) */
+  isLive: boolean;
+  slug: string;
+  firstPublished: string;
+  lastPublishedUpdate: string;
+  hasDraft: boolean;
+  draftUpdatedAt: string | null;
+  /** updated_at للنسخة الحية كما حُمّلت مع الصفحة — أساس أول حفظ */
+  liveUpdatedAt: string;
+  /** أقسام تغيّرت في النسخة الحية بعد بدء المسودة، أو null */
+  liveChanged: SectionId[] | null;
+  done: "published" | "discarded" | "restored" | null;
+};
 
 type Props = {
   id: string;
@@ -18,7 +36,19 @@ type Props = {
   categories: { id: string; name_ar: string }[];
   storedIssues: Issue[];
   publishBlocked: boolean;
+  /** null = مسودة لم تُنشر قط (الخطوة ٢) */
+  published: PublishedInfo | null;
 };
+
+type Conflict = { liveUpdatedAt: string; changed: SectionId[]; again: boolean };
+
+const DONE_TEXT = {
+  published: "نُشرت التعديلات. النسخة السابقة محفوظة في سجل النسخ.",
+  discarded: "أُزيلت التعديلات غير المنشورة. النسخة الحية لم تتغيّر.",
+  restored: "حُمّلت النسخة السابقة في المسودة. راجعها ثم انشر التعديلات — لم يُنشر شيء بعد.",
+} as const;
+
+const sectionTitle = (id: SectionId) => SECTIONS.find((s) => s.id === id)?.title ?? id;
 
 type TextDef = readonly [string, string, number];
 const fid = (field: string) => `f-${field.replaceAll(".", "-")}`;
@@ -54,7 +84,7 @@ function focusField(field: string) {
 }
 
 export function EditorForm({
-  id, initialValues, initialUpdatedAt, categories, storedIssues, publishBlocked,
+  id, initialValues, initialUpdatedAt, categories, storedIssues, publishBlocked, published,
 }: Props) {
   const [values, setValues] = useState<EditorValues>(initialValues);
   const [baseline, setBaseline] = useState(() => JSON.stringify(initialValues));
@@ -64,8 +94,16 @@ export function EditorForm({
   const [message, setMessage] = useState<{ tone: "ok" | "error"; text: string } | null>(
     publishBlocked
       ? { tone: "error", text: "لم يُنشر الملخص: صحّح الحقول المعلَّمة ثم احفظ وأعد المحاولة." }
-      : null,
+      : published?.done
+        ? { tone: "ok", text: DONE_TEXT[published.done] }
+        : null,
   );
+  // حالة مسودة الملخص المنشور
+  const [hasDraft, setHasDraft] = useState(published?.hasDraft ?? false);
+  const [draftUpdatedAt, setDraftUpdatedAt] = useState(published?.draftUpdatedAt ?? null);
+  const [conflict, setConflict] = useState<Conflict | null>(null);
+  const [confirming, setConfirming] = useState<"discard" | "overwrite" | null>(null);
+  const [discarding, startDiscarding] = useTransition();
   // شروط اكتمال النشر تُعلَّم على الحقول بعد محاولة نشر فقط — المسودة الناقصة ليست خطأً
   const [showRequired, setShowRequired] = useState(publishBlocked);
   const [saving, startSaving] = useTransition();
@@ -112,6 +150,26 @@ export function EditorForm({
       focusField(errors[0].field);
       return;
     }
+    if (published) {
+      startSaving(async () => {
+        const res = await saveSummaryEdits(id, values, { draftUpdatedAt, liveUpdatedAt: published.liveUpdatedAt });
+        if (res.ok) {
+          setValues(res.values);
+          setBaseline(JSON.stringify(res.values));
+          setHasDraft(true);
+          setDraftUpdatedAt(res.draftUpdatedAt);
+          setServerIssues([]);
+          setMessage({ tone: "ok", text: "حُفظت المسودة. النسخة الحية لم تتغيّر." });
+        } else if (res.kind === "validation") {
+          setServerIssues(res.issues);
+          setMessage({ tone: "error", text: "لم تُحفظ المسودة: صحّح الحقول المعلَّمة." });
+          if (res.issues[0]) focusField(res.issues[0].field);
+        } else {
+          setMessage({ tone: "error", text: res.message });
+        }
+      });
+      return;
+    }
     startSaving(async () => {
       const res = await saveDraftSummary(id, values, updatedAt);
       if (res.ok) {
@@ -140,45 +198,119 @@ export function EditorForm({
       focusField(required[0].field);
       return;
     }
+    if (published) {
+      publishEdits(null);
+      return;
+    }
     startPublishing(async () => {
       await publishFromEditor(id, savedSlug);
     });
   }
 
-  const busy = saving || publishing;
+  /** نشر تعديلات ملخص منشور. overwrite = توقيت النسخة الحية التي أكّد الأدمن الكتابة فوقها */
+  function publishEdits(overwrite: { liveUpdatedAt: string } | null) {
+    if (!draftUpdatedAt) return;
+    setConfirming(null);
+    startPublishing(async () => {
+      const res = await publishSummaryEdits(id, draftUpdatedAt, overwrite);
+      if (res.ok) {
+        window.location.assign(`/admin/summaries/${id}?done=published`);
+      } else if (res.kind === "validation") {
+        setServerIssues(res.issues);
+        setShowRequired(true);
+        setMessage({ tone: "error", text: "لم تُنشر التعديلات: صحّح الحقول المعلَّمة ثم احفظ المسودة." });
+        if (res.issues[0]) focusField(res.issues[0].field);
+      } else if (res.kind === "conflict") {
+        setConflict({ liveUpdatedAt: res.liveUpdatedAt, changed: res.changed, again: res.again });
+        setDraftUpdatedAt(res.draftUpdatedAt);   // قد تكون المسودة أُعيد تأسيسها قبل أن يوقف الحارس النشر
+        setMessage({
+          tone: "error",
+          text: res.again
+            ? "تغيّرت النسخة الحية مرة أخرى. لم يُنشر شيء — راجعها ثم أكّد من جديد."
+            : "لم تُنشر التعديلات: تغيّر محتوى النسخة الحية بعد بدء هذه المسودة.",
+        });
+        document.getElementById("adm-conflict")?.scrollIntoView({ block: "center" });
+      } else {
+        setMessage({ tone: "error", text: res.message });
+      }
+    });
+  }
+
+  function onDiscard() {
+    setConfirming(null);
+    startDiscarding(async () => {
+      const res = await discardSummaryEdits(id);
+      if (res.ok) window.location.assign(`/admin/summaries/${id}?done=discarded`);
+      else setMessage({ tone: "error", text: res.message });
+    });
+  }
+
+  const busy = saving || publishing || discarding;
   const state = saving ? "saving" : dirty ? "dirty" : "saved";
   const stateText = saving
     ? "جارٍ الحفظ…"
     : dirty
       ? "تغييرات غير محفوظة"
-      : "كل التغييرات محفوظة";
+      : published
+        ? hasDraft ? "المسودة محفوظة" : "لا تعديلات غير محفوظة"
+        : "كل التغييرات محفوظة";
+  const labels = published
+    ? { save: "حفظ المسودة", preview: "معاينة التعديلات", publish: "نشر التعديلات", publishing: "جارٍ نشر التعديلات…" }
+    : { save: "حفظ", preview: "معاينة", publish: "نشر", publishing: "جارٍ النشر…" };
+  const previewSlug = published ? published.slug : savedSlug;
+  const publishDisabled = busy || dirty || allErrors.length > 0 || (!!published && !hasDraft);
 
   const actions = (
     <div className="adm-actions">
       <button type="button" className="adm-btn adm-btn-primary" onClick={onSave} disabled={busy || !dirty}>
-        حفظ
+        {labels.save}
       </button>
       <a
         className="adm-btn"
-        href={`/admin/preview/${savedSlug}`}
+        href={`/admin/preview/${previewSlug}`}
         target="_blank"
         rel="noreferrer"
         aria-disabled={dirty || busy}
         title={dirty ? "احفظ التغييرات أولاً" : undefined}
       >
-        معاينة
+        {labels.preview}
       </a>
       <button
         type="button"
         className="adm-btn"
         onClick={onPublish}
-        disabled={busy || dirty || allErrors.length > 0}
-        title={dirty ? "احفظ التغييرات أولاً" : allErrors.length ? "صحّح الأخطاء أولاً" : required.length ? "أكمل الحقول المطلوبة للنشر" : undefined}
+        disabled={publishDisabled}
+        title={
+          dirty ? "احفظ التغييرات أولاً"
+            : allErrors.length ? "صحّح الأخطاء أولاً"
+              : published && !hasDraft ? "لا تعديلات غير منشورة"
+                : required.length ? "أكمل الحقول المطلوبة للنشر" : undefined
+        }
       >
-        {publishing ? "جارٍ النشر…" : "نشر"}
+        {publishing ? labels.publishing : labels.publish}
       </button>
     </div>
   );
+
+  /* التراجع عن التعديلات غير المنشورة — بتأكيد من خطوتين */
+  const discardConfirm = (
+    <div className="adm-confirm" role="alertdialog" aria-label="تأكيد التراجع">
+      <p>ستُحذف التعديلات غير المنشورة نهائياً، وتبقى النسخة الحية كما هي.</p>
+      <div className="adm-actions">
+        <button type="button" className="adm-btn adm-btn-danger" onClick={onDiscard} disabled={busy}>
+          {discarding ? "جارٍ التراجع…" : "نعم، تراجع عن التعديلات"}
+        </button>
+        <button type="button" className="adm-btn" onClick={() => setConfirming(null)} disabled={busy}>إلغاء</button>
+      </div>
+    </div>
+  );
+  const discardControl = published && hasDraft ? (
+    confirming === "discard" && !conflict ? discardConfirm : (
+      <button type="button" className="adm-btn adm-btn-danger" onClick={() => setConfirming("discard")} disabled={busy}>
+        التراجع عن التعديلات غير المنشورة
+      </button>
+    )
+  ) : null;
 
   // ── عناصر الحقول ──────────────────────────────────────────
   const text = (
@@ -294,10 +426,32 @@ export function EditorForm({
       <div className="adm-top">
         <div className="adm-bar">
           <div className="adm-bar-title">
-            <p className="adm-bar-meta">
-              <Link href="/admin" className="textlink">اللوحة</Link> · مسودة — لم تُنشر بعد
-            </p>
+            {published ? (
+              <p className="adm-bar-meta">
+                <Link href="/admin" className="textlink">اللوحة</Link>
+                {published.isLive ? (
+                  <span className="adm-chip" data-tone="live">منشور</span>
+                ) : (
+                  <>
+                    <span className="adm-chip" data-tone="off">غير منشور حالياً</span>
+                    <span className="adm-chip">سبق نشره</span>
+                  </>
+                )}
+                <span className="adm-chip" data-tone={hasDraft ? "pending" : undefined}>
+                  {hasDraft ? "لديه تعديلات غير منشورة" : "لا تعديلات غير منشورة"}
+                </span>
+              </p>
+            ) : (
+              <p className="adm-bar-meta">
+                <Link href="/admin" className="textlink">اللوحة</Link> · مسودة — لم تُنشر بعد
+              </p>
+            )}
             <h1>{values.meta.book_title_ar || "ملخص بلا عنوان"}</h1>
+            {published ? (
+              <p className="adm-bar-meta">
+                نُشر أول مرة: {published.firstPublished} · آخر تحديث منشور: {published.lastPublishedUpdate}
+              </p>
+            ) : null}
           </div>
           <span className="adm-state" data-state={state} role="status">{stateText}</span>
           {actions}
@@ -308,6 +462,56 @@ export function EditorForm({
           </p>
         ) : null}
       </div>
+
+      {published && !published.isLive ? (
+        <p className="adm-flash">
+          هذا الملخص غير ظاهر للعموم حالياً. نشر التعديلات يحدّث محتواه فقط ولا يعيد إظهاره.
+        </p>
+      ) : null}
+
+      {published?.liveChanged && !conflict ? (
+        <div className="adm-notice" role="status">
+          <p>تغيّر محتوى النسخة الحية بعد بدء هذه المسودة.</p>
+          <p className="adm-notice-sub">
+            الأقسام المتغيّرة: {published.liveChanged.map(sectionTitle).join("، ")}. سيُطلب منك القرار عند النشر.
+          </p>
+        </div>
+      ) : null}
+
+      {conflict ? (
+        <div className="adm-notice adm-conflict" id="adm-conflict" role="alertdialog" aria-label="تعارض مع النسخة الحية">
+          <p>{conflict.again ? "تغيّرت النسخة الحية مرة أخرى." : "تغيّر محتوى النسخة الحية بعد بدء هذه المسودة."} لم يُنشر شيء.</p>
+          {conflict.changed.length > 0 ? (
+            <p className="adm-notice-sub">الأقسام المتغيّرة في النسخة الحية: {conflict.changed.map(sectionTitle).join("، ")}.</p>
+          ) : null}
+          {confirming === "overwrite" ? (
+            <div className="adm-confirm">
+              <p>ستستبدل تعديلاتُك محتوى النسخة الحية الحالية. تبقى النسخة الحالية في سجل النسخ ويمكن استرجاعها.</p>
+              <div className="adm-actions">
+                <button
+                  type="button" className="adm-btn adm-btn-danger" disabled={busy}
+                  onClick={() => publishEdits({ liveUpdatedAt: conflict.liveUpdatedAt })}
+                >
+                  {publishing ? "جارٍ النشر…" : "نعم، انشر تعديلاتي فوق النسخة الحية"}
+                </button>
+                <button type="button" className="adm-btn" onClick={() => setConfirming(null)} disabled={busy}>إلغاء</button>
+              </div>
+            </div>
+          ) : confirming === "discard" ? discardConfirm : (
+            <div className="adm-actions">
+              <a className="adm-btn" href={`/admin/preview/${previewSlug}?v=live`} target="_blank" rel="noreferrer">
+                عرض النسخة الحية الحالية
+              </a>
+              <button type="button" className="adm-btn" onClick={() => setConfirming("discard")} disabled={busy}>
+                التراجع عن تعديلاتي
+              </button>
+              <button type="button" className="adm-btn adm-btn-danger" onClick={() => setConfirming("overwrite")} disabled={busy}>
+                نشر تعديلاتي فوق النسخة الحية
+              </button>
+            </div>
+          )}
+        </div>
+      ) : null}
 
       {/* الجوال: قائمة منسدلة مدمجة بدل الشريط الجانبي */}
       <div className="adm-jump">
@@ -325,6 +529,8 @@ export function EditorForm({
           {SECTIONS.map((s) => (
             <option key={s.id} value={s.id}>{navLabel(s)}{sectionHasError(s.id) ? " — فيه خطأ" : ""}</option>
           ))}
+          <option value="save">الحفظ والمعاينة</option>
+          {published ? <option value="history">سجل النسخ</option> : null}
         </select>
       </div>
 
@@ -338,6 +544,8 @@ export function EditorForm({
                 </a>
               </li>
             ))}
+            <li><a href="#sec-save">الحفظ والمعاينة</a></li>
+            {published ? <li><a href="#sec-history">سجل النسخ</a></li> : null}
           </ul>
         </nav>
 
@@ -372,10 +580,18 @@ export function EditorForm({
                   (v) => update((d) => { d.meta.reading_minutes = v; }),
                   { type: "number", dir: "ltr", hint: `من ${toArabicNumerals(MINUTES_MIN)} إلى ${toArabicNumerals(MINUTES_MAX)} دقيقة.` })}
               </div>
-              {text("meta.slug", "المسار (slug)", values.meta.slug,
-                (v) => update((d) => { d.meta.slug = v; }),
-                { dir: "ltr", hint: "لا يتغيّر تلقائياً عند تعديل العنوان. يُقفل نهائياً بعد أول نشر." })}
-              <p className="adm-url" dir="ltr">bahjaa.com/s/{values.meta.slug || "…"}</p>
+              {published ? (
+                <div className="adm-field">
+                  <label className="adm-label" htmlFor={fid("meta.slug")}>المسار (slug)</label>
+                  <input id={fid("meta.slug")} className="adm-input" dir="ltr" value={published.slug} readOnly aria-readonly="true" />
+                  <p className="adm-hint">مقفول نهائياً: هذا الملخص نُشر من قبل، وتغيير المسار يكسر روابطه.</p>
+                </div>
+              ) : (
+                text("meta.slug", "المسار (slug)", values.meta.slug,
+                  (v) => update((d) => { d.meta.slug = v; }),
+                  { dir: "ltr", hint: "لا يتغيّر تلقائياً عند تعديل العنوان. يُقفل نهائياً بعد أول نشر." })
+              )}
+              <p className="adm-url" dir="ltr">bahjaa.com/s/{published ? published.slug : values.meta.slug || "…"}</p>
             </>
           ))}
 
@@ -513,7 +729,12 @@ export function EditorForm({
               <span className="adm-state" data-state={state} role="status">{stateText}</span>
               {actions}
             </div>
-            <p className="adm-hint">المعاينة والنشر يعملان على النسخة المحفوظة، فاحفظ أولاً.</p>
+            <p className="adm-hint">
+              {published
+                ? "المعاينة والنشر يعملان على المسودة المحفوظة. النسخة الحية لا تتغيّر قبل «نشر التعديلات»."
+                : "المعاينة والنشر يعملان على النسخة المحفوظة، فاحفظ أولاً."}
+            </p>
+            {discardControl ? <div className="adm-discard">{discardControl}</div> : null}
           </section>
         </div>
       </div>
@@ -521,7 +742,7 @@ export function EditorForm({
       {/* الجوال: شريط حفظ ثابت في الأسفل */}
       <div className="adm-foot">
         <span className="adm-state" data-state={state}>{stateText}</span>
-        <button type="button" className="adm-btn adm-btn-primary" onClick={onSave} disabled={busy || !dirty}>حفظ</button>
+        <button type="button" className="adm-btn adm-btn-primary" onClick={onSave} disabled={busy || !dirty}>{labels.save}</button>
       </div>
     </div>
   );
