@@ -1,9 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { getAdminEmail } from "@/lib/supabase/admin";
+import { validateStored, type StoredSummary } from "@/lib/admin/summary-content";
 
 /** طبقة حماية أولى — والثانية في سياسات Postgres نفسها */
 async function guard() {
@@ -25,6 +27,20 @@ function assertMutationSucceeded(error: { message: string } | null) {
 
 export async function publishSummary(id: string, slug?: string) {
   const supabase = await guard();
+
+  // النشر لا يتجاوز تحقق المحرّر: نفحص الصف المخزَّن كما هو قبل النشر مباشرة
+  const { data: row } = await supabase
+    .from("bh_summaries")
+    .select("slug, book_title_ar, book_title_en, author, category_id, reading_minutes, content_free, content_full")
+    .eq("id", id)
+    .maybeSingle();
+  if (!row) throw new Error("الملخص غير موجود");
+  const { data: cats } = await supabase.from("bh_categories").select("id");
+  const categoryIds = ((cats || []) as { id: string }[]).map((c) => c.id);
+  if (validateStored(row as unknown as StoredSummary, categoryIds).length > 0) {
+    redirect(`/admin/summaries/${id}?publish=blocked`);
+  }
+
   const { error } = await supabase
     .from("bh_summaries")
     .update({ status: "published", published_at: new Date().toISOString() })
