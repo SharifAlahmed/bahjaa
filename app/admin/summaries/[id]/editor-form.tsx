@@ -90,6 +90,8 @@ export function EditorForm({
   const [baseline, setBaseline] = useState(() => JSON.stringify(initialValues));
   const [savedSlug, setSavedSlug] = useState(initialValues.meta.slug);
   const [updatedAt, setUpdatedAt] = useState(initialUpdatedAt);
+  // توقيت الصف الحي المتوقع عند أول حفظ لتعديلات ملخص منشور؛ يتبع تغيير الغلاف من لوحة الغلاف
+  const [liveUpdatedAt, setLiveUpdatedAt] = useState(published?.liveUpdatedAt ?? initialUpdatedAt);
   const [serverIssues, setServerIssues] = useState<Issue[]>(storedIssues);
   const [message, setMessage] = useState<{ tone: "ok" | "error"; text: string } | null>(
     publishBlocked
@@ -127,6 +129,18 @@ export function EditorForm({
     });
   }, []);
 
+  // تغيير الغلاف يحدّث updated_at للصف دون أن يمسّ النص: نتبعه كي لا يُحسب تعارضاً عند الحفظ
+  useEffect(() => {
+    const onTouched = (e: Event) => {
+      const next = (e as CustomEvent<{ updatedAt?: string }>).detail?.updatedAt;
+      if (typeof next !== "string") return;
+      setUpdatedAt(next);
+      setLiveUpdatedAt(next);
+    };
+    window.addEventListener("bh:summary-touched", onTouched);
+    return () => window.removeEventListener("bh:summary-touched", onTouched);
+  }, []);
+
   // تحذير المتصفح عند مغادرة الصفحة بتغييرات غير محفوظة
   useEffect(() => {
     if (!dirty) return;
@@ -152,7 +166,7 @@ export function EditorForm({
     }
     if (published) {
       startSaving(async () => {
-        const res = await saveSummaryEdits(id, values, { draftUpdatedAt, liveUpdatedAt: published.liveUpdatedAt });
+        const res = await saveSummaryEdits(id, values, { draftUpdatedAt, liveUpdatedAt });
         if (res.ok) {
           setValues(res.values);
           setBaseline(JSON.stringify(res.values));
@@ -530,6 +544,7 @@ export function EditorForm({
             <option key={s.id} value={s.id}>{navLabel(s)}{sectionHasError(s.id) ? " — فيه خطأ" : ""}</option>
           ))}
           <option value="save">الحفظ والمعاينة</option>
+          <option value="cover">الغلاف</option>
           {published ? <option value="history">سجل النسخ</option> : null}
         </select>
       </div>
@@ -545,6 +560,7 @@ export function EditorForm({
               </li>
             ))}
             <li><a href="#sec-save">الحفظ والمعاينة</a></li>
+            <li><a href="#sec-cover">الغلاف</a></li>
             {published ? <li><a href="#sec-history">سجل النسخ</a></li> : null}
           </ul>
         </nav>

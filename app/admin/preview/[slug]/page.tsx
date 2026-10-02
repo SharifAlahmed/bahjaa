@@ -83,7 +83,8 @@ export default async function PreviewPage({
     const d = draft as Shown | null;
     hasDraft = !!d;
     if (d && v !== "live") {
-      shown = { ...d, content_free: d.content_free || {}, content_full: d.content_full ?? null };
+      // الغلاف مستقل عن مسودة النص: المعاينة تعرض الغلاف الحي الحالي دائماً
+      shown = { ...d, cover_url: s.cover_url, content_free: d.content_free || {}, content_full: d.content_full ?? null };
       mode = "draft";
       label = "تعديلات غير منشورة · النسخة الحية لم تتغيّر";
     } else if (d) {
