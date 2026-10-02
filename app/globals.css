@@ -3121,6 +3121,28 @@ body:has(.join-landing) > #main {
 .adm-editor:has(+ .adm-history-wrap){padding-block-end:14px;}
 .sr-admin-links{display:flex;flex-wrap:wrap;gap:6px 16px;font-weight:400 !important;}
 .adm-history-wrap:has(+ .adm-history-wrap){padding-block-end:14px;}
+.adm-list{margin-block-start:32px;}
+.adm-list-tools{margin-block-end:14px;}
+.adm-filters{display:flex;flex-wrap:wrap;gap:8px;margin-block-start:12px;}
+.adm-filter{
+  display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 12px;border:1px solid var(--rule);border-radius:var(--radius-full);
+  background:var(--color-surface);font:inherit;font-size:14px;font-weight:700;line-height:1.6;color:var(--ink-soft);cursor:pointer;
+}
+.adm-filter[aria-pressed="true"]{border-color:var(--color-brand-ink);background:var(--color-brand-ink);color:var(--color-surface);}
+.adm-filter:focus-visible{outline:2px solid var(--color-brand-ink);outline-offset:2px;}
+.adm-filter-count{font-weight:400;}
+.adm-rows{list-style:none;margin:0;padding:0;}
+.adm-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 16px;}
+.adm-row + .adm-row{border-block-start:1px solid var(--rule);}
+.adm-row-main{flex:1;min-width:min(100%,240px);}
+.adm-row-title{margin:0;font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.6;color:var(--ink);overflow-wrap:anywhere;}
+.adm-row-meta{margin:2px 0 0;font-size:13px;line-height:1.7;color:var(--ink-soft);overflow-wrap:anywhere;}
+.adm-row-chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0;}
+.adm-row-chips .adm-chip{margin-inline-start:0;}
+.adm-row-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
+.adm-row .adm-confirm,.adm-row .adm-notice{flex-basis:100%;margin-block-start:0;}
+.adm-archive-note{margin:8px 0 0;font-size:14px;line-height:1.9;color:var(--ink);}
+
 .adm-cover-current{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:flex-start;margin-block-start:14px;}
 .adm-cover-current-body{flex:1;min-width:200px;}
 .adm-cover-current-body .adm-actions{margin-block-start:10px;}

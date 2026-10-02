@@ -12,6 +12,7 @@ import {
 } from "@/lib/admin/summary-content";
 import { changedSections, planPublish, type EditableContent } from "@/lib/admin/publish-flow";
 import { COVER_BUCKET, ownCoverObjectPath } from "@/lib/admin/cover";
+import { ARCHIVED_MESSAGE } from "@/lib/admin/list";
 
 export type SaveResult =
   | { ok: true; updatedAt: string; values: EditorValues }
@@ -38,6 +39,12 @@ const DRAFT_COLUMNS =
 async function admin(): Promise<SupabaseClient | null> {
   const email = await getAdminEmail();
   return email ? createClient() : null;
+}
+
+/** المؤرشف مجمَّد: لا حفظ ولا نشر ولا استرجاع ولا تغيير غلاف قبل «إلغاء الأرشفة» */
+async function isArchived(supabase: SupabaseClient, id: string): Promise<boolean> {
+  const { data } = await supabase.from("bh_summaries").select("archived_at").eq("id", id).maybeSingle();
+  return !!(data as { archived_at: string | null } | null)?.archived_at;
 }
 
 async function loadLive(supabase: SupabaseClient, id: string): Promise<LiveRow | null> {
@@ -76,6 +83,7 @@ export async function saveDraftSummary(
 ): Promise<SaveResult> {
   const supabase = await admin();
   if (!supabase) return { ok: false, kind: "error", message: "غير مصرّح." };
+  if (await isArchived(supabase, id)) return { ok: false, kind: "error", message: ARCHIVED_MESSAGE };
 
   const values = parseEditorValues(input);
   if (!values) return { ok: false, kind: "error", message: "البيانات المرسلة غير صالحة." };
@@ -155,6 +163,7 @@ export async function saveSummaryEdits(
 ): Promise<EditsSaveResult> {
   const supabase = await admin();
   if (!supabase) return { ok: false, kind: "error", message: "غير مصرّح." };
+  if (await isArchived(supabase, id)) return { ok: false, kind: "error", message: ARCHIVED_MESSAGE };
 
   const parsed = parseEditorValues(input);
   if (!parsed) return { ok: false, kind: "error", message: "البيانات المرسلة غير صالحة." };
@@ -238,6 +247,7 @@ export async function publishSummaryEdits(
 ): Promise<PublishEditsResult> {
   const supabase = await admin();
   if (!supabase) return { ok: false, kind: "error", message: "غير مصرّح." };
+  if (await isArchived(supabase, id)) return { ok: false, kind: "error", message: ARCHIVED_MESSAGE };
 
   const live = await loadLive(supabase, id);
   if (!live) return { ok: false, kind: "error", message: "الملخص غير موجود." };
@@ -328,6 +338,7 @@ async function changedSinceBase(supabase: SupabaseClient, id: string, baseUpdate
 export async function discardSummaryEdits(id: string): Promise<{ ok: true } | { ok: false; message: string }> {
   const supabase = await admin();
   if (!supabase) return { ok: false, message: "غير مصرّح." };
+  if (await isArchived(supabase, id)) return { ok: false, message: ARCHIVED_MESSAGE };
   const { error } = await supabase.from("bh_summary_drafts").delete().eq("summary_id", id);
   if (error) return { ok: false, message: `تعذّر التراجع: ${error.message}` };
   revalidatePath("/admin");
@@ -350,6 +361,7 @@ export async function restoreSummaryVersion(
 ): Promise<RestoreResult> {
   const supabase = await admin();
   if (!supabase) return { ok: false, kind: "error", message: "غير مصرّح." };
+  if (await isArchived(supabase, id)) return { ok: false, kind: "error", message: ARCHIVED_MESSAGE };
 
   // النسخة يجب أن تخص هذا الملخص نفسه
   const { data: version } = await supabase
@@ -408,6 +420,7 @@ export type CoverResult =
 export async function setSummaryCover(id: string, coverUrl: string | null): Promise<CoverResult> {
   const supabase = await admin();
   if (!supabase) return { ok: false, message: "غير مصرّح." };
+  if (await isArchived(supabase, id)) return { ok: false, message: ARCHIVED_MESSAGE };
 
   const { data: row } = await supabase
     .from("bh_summaries").select("id, slug, cover_url, updated_at").eq("id", id).maybeSingle();

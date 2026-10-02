@@ -20,11 +20,12 @@ const REASON = { update: "تعديل المحتوى", delete: "حذف" } as cons
 const title = (id: SectionId) => SECTIONS.find((s) => s.id === id)?.title ?? id;
 
 export function VersionHistory({
-  summaryId, slug, hasDraft, items,
-}: { summaryId: string; slug: string; hasDraft: boolean; items: VersionItem[] }) {
+  summaryId, slug, hasDraft, items, locked = false,
+}: { summaryId: string; slug: string; hasDraft: boolean; items: VersionItem[]; locked?: boolean }) {
   const [confirmId, setConfirmId] = useState<number | null>(null);
   const [error, setError] = useState("");
-  const [pending, start] = useTransition();
+  const [working, start] = useTransition();
+  const pending = working || locked;   // المؤرشف: معاينة النسخ فقط
 
   function restore(versionId: number, replace: boolean) {
     setError("");
@@ -71,7 +72,7 @@ export function VersionHistory({
                     <p>لديك تعديلات غير منشورة. استرجاع هذه النسخة سيستبدلها في المسودة.</p>
                     <div className="adm-actions">
                       <button type="button" className="adm-btn adm-btn-danger" disabled={pending} onClick={() => restore(v.id, true)}>
-                        {pending ? "جارٍ الاسترجاع…" : "نعم، استبدل تعديلاتي بهذه النسخة"}
+                        {working ? "جارٍ الاسترجاع…" : "نعم، استبدل تعديلاتي بهذه النسخة"}
                       </button>
                       <button type="button" className="adm-btn" disabled={pending} onClick={() => setConfirmId(null)}>إلغاء</button>
                     </div>

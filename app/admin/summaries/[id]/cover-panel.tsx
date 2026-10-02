@@ -14,7 +14,7 @@ export const SUMMARY_TOUCHED_EVENT = "bh:summary-touched";
 type Confirming = { kind: "remove" } | { kind: "reuse"; url: string } | null;
 
 export function CoverPanel({
-  summaryId, isLive, hasTextDraft, initialCoverUrl, initialPrevious,
+  summaryId, isLive, hasTextDraft, initialCoverUrl, initialPrevious, locked = false,
 }: {
   summaryId: string;
   /** منشور ويراه القرّاء الآن */
@@ -22,12 +22,15 @@ export function CoverPanel({
   hasTextDraft: boolean;
   initialCoverUrl: string | null;
   initialPrevious: string[];
+  /** مؤرشف: عرض فقط */
+  locked?: boolean;
 }) {
   const [coverUrl, setCoverUrl] = useState(initialCoverUrl);
   const [previous, setPrevious] = useState(initialPrevious);
   const [confirming, setConfirming] = useState<Confirming>(null);
   const [message, setMessage] = useState<{ tone: "ok" | "error"; text: string } | null>(null);
-  const [pending, start] = useTransition();
+  const [working, start] = useTransition();
+  const pending = working || locked;
 
   /** يطبّق الغلاف على الصف ثم يحدّث اللوحة. يعيد رسالة الخطأ أو null */
   async function apply(next: string | null, done: string): Promise<string | null> {
@@ -75,6 +78,7 @@ export function CoverPanel({
             ? "الغلاف يُدار مباشرة على النسخة الحية، ومستقل عن تعديلات النص."
             : "الغلاف يُحفظ على هذا الملخص مباشرة، ومستقل عن حفظ النص."}
           {hasTextDraft ? " تعديلات النص غير المنشورة لا تغيّر الغلاف: عند نشرها يبقى الغلاف الحالي كما هو." : ""}
+          {locked ? " الملخص مؤرشف: لا يمكن تغيير الغلاف قبل إلغاء الأرشفة." : ""}
         </p>
         {message ? (
           <p className={message.tone === "ok" ? "adm-flash" : "adm-notice"} role={message.tone === "ok" ? "status" : "alert"}>{message.text}</p>
@@ -109,7 +113,7 @@ export function CoverPanel({
                     type="button" className="adm-btn adm-btn-danger" disabled={pending}
                     onClick={() => run(null, isLive ? "أُزيل الغلاف. يُعرض الغلاف التوليدي للقرّاء الآن." : "أُزيل الغلاف من المسودة.")}
                   >
-                    {pending ? "جارٍ الإزالة…" : "نعم، أزل الغلاف"}
+                    {working ? "جارٍ الإزالة…" : "نعم، أزل الغلاف"}
                   </button>
                   <button type="button" className="adm-btn" disabled={pending} onClick={() => setConfirming(null)}>إلغاء</button>
                 </div>
@@ -151,7 +155,7 @@ export function CoverPanel({
                           type="button" className="adm-btn adm-btn-primary" disabled={pending}
                           onClick={() => run(url, isLive ? "اعتُمد الغلاف السابق، وهو ظاهر للقرّاء الآن." : "اعتُمد الغلاف السابق على المسودة.")}
                         >
-                          {pending ? "جارٍ التطبيق…" : "نعم، استخدمه"}
+                          {working ? "جارٍ التطبيق…" : "نعم، استخدمه"}
                         </button>
                         <button type="button" className="adm-btn" disabled={pending} onClick={() => setConfirming(null)}>إلغاء</button>
                       </div>
