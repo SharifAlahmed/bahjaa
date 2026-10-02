@@ -12,6 +12,7 @@ import { EditorForm, type PublishedInfo } from "./editor-form";
 import { VersionHistory, type VersionItem } from "./version-history";
 import { DangerZone } from "./danger-zone";
 import { CoverPanel } from "./cover-panel";
+import { ArchiveCard } from "./archive-card";
 import { previousCovers } from "@/lib/admin/cover";
 
 export const dynamic = "force-dynamic";
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 type Row = StoredSummary & {
   id: string; status: "draft" | "published";
   first_published_at: string | null; published_at: string | null;
-  updated_at: string; cover_url: string | null;
+  updated_at: string; cover_url: string | null; archived_at: string | null;
 };
 
 type DraftRow = {
@@ -60,12 +61,16 @@ export default async function SummaryEditorPage({
   const { data } = await supabase
     .from("bh_summaries")
     .select(
-      "id, slug, book_title_ar, book_title_en, author, category_id, reading_minutes, content_free, content_full, status, first_published_at, published_at, updated_at, cover_url",
+      "id, slug, book_title_ar, book_title_en, author, category_id, reading_minutes, content_free, content_full, status, first_published_at, published_at, updated_at, cover_url, archived_at",
     )
     .eq("id", id)
     .maybeSingle();
   const row = data as unknown as Row | null;
   if (!row) notFound();
+  const archived = !!row.archived_at;
+  const archiveCard = (
+    <ArchiveCard summaryId={row.id} title={row.book_title_ar} isLive={row.status === "published"} archived={archived} />
+  );
 
   const { data: cats } = await supabase
     .from("bh_categories")
@@ -86,6 +91,7 @@ export default async function SummaryEditorPage({
       isLive={row.status === "published"}
       hasTextDraft={hasTextDraft}
       initialCoverUrl={row.cover_url}
+      locked={archived}
       initialPrevious={previousCovers(
         ((coverRows || []) as unknown as { cover_url: string | null }[]).map((c) => c.cover_url),
         row.cover_url, process.env.NEXT_PUBLIC_SUPABASE_URL!, row.id,
@@ -105,8 +111,10 @@ export default async function SummaryEditorPage({
           storedIssues={structuralIssues(row.content_free, row.content_full)}
           publishBlocked={publish === "blocked"}
           published={null}
+          archived={archived}
         />
         {coverPanel(false)}
+        {archiveCard}
         <DangerZone summaryId={row.id} slug={row.slug} title={row.book_title_ar} isLive={false} />
       </>
     );
@@ -183,9 +191,11 @@ export default async function SummaryEditorPage({
         storedIssues={structuralIssues(shown.content_free, shown.content_full)}
         publishBlocked={publish === "blocked"}
         published={published}
+        archived={archived}
       />
       {coverPanel(!!draft)}
-      <VersionHistory summaryId={row.id} slug={row.slug} hasDraft={!!draft} items={history} />
+      <VersionHistory summaryId={row.id} slug={row.slug} hasDraft={!!draft} items={history} locked={archived} />
+      {archiveCard}
       <DangerZone summaryId={row.id} slug={row.slug} title={row.book_title_ar} isLive={row.status === "published"} />
     </>
   );

@@ -36,6 +36,8 @@ type Props = {
   categories: { id: string; name_ar: string }[];
   storedIssues: Issue[];
   publishBlocked: boolean;
+  /** مؤرشف: للمعاينة فقط — لا حفظ ولا نشر قبل إلغاء الأرشفة */
+  archived?: boolean;
   /** null = مسودة لم تُنشر قط (الخطوة ٢) */
   published: PublishedInfo | null;
 };
@@ -84,7 +86,7 @@ function focusField(field: string) {
 }
 
 export function EditorForm({
-  id, initialValues, initialUpdatedAt, categories, storedIssues, publishBlocked, published,
+  id, initialValues, initialUpdatedAt, categories, storedIssues, publishBlocked, published, archived = false,
 }: Props) {
   const [values, setValues] = useState<EditorValues>(initialValues);
   const [baseline, setBaseline] = useState(() => JSON.stringify(initialValues));
@@ -259,7 +261,9 @@ export function EditorForm({
     });
   }
 
-  const busy = saving || publishing || discarding;
+  // المؤرشف مجمَّد: كل أزرار الكتابة معطّلة، والخادم يرفض كذلك
+  const working = saving || publishing || discarding;
+  const busy = working || archived;
   const state = saving ? "saving" : dirty ? "dirty" : "saved";
   const stateText = saving
     ? "جارٍ الحفظ…"
@@ -284,7 +288,7 @@ export function EditorForm({
         href={`/admin/preview/${previewSlug}`}
         target="_blank"
         rel="noreferrer"
-        aria-disabled={dirty || busy}
+        aria-disabled={dirty || working}
         title={dirty ? "احفظ التغييرات أولاً" : undefined}
       >
         {labels.preview}
@@ -443,7 +447,12 @@ export function EditorForm({
             {published ? (
               <p className="adm-bar-meta">
                 <Link href="/admin" className="textlink">اللوحة</Link>
-                {published.isLive ? (
+                {archived ? (
+                  <>
+                    <span className="adm-chip" data-tone="off">مؤرشف</span>
+                    <span className="adm-chip">سبق نشره</span>
+                  </>
+                ) : published.isLive ? (
                   <span className="adm-chip" data-tone="live">منشور</span>
                 ) : (
                   <>
@@ -457,7 +466,7 @@ export function EditorForm({
               </p>
             ) : (
               <p className="adm-bar-meta">
-                <Link href="/admin" className="textlink">اللوحة</Link> · مسودة — لم تُنشر بعد
+                <Link href="/admin" className="textlink">اللوحة</Link> · {archived ? "مؤرشف — لم يُنشر قط" : "مسودة — لم تُنشر بعد"}
               </p>
             )}
             <h1>{values.meta.book_title_ar || "ملخص بلا عنوان"}</h1>
@@ -477,7 +486,13 @@ export function EditorForm({
         ) : null}
       </div>
 
-      {published && !published.isLive ? (
+      {archived ? (
+        <p className="adm-notice" role="status">
+          هذا الملخص مؤرشف: يمكن الاطلاع عليه فقط. لا حفظ ولا نشر ولا تمييز قبل «إلغاء الأرشفة» (أسفل الصفحة).
+        </p>
+      ) : null}
+
+      {published && !published.isLive && !archived ? (
         <p className="adm-flash">
           هذا الملخص غير ظاهر للعموم حالياً. نشر التعديلات يحدّث محتواه فقط ولا يعيد إظهاره.
         </p>
@@ -545,6 +560,7 @@ export function EditorForm({
           ))}
           <option value="save">الحفظ والمعاينة</option>
           <option value="cover">الغلاف</option>
+          <option value="archive">الأرشفة</option>
           {published ? <option value="history">سجل النسخ</option> : null}
         </select>
       </div>
@@ -561,6 +577,7 @@ export function EditorForm({
             ))}
             <li><a href="#sec-save">الحفظ والمعاينة</a></li>
             <li><a href="#sec-cover">الغلاف</a></li>
+            <li><a href="#sec-archive">الأرشفة</a></li>
             {published ? <li><a href="#sec-history">سجل النسخ</a></li> : null}
           </ul>
         </nav>
