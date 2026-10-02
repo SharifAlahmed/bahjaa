@@ -2122,6 +2122,10 @@ body:has(.join-landing) > #main {
   .home-hero-v3 .home-hero-grid{align-items:start;}
   /* العنوان أصغر ~١٢٪ على سطح المكتب (كان clamp(30px,3.9vw,44px)) ليتسع الـHero داخل الشاشة */
   .home-hero-v3 .home-hero-title{font-size:clamp(28px,3.45vw,39px);}
+  /* مسافات رأسية أضيق داخل عمود النص (كانت ٢٢ / ٢٨ / ٢٤) لتظهر فقرة المؤسس داخل الشاشة */
+  .home-hero-v3 .home-hero-lede{margin-top:14px;}
+  .home-hero-v3 .home-hero-actions{margin-top:20px;}
+  .home-hero-v3 .home-hero-authority{margin-top:16px;}
 }
 
 
