@@ -27,6 +27,7 @@ type Row = {
   published_at: string | null;
   created_at: string;
   is_featured: boolean;
+  first_published_at: string | null;
   cover_url: string | null;
   bh_categories: { name_ar: string } | null;
 };
@@ -57,7 +58,7 @@ export default async function AdminPage() {
   const { data } = await supabase
     .from("bh_summaries")
     .select(
-      "id, slug, book_title_ar, author, status, published_at, created_at, is_featured, cover_url, bh_categories(name_ar)"
+      "id, slug, book_title_ar, author, status, published_at, created_at, is_featured, first_published_at, cover_url, bh_categories(name_ar)"
     )
     .order("created_at", { ascending: false });
 
@@ -134,6 +135,16 @@ function Group({ title, rows, empty }: { title: string; rows: Row[]; empty: stri
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0 flex-wrap">
+                  {/* تحرير — للمسودات التي لم تُنشر قط فقط (الخطوة ٢) */}
+                  {r.status === "draft" && !r.first_published_at && (
+                    <Link
+                      href={`/admin/summaries/${r.id}`}
+                      className="px-3 py-1.5 rounded-lg border border-border text-sm font-bold text-ink-soft hover:bg-background transition"
+                    >
+                      تحرير
+                    </Link>
+                  )}
+
                   <Link
                     href={`/admin/preview/${r.slug}`}
                     className="px-3 py-1.5 rounded-lg border border-border text-sm font-bold text-ink-soft hover:bg-background transition"
