@@ -63,6 +63,10 @@ export default async function AdminPage() {
     .order("created_at", { ascending: false });
 
   const rows = (data || []) as unknown as Row[];
+
+  // الملخصات التي لها تعديلات غير منشورة (مسودة في bh_summary_drafts)
+  const { data: pending } = await supabase.from("bh_summary_drafts").select("summary_id");
+  const pendingIds = new Set(((pending || []) as { summary_id: string }[]).map((p) => p.summary_id));
   const drafts = rows.filter((r) => r.status === "draft");
   const published = rows.filter((r) => r.status === "published");
 
@@ -87,8 +91,8 @@ export default async function AdminPage() {
         </p>
       </div>
 
-      <Group title="المسودات — بانتظار مراجعتك" rows={drafts} empty="لا توجد مسودات." />
-      <Group title="المنشور" rows={published} empty="لم تنشر شيئاً بعد." />
+      <Group title="المسودات — بانتظار مراجعتك" rows={drafts} pendingIds={pendingIds} empty="لا توجد مسودات." />
+      <Group title="المنشور" rows={published} pendingIds={pendingIds} empty="لم تنشر شيئاً بعد." />
     </div>
   );
 }
@@ -102,7 +106,7 @@ function Stat({ label, value }: { label: string; value: number }) {
   );
 }
 
-function Group({ title, rows, empty }: { title: string; rows: Row[]; empty: string }) {
+function Group({ title, rows, pendingIds, empty }: { title: string; rows: Row[]; pendingIds: Set<string>; empty: string }) {
   return (
     <section className="mt-10">
       <h2 className="bh-pillar-title text-brand-dark mb-3">{title}</h2>
@@ -124,6 +128,14 @@ function Group({ title, rows, empty }: { title: string; rows: Row[]; empty: stri
                     {[r.author, r.bh_categories?.name_ar, `/s/${r.slug}`]
                       .filter(Boolean)
                       .join(" · ")}
+                    {pendingIds.has(r.id) && (
+                      <span style={{ color: "var(--color-accent-ink)", marginInlineStart: 6, fontWeight: 700 }}>
+                        · تعديلات غير منشورة
+                      </span>
+                    )}
+                    {r.status === "draft" && r.first_published_at && (
+                      <span style={{ marginInlineStart: 6 }}>· سبق نشره</span>
+                    )}
                     {r.cover_url && (
                       <span
                         style={{ color: "var(--color-brand-primary)", marginInlineStart: 6 }}
@@ -135,15 +147,13 @@ function Group({ title, rows, empty }: { title: string; rows: Row[]; empty: stri
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0 flex-wrap">
-                  {/* تحرير — للمسودات التي لم تُنشر قط فقط (الخطوة ٢) */}
-                  {r.status === "draft" && !r.first_published_at && (
-                    <Link
-                      href={`/admin/summaries/${r.id}`}
-                      className="px-3 py-1.5 rounded-lg border border-border text-sm font-bold text-ink-soft hover:bg-background transition"
-                    >
-                      تحرير
-                    </Link>
-                  )}
+                  {/* تحرير — المسودة تُحفظ مباشرة؛ ما سبق نشره يمرّ عبر مسودة ثم «نشر التعديلات» */}
+                  <Link
+                    href={`/admin/summaries/${r.id}`}
+                    className="px-3 py-1.5 rounded-lg border border-border text-sm font-bold text-ink-soft hover:bg-background transition"
+                  >
+                    تحرير
+                  </Link>
 
                   <Link
                     href={`/admin/preview/${r.slug}`}
