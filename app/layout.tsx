@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 
@@ -18,7 +17,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" dir="rtl">
       <body className="min-h-screen flex flex-col">
         <a href="#main" className="skip-link">تخطَّ إلى المحتوى</a>
-        <AnnouncementBar />
         <SiteHeader />
         <main id="main" className="flex-1">{children}</main>
         <SiteFooter />
