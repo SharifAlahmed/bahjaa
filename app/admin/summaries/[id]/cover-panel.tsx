@@ -90,7 +90,9 @@ export function CoverPanel({
           <div className="adm-cover-current-body">
             <p className="adm-label">{coverUrl ? "الغلاف الحالي" : "لا يوجد غلاف مرفوع"}</p>
             <p className="adm-hint">
-              {coverUrl ? "هذا ما يُعرض في الموقع الآن." : "يُعرض الغلاف التوليدي (العنوان والمؤلف وأيقونة القسم) تلقائياً."}
+              {coverUrl
+                ? (isLive ? "هذا ما يراه القرّاء في الموقع الآن." : "يظهر في المعاينة الآن، وللقرّاء عند النشر.")
+                : "يُعرض الغلاف التوليدي (العنوان والمؤلف وأيقونة القسم) تلقائياً."}
             </p>
             {coverUrl && confirming?.kind !== "remove" ? (
               <div className="adm-actions">
