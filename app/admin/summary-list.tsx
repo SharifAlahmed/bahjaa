@@ -10,7 +10,7 @@ import {
   type ListFilter, type ListRow, type SummaryState,
 } from "@/lib/admin/list";
 import {
-  archiveSummary, publishSummary, setFeatured, unarchiveSummary, unpublishSummary, unsetFeatured,
+  archiveSummary, publishSummary, unarchiveSummary, unpublishSummary,
   type ListActionResult,
 } from "./actions";
 
@@ -86,7 +86,6 @@ export function SummaryList({ rows }: { rows: AdminRow[] }) {
                     {state === "unpublished" ? <span className="adm-chip">سبق نشره</span> : null}
                     {archived && r.first_published_at ? <span className="adm-chip">سبق نشره</span> : null}
                     {r.hasPendingEdits ? <span className="adm-chip" data-tone="pending">لديه تعديلات غير منشورة</span> : null}
-                    {r.is_featured ? <span className="adm-chip">★ مميّز</span> : null}
                     {r.cover_url ? <span className="adm-chip">غلاف ✓</span> : null}
                   </p>
                 </div>
@@ -94,12 +93,6 @@ export function SummaryList({ rows }: { rows: AdminRow[] }) {
                 <div className="adm-row-actions">
                   <Link href={`/admin/summaries/${r.id}`} className="adm-btn adm-btn-sm">{archived ? "فتح" : "تحرير"}</Link>
                   <Link href={`/admin/preview/${r.slug}`} className="adm-btn adm-btn-sm">معاينة</Link>
-
-                  {state === "published" ? (
-                    <form action={r.is_featured ? unsetFeatured.bind(null, r.id, r.slug) : setFeatured.bind(null, r.id, r.slug)}>
-                      <button className="adm-btn adm-btn-sm" disabled={pending}>{r.is_featured ? "★ إلغاء التمييز" : "☆ ميّز"}</button>
-                    </form>
-                  ) : null}
 
                   {state === "never_published" || state === "unpublished" ? (
                     <form action={publishSummary.bind(null, r.id, r.slug)}>

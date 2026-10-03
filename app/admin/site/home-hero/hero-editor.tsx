@@ -128,7 +128,7 @@ export function HeroEditor({
   const publishDisabled = pending || dirty || !hasDraft || !local.ok;
   const actions = (
     <div className="adm-actions">
-      <button type="button" className="adm-btn adm-btn-primary" onClick={save} disabled={pending || !dirty}>حفظ المسودة</button>
+      <button type="button" className="adm-btn adm-btn-primary" onClick={save} disabled={pending || (!dirty && hasDraft)}>حفظ المسودة</button>
       <a className="adm-btn" href="/admin/site/home-hero/preview" target="_blank" rel="noreferrer"
          aria-disabled={dirty || pending || !hasDraft} title={dirty ? "احفظ التغييرات أولاً" : !hasDraft ? "لا توجد مسودة محفوظة" : undefined}>
         معاينة
@@ -187,7 +187,7 @@ export function HeroEditor({
       <section className="adm-card" aria-labelledby="hero-image-h">
         <header className="adm-card-head"><h2 id="hero-image-h">الصورة</h2></header>
         <p className="adm-hint">
-          {values.image_url ? "صورة مرفوعة من المحرّر." : "الصورة الحالية للـHero (من الموقع)."} أي صورة جديدة تدخل المسودة فقط، والصور السابقة تبقى محفوظة.
+          {values.image_url ? "صورة مرفوعة من المحرّر." : "الصورة الحالية لقسم الافتتاح (من الموقع)."} أي صورة جديدة تدخل المسودة فقط، والصور السابقة تبقى محفوظة.
         </p>
         {values.image_url ? (
           <div className="adm-actions" style={{ marginBlockStart: 10 }}>
@@ -277,7 +277,7 @@ export function HeroEditor({
         )}
       </section>
 
-      <section className="adm-hero-live" aria-label="معاينة حية للـHero بالقيم الحالية في النموذج">
+      <section className="adm-hero-live" aria-label="معاينة حية لقسم الافتتاح بالقيم الحالية في النموذج">
         <p className="adm-label adm-hero-live-label">معاينة حية (بالقيم الحالية في النموذج، قبل الحفظ)</p>
         <div className="adm-hero-live-frame">
           <Hero content={local.ok ? local.value : values} />
