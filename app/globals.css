@@ -3261,9 +3261,7 @@ body:has(.join-landing) > #main {
   min-height:52px;
 }
 .mobile-nav-panel a.btn:hover{color:var(--color-surface);}
-/* ٢) أهداف لمس ٤٤px على الأقل لكل عناصر القائمة */
-.mobile-nav-panel a,
-.mobile-nav-panel button{min-height:44px;}
+/* ٢) أهداف اللمس في القائمة: الروابط ٥٢px وزر الإغلاق ٤٤px (موجودة أصلاً)؛ أُضيفت «الرئيسية» بالارتفاع نفسه */
 
 /* ٣) بطاقات الأقسام: حدّ وظل خفيفان ونص أوضح ورابط «استكشف» بشكل زر صغير */
 .cat-card{
