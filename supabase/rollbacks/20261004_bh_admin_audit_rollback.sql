@@ -1,19 +1,47 @@
--- Rollback for 20261004_bh_admin_audit: removes the audit trail and puts the restore function back
--- to its 20261003_bh_restore_preserve_created_at body. All audit rows are lost.
+-- Rollback for 20261004_bh_admin_audit — NON-DESTRUCTIVE.
+-- Stops all future audit writes and restores both RPCs exactly to their pre-audit production bodies.
+-- bh_admin_audit and every existing row are KEPT, read-only for admins, and still cannot be changed.
+-- Full removal of the table is a separate, explicit file: 20261004_bh_admin_audit_cleanup_DESTRUCTIVE.sql
 
 drop trigger if exists bh_summary_drafts_audit on public.bh_summary_drafts;
 drop trigger if exists bh_summaries_audit on public.bh_summaries;
 drop function if exists public.bh_summary_drafts_audit();
 drop function if exists public.bh_summaries_audit();
 drop function if exists public.bh_admin_audit_write(text, uuid, text, jsonb);
-drop table if exists public.bh_admin_audit;          -- also drops its triggers, policy and indexes
-drop function if exists public.bh_admin_audit_immutable();
+-- kept on purpose: table bh_admin_audit, its admin-read policy, and the append-only triggers/function
 
-create or replace function public.bh_restore_summary_version(
-  p_version_id bigint,
-  p_replace_existing_draft boolean default false)
-returns uuid
-language plpgsql security invoker set search_path = public as $$
+CREATE OR REPLACE FUNCTION public.bh_publish_summary_draft(p_summary_id uuid, p_force boolean DEFAULT false)
+ RETURNS bh_summaries
+ LANGUAGE plpgsql
+ SET search_path TO 'public'
+AS $function$
+declare d public.bh_summary_drafts; live public.bh_summaries;
+begin
+  if not public.bh_is_admin() then
+    raise exception 'not authorized' using errcode = '42501'; end if;
+  select * into live from public.bh_summaries where id = p_summary_id for update;
+  if not found then raise exception 'summary not found'; end if;
+  select * into d from public.bh_summary_drafts where summary_id = p_summary_id for update;
+  if not found then raise exception 'no draft to publish'; end if;
+  if not p_force and live.updated_at <> d.base_updated_at then
+    raise exception 'the live summary changed after this draft was started'
+      using errcode = '40001'; end if;
+  update public.bh_summaries set
+    book_title_ar = d.book_title_ar, book_title_en = d.book_title_en,
+    author = d.author, category_id = d.category_id,
+    reading_minutes = d.reading_minutes, cover_url = d.cover_url,
+    content_free = d.content_free, content_full = d.content_full
+  where id = p_summary_id returning * into live;      -- snapshot trigger fires here
+  delete from public.bh_summary_drafts where summary_id = p_summary_id;
+  return live;
+end $function$
+;
+
+CREATE OR REPLACE FUNCTION public.bh_restore_summary_version(p_version_id bigint, p_replace_existing_draft boolean DEFAULT false)
+ RETURNS uuid
+ LANGUAGE plpgsql
+ SET search_path TO 'public'
+AS $function$
 declare v public.bh_summary_versions; s jsonb; live public.bh_summaries;
 begin
   if not public.bh_is_admin() then
@@ -60,4 +88,5 @@ begin
        coalesce((s->>'created_at')::timestamptz, now()));
   end if;
   return v.summary_id;
-end $$;
+end $function$
+;
