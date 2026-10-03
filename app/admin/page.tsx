@@ -92,7 +92,8 @@ export default async function AdminPage({
         <p className="bh-card-label mb-1">محتوى الصفحة الرئيسية</p>
         <p className="bh-body">
           <Link href="/admin/site/home-hero" className="textlink">تحرير قسم الافتتاح</Link> — النصوص والأزرار والصورة.
-          {" · "}<Link href="/admin/site/home-featured" className="textlink">المختارات</Link> — حتى ٤ ملخصات بالترتيب. كلاهما عبر مسودة ثم نشر.
+          {" · "}<Link href="/admin/site/home-featured" className="textlink">المختارات</Link> — حتى ٤ ملخصات بالترتيب.
+          {" · "}<Link href="/admin/site/home-banner" className="textlink">البانر</Link> — بطاقة اختيارية تحت قسم الافتتاح. الكل عبر مسودة ثم نشر.
         </p>
       </div>
 
