@@ -25,7 +25,8 @@ export function Hero({ content = DEFAULT_HOME_HERO }: { content?: HomeHero }) {
           </div>
 
           <p className="home-hero-authority">
-            <strong>{content.founder_lead}</strong> — {content.founder_text}
+            {/* نص واحد بعد العنصر البارز — لا عقدتان نصيتان متجاورتان، فيطابق الـHTML السابق حرفياً */}
+            <strong>{content.founder_lead}</strong>{` — ${content.founder_text}`}
           </p>
         </div>
 
