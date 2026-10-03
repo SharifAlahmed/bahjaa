@@ -3121,6 +3121,10 @@ body:has(.join-landing) > #main {
 .adm-editor:has(+ .adm-history-wrap){padding-block-end:14px;}
 .sr-admin-links{display:flex;flex-wrap:wrap;gap:6px 16px;font-weight:400 !important;}
 .adm-history-wrap:has(+ .adm-history-wrap){padding-block-end:14px;}
+.adm-hero-media-preview{display:block;width:220px;max-width:100%;height:auto;border:1px solid var(--rule);border-radius:var(--radius-sm);}
+.adm-hero-live{margin-block-start:24px;}
+.adm-hero-live-label{margin-block-end:8px;}
+.adm-hero-live-frame{border:1px dashed var(--rule);border-radius:var(--radius-sm);overflow:hidden;background:var(--color-background);}
 .adm-list{margin-block-start:32px;}
 .adm-list-tools{margin-block-end:14px;}
 .adm-filters{display:flex;flex-wrap:wrap;gap:8px;margin-block-start:12px;}
