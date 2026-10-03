@@ -121,6 +121,7 @@ export function NavLinks({ user, isAdmin }: Props) {
         <button className="mobile-nav-close" onClick={closeMenu} aria-label="إغلاق القائمة">
           <IconClose />
         </button>
+        {navLink("/", "الرئيسية")}
         {navLink("/categories", "الأقسام")}
         {navLink("/about", "عن بهجة")}
         {user && navLink("/my-library", "مكتبتي")}
