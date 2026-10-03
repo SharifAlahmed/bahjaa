@@ -3266,3 +3266,68 @@ body:has(.join-landing) > #main {
     max-height:calc(100vh - var(--header-h) - 156px);overflow:auto;padding-block-start:28px;
   }
 }
+
+
+/* ══ تلميع الجوال · أكتوبر ٢٠٢٦ ══════════════════════════════
+   إصلاحات تباين ولمس ومسافات فقط — لا تغيير في البنية ولا الوظائف.
+   سطح المكتب بلا تغيير، عدا بطاقات الأقسام. */
+
+/* ١) زر «دخول» في قائمة الجوال: قاعدة روابط القائمة كانت تفرض لون النص الداكن
+   على خلفية .btn-primary الداكنة فيختفي النص. */
+.mobile-nav-panel a.btn{
+  justify-content:center;
+  color:var(--color-surface);
+  border-bottom:0;
+  min-height:52px;
+}
+.mobile-nav-panel a.btn:hover{color:var(--color-surface);}
+/* ٢) أهداف اللمس في القائمة: الروابط ٥٢px وزر الإغلاق ٤٤px (موجودة أصلاً)؛ أُضيفت «الرئيسية» بالارتفاع نفسه */
+
+/* ٣) بطاقات الأقسام: حدّ وظل خفيفان ونص أوضح ورابط «استكشف» بشكل زر صغير */
+.cat-card{
+  border-color:rgba(21,51,42,.16);
+  box-shadow:var(--shadow-1);
+}
+.cat-card-outcome{color:var(--color-ink-read);}
+.cat-card-count{color:var(--ink-soft);}
+.cat-card-link{
+  min-height:36px;
+  padding-inline:14px 10px;
+  border:1px solid color-mix(in srgb,var(--brass-ink) 35%,transparent);
+  border-radius:var(--radius-full);
+  background:var(--color-surface);
+  font-size:13.5px;
+  transition:background .18s ease,border-color .18s ease;
+}
+.cat-card:hover .cat-card-link,
+.cat-card:focus-visible .cat-card-link{
+  border-color:var(--brass-ink);
+  background:color-mix(in srgb,var(--brass) 8%,var(--color-surface));
+}
+
+/* ٤) Hero الجوال أقصر قليلاً: مسافات أضيق وعنوان أصغر قليلاً — البنية والصورة كما هي */
+@media (max-width:600px){
+  .home-hero-v3{padding-block-end:32px;}
+  .home-hero-v3 .home-hero-grid{gap:20px;}
+  .home-hero-v3 .home-hero-title{font-size:clamp(26px,6.8vw,30px);max-width:none;}
+  .home-hero-v3 .home-hero-lede{margin-top:14px;line-height:1.85;}
+  .home-hero-v3 .home-hero-actions{margin-top:20px;gap:10px;}
+  .home-hero-v3 .home-hero-authority{margin-top:18px;}
+}
+
+/* ٥) فوتر الجوال أكثر إحكاماً: قائمتا «استكشف» و«الأقسام» جنباً إلى جنب */
+@media (max-width:500px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:26px 20px;padding-block:28px 20px;}
+  .footer-brand,
+  .footer-grid > .footer-col:last-child{grid-column:1 / -1;}
+  .footer-col{gap:6px;}
+  .footer-tagline{max-width:none;}
+}
+
+/* ٦) النص الثانوي على الجوال أغمق قليلاً (كان ٦٧٪ و٧٢٪ ≈ ٤٫٦–٥٫٤:١ في أحجام صغيرة) */
+@media (max-width:767px){
+  :root{
+    --color-ink-muted:rgba(21,51,42,.76);
+    --color-ink-soft:rgba(21,51,42,.78);
+  }
+}
