@@ -88,6 +88,13 @@ export default async function AdminPage({
         </p>
       </div>
 
+      <div className="bh-card p-5 mt-4">
+        <p className="bh-card-label mb-1">محتوى الصفحة الرئيسية</p>
+        <p className="bh-body">
+          <Link href="/admin/site/home-hero" className="textlink">تحرير قسم الافتتاح</Link> — النصوص والأزرار والصورة، عبر مسودة ثم نشر.
+        </p>
+      </div>
+
       {deleted ? (
         <div className="bh-card p-4 mt-6" role="status">
           <p className="bh-body">حُذف الملخص نهائياً.</p>
